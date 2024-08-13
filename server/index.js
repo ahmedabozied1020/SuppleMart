@@ -1,12 +1,10 @@
 // MODULES
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 
-const logger = require('./utils/logging/logger');
-
+const logger = require("./utils/logging/logger");
 
 const app = express();
-
 
 // ENV FILE CONFIGURATION
 require("dotenv").config();
@@ -25,3 +23,4 @@ mongoose.connect(process.env.DB_URL).then(() => {
     })
   );
 });
+//Ziad branch initial commit
