@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FilledButtonComponent } from './components/buttons/filled-button/filled-button.component';
+import { MainProductCardComponent } from './components/cards/product-cards/main-product-card/main-product-card.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FilledButtonComponent],
+  imports: [RouterOutlet, MainProductCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
