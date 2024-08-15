@@ -48,6 +48,9 @@ const productSchema = new Schema(
   }
 );
 
+productSchema.index({ title: 1 });
+productSchema.index({ tags: 1 });
+
 //generat virtuale property => formattedPrice == price.fixed(2)
 productSchema.virtual("formattedPrice").get(function () {
   return `$${this.price.toFixed(2)}`;
