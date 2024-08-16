@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const userSchma = Schema(
+const userSchema = Schema(
   {
     name: {
       type: String,
@@ -29,12 +29,13 @@ const userSchma = Schema(
   }
 );
 
-userSchma.pre("save", async function () {
+// Pre-save script to add "All" category if not present
+userSchema.pre("save", async function () {
   if (this.isModifies("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
-const User = model("User", userSchmea);
+const User = model("User", userSchema);
 
 module.exports = User;

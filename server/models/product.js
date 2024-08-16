@@ -27,12 +27,18 @@ const productSchema = new Schema(
 
     rate: {
       type: Number,
+      min: 0,
+      max: 5,
     },
 
-    tags: {
-      type: [String],
-      default: [],
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Category",
+        required: true,
+        default: [],
+      },
+    ],
 
     thumbnail: {
       type: String,
@@ -41,6 +47,7 @@ const productSchema = new Schema(
 
     images: {
       type: [String],
+      default: [],
     },
   },
   {
@@ -51,7 +58,14 @@ const productSchema = new Schema(
 productSchema.index({ title: 1 });
 productSchema.index({ tags: 1 });
 
-//generat virtuale property => formattedPrice == price.fixed(2)
+// Pre-save script to add "All" category if not present
+productSchema.pre("save", function () {
+  if (!this.categories.includes("All")) {
+    this.categories.push("All");
+  }
+});
+
+//Generat virtuale property => formattedPrice = price.fixed(2)
 productSchema.virtual("formattedPrice").get(function () {
   return `$${this.price.toFixed(2)}`;
 });
