@@ -3,4 +3,4 @@ const {} = require("../controllers/products.js");
 
 const router = express.Router();
 
-export default router;
+module.exports = router;
