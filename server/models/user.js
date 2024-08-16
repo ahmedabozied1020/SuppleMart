@@ -18,6 +18,11 @@ const userSchma = Schema(
       required: true,
       minlength: 8,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin", "seller"], // Define possible roles
+      default: "user",
+    },
   },
   {
     timestamps: true,
