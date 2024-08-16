@@ -1,5 +1,5 @@
-import { CardsRealCustomersComponent } from './../../cards/cards-real-customers/cards-real-customers.component';
 import { Component } from '@angular/core';
+import { CardsRealCustomersComponent } from '../../components/cards/cards-real-customers/cards-real-customers.component';
 
 @Component({
   selector: 'app-review-real-customers',
