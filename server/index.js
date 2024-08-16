@@ -7,9 +7,10 @@ const morgan = require("morgan");
 require("express-async-errors");
 
 const logger = require("./utils/logging/logger");
+const errorHandler = require("./utils/errors/CustomError");
 
-const userRoutes = require("./routes/users.js");
-const productRoutes = require("./routes/products.js");
+const userRoutes = require("./routes/users");
+const productRoutes = require("./routes/products");
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use(express.json());
 
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
+
+app.use(errorHandler);
 
 mongoose.connect(DB_URL).then(() => {
   logger.log({
