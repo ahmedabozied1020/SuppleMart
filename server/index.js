@@ -7,7 +7,7 @@ const morgan = require("morgan");
 require("express-async-errors");
 
 const logger = require("./utils/logging/logger");
-const errorHandler = require("./utils/errors/CustomError");
+const errorHandler = require("./middlewares/errorHandler");
 
 const userRoutes = require("./routes/users");
 const productRoutes = require("./routes/products");
