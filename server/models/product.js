@@ -31,14 +31,14 @@ const productSchema = new Schema(
       max: 5,
     },
 
-    categories: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-        required: true,
-        default: [],
-      },
-    ],
+    // categories: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Category",
+    //     required: true,
+    //     default: [],
+    //   },
+    // ],
 
     thumbnail: {
       type: String,
@@ -57,13 +57,6 @@ const productSchema = new Schema(
 
 productSchema.index({ title: 1 });
 productSchema.index({ categories: 1 });
-
-// Pre-save script to add "All" category if not present
-productSchema.pre("save", function () {
-  if (!this.categories.includes("All")) {
-    this.categories.push("All");
-  }
-});
 
 //Generat virtuale property => formattedPrice = price.fixed(2)
 productSchema.virtual("formattedPrice").get(function () {

@@ -1,7 +1,8 @@
 const Product = require("../models/product");
+const Category = require("../models/category");
 
-const { default: mongoose } = require("mongoose");
-const createProductSchema = require("../utils/validations/products");
+const CustomError = require("../utils/errors/CustomError");
+const { createProductSchema } = require("../utils/validations/products");
 
 const createProduct = async (req, res, next) => {
   try {
@@ -17,15 +18,27 @@ const createProduct = async (req, res, next) => {
       price,
       count,
       rate,
-      categories,
+      // categories,
       thumbnail,
       images,
     } = req.body;
 
-    //Convert the recieved categories string to an array of their objectId
-    const categoriesId = categories
-      ? categories.map((categoryName) => mongoose.Types.ObjectId(categoryName))
-      : [];
+    // Convert the received categories string to an array of their objectId
+    //---------mycode----------
+    //const categoriesId = categories
+    // ? categories.map((categoryName) => mongoose.Types.ObjectId(categoryName))
+    //----------chatgpt------------------
+    // const categoriesId = categories
+    //   ? await Promise.all(
+    //       categories.map(async (categoryName) => {
+    //         const category = await Category.findOne({ name: categoryName });
+    //         if (!category) {
+    //           throw new CustomError(`Category ${categoryName} not found`, 400);
+    //         }
+    //         return category._id;
+    //       })
+    //     )
+    //   : [];
 
     const product = new Product({
       title,
@@ -33,7 +46,7 @@ const createProduct = async (req, res, next) => {
       price,
       count,
       rate,
-      categories: categoriesId,
+      // categories: categoriesId,
       thumbnail,
       images,
     });
@@ -46,4 +59,4 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-module.exports = {};
+module.exports = { createProduct };

@@ -34,6 +34,7 @@ mongoose.connect(DB_URL).then(() => {
     level: "info",
     message: "Connected to DB",
   });
+
   app.listen(PORT, () =>
     logger.log({
       level: "info",
