@@ -29,11 +29,10 @@ const userSchma = Schema(
   }
 );
 
-userSchma.pre("save", async function (req, res, next) {
+userSchma.pre("save", async function () {
   if (this.isModifies("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
-  next();
 });
 
 const User = model("User", userSchmea);
