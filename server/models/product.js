@@ -56,7 +56,7 @@ const productSchema = new Schema(
 );
 
 productSchema.index({ title: 1 });
-productSchema.index({ tags: 1 });
+productSchema.index({ categories: 1 });
 
 // Pre-save script to add "All" category if not present
 productSchema.pre("save", function () {

@@ -8,8 +8,8 @@ require("express-async-errors");
 
 const logger = require("./utils/logging/logger");
 
-import userRoutes from "./routes/users.js";
-import productRoutes from "./routes/products.js";
+const userRoutes = require("./routes/users.js");
+const productRoutes = require("./routes/products.js");
 
 const app = express();
 
