@@ -4,6 +4,14 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
+      enum: [
+        "Whey Protein",
+        "Sports Nutrition",
+        "Weight Loss",
+        "Well-Being",
+        "Vitamins",
+        "Food & Drink",
+      ],
       required: true,
       unique: true,
     },
