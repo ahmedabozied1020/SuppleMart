@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const userSchma = Schema(
+const userSchema = Schema(
   {
     name: {
       type: String,
@@ -18,19 +18,24 @@ const userSchma = Schema(
       required: true,
       minlength: 8,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-userSchma.pre("save", async function (req, res, next) {
+// Pre-save script to add "All" category if not present
+userSchema.pre("save", async function () {
   if (this.isModifies("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
-  next();
 });
 
-const User = model("User", userSchmea);
+const User = model("User", userSchema);
 
 module.exports = User;
