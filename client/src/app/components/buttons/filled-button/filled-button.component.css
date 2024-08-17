@@ -1,22 +1,51 @@
-button {
-  position: relative;
-  overflow: hidden;
+/* button:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: "";
+  background-color: #ff0072;
+  z-index: -1;
 }
 
-button div {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-button:hover .bg-black {
-  transform: scale(1.1);
-  opacity: 0.7;
-}
-
-button:hover .border-black {
-  transform: scale(1.2);
-  opacity: 0.4;
-}
-
-button:hover span {
+button:hover,
+button:focus {
   color: white;
+}
+
+button:hover:before,
+button:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+button:active {
+  transform: scale(0.9);
+} */
+/* Custom CSS */
+button::before {
+  content: "";
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: white;
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+button:hover::before {
+  width: 120%;
+}
+
+button:hover {
+  color: black;
 }
