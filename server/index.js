@@ -9,15 +9,15 @@ require("express-async-errors");
 const logger = require("./utils/logging/logger");
 const errorHandler = require("./middlewares/errorHandler");
 
-const userRoutes = require("./routes/users");
-const productRoutes = require("./routes/products");
+const userRoutes = require("./routes/users.routes");
+const productRoutes = require("./routes/products.routes");
 
 const app = express();
 
 // ENV FILE CONFIGURATION
 require("dotenv").config();
 
-PORT = process.env.PORT || 5000;
+PORT = process.env.PORT;
 DB_URL = process.env.DB_URL;
 
 app.use(cors());

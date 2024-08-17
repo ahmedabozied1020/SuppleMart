@@ -7,7 +7,7 @@ const createProductSchema = Joi.object({
   price: Joi.number().min(0).required(),
   count: Joi.number().min(0).required(),
   rate: Joi.number().min(0).max(5),
-  // categories: Joi.array().items(Joi.string()).required(),
+  categories: Joi.array().items(Joi.string()),
   thumbnail: Joi.string().uri().required(),
   images: Joi.array().items(Joi.string().uri()).default([]),
 });

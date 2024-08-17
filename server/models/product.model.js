@@ -31,14 +31,20 @@ const productSchema = new Schema(
       max: 5,
     },
 
-    // categories: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Category",
-    //     required: true,
-    //     default: [],
-    //   },
-    // ],
+    categories: [
+      {
+        type: String,
+        enum: [
+          "all",
+          "whey protein",
+          "sports nutrition",
+          "weight loss",
+          "well-being",
+          "vitamins",
+          "food & drink",
+        ],
+      },
+    ],
 
     thumbnail: {
       type: String,
@@ -57,6 +63,12 @@ const productSchema = new Schema(
 
 productSchema.index({ title: 1 });
 productSchema.index({ categories: 1 });
+
+productSchema.pre("save", function () {
+  if (!this.categories.includes("all")) {
+    this.categories.push("all");
+  }
+});
 
 //Generat virtuale property => formattedPrice = price.fixed(2)
 productSchema.virtual("formattedPrice").get(function () {
