@@ -6,6 +6,28 @@ const {
   createProductSchema,
 } = require("../utils/validations/products.validation");
 
+const getProducts = async (req, res, next) => {
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 10;
+  const skip = (page - 1) * limit;
+
+  const productCount = await Product.countDocuments();
+  const products = await Product.find().skip(skip).limit(limit);
+
+  const pagesNumber = Math.ceil(productCount / limit);
+
+  res.send({
+    products,
+    pagination: {
+      total: productCount,
+      pages: pagesNumber,
+      page,
+      prev: page > 1,
+      next: page < pagesNumber,
+    },
+  });
+};
+
 const createProduct = async (req, res, next) => {
   try {
     const { error } = createProductSchema.validate(req.body);
@@ -65,4 +87,4 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct };
+module.exports = { createProduct, getProducts };
