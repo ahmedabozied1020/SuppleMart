@@ -11,7 +11,6 @@ const errorHandler = require("./middlewares/errorHandler");
 
 const userRoutes = require("./routes/users.routes");
 const productRoutes = require("./routes/products.routes");
-const Product = require("./models/product.model");
 
 const app = express();
 
@@ -28,19 +27,6 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 
-async function addSalesCountField() {
-  try {
-    const result = await Product.updateMany(
-      { salesCount: { $exists: false } },
-      { $set: { salesCount: 0 } }
-    );
-    console.log(`${result.nModified} documents were updated`);
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
-addSalesCountField();
 app.use(errorHandler);
 
 mongoose.connect(DB_URL).then(() => {

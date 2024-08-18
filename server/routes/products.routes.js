@@ -3,6 +3,7 @@ const {
   createProduct,
   getProducts,
   getCategories,
+  getBestSellingProducts,
 } = require("../controllers/products.controllers");
 const upload = require("../utils/multerConfig");
 
@@ -20,5 +21,7 @@ router.post(
 router.get("/products", getProducts); //auth middlware is required
 
 router.get("/categories", getCategories);
+
+router.get("/bestSelling", getBestSellingProducts);
 
 module.exports = router;

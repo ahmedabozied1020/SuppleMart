@@ -7,25 +7,29 @@ const {
 } = require("../utils/validations/products.validation");
 
 const getProducts = async (req, res, next) => {
-  const page = +req.query.page || 1;
-  const limit = +req.query.limit || 10;
-  const skip = (page - 1) * limit;
+  try {
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 10;
+    const skip = (page - 1) * limit;
 
-  const productCount = await Product.countDocuments();
-  const products = await Product.find().skip(skip).limit(limit);
+    const productCount = await Product.countDocuments();
+    const products = await Product.find().skip(skip).limit(limit);
 
-  const pagesNumber = Math.ceil(productCount / limit);
+    const pagesNumber = Math.ceil(productCount / limit);
 
-  res.send({
-    products,
-    pagination: {
-      total: productCount,
-      pages: pagesNumber,
-      page,
-      prev: page > 1,
-      next: page < pagesNumber,
-    },
-  });
+    res.send({
+      products,
+      pagination: {
+        total: productCount,
+        pages: pagesNumber,
+        page,
+        prev: page > 1,
+        next: page < pagesNumber,
+      },
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 const createProduct = async (req, res, next) => {
@@ -88,23 +92,40 @@ const createProduct = async (req, res, next) => {
 };
 
 const getCategories = async (req, res, next) => {
-  const categories = Product.schema.path("categories").options.enum;
-  const productsCountInEachCategory = await Promise.all(
-    categories.map((category) =>
-      Product.find({ categories: { $all: [category] } })
-    )
-  );
+  try {
+    const categories = Product.schema.path("categories").options.enum;
+    const productsCountInEachCategory = await Promise.all(
+      categories.map((category) =>
+        Product.find({ categories: { $all: [category] } })
+      )
+    );
 
-  const CategoryAndProducts = categories.reduce((obj, category, index) => {
-    obj[category] = productsCountInEachCategory[index];
-    return obj;
-  }, {});
+    const CategoryAndProducts = categories.reduce((obj, category, index) => {
+      obj[category] = productsCountInEachCategory[index];
+      return obj;
+    }, {});
 
-  res.status(200).send(CategoryAndProducts);
+    res.status(200).send(CategoryAndProducts);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
-// const getBestSellingProducts=async (req,res,next) => {
-//   const
-// }
+const getBestSellingProducts = async (req, res, next) => {
+  try {
+    const bestSellingProducts = await Product.find()
+      .sort({ salesCount: -1 })
+      .limit(5);
 
-module.exports = { createProduct, getProducts, getCategories };
+    res.status(200).send(bestSellingProducts);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+module.exports = {
+  createProduct,
+  getProducts,
+  getCategories,
+  getBestSellingProducts,
+};
