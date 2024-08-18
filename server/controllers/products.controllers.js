@@ -88,7 +88,8 @@ const createProduct = async (req, res, next) => {
     product.save();
     res.status(201).send(product);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Error creating product:", error);
+    next(error);
   }
 };
 
