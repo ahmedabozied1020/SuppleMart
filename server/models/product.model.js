@@ -27,7 +27,7 @@ const productSchema = new Schema(
     },
 
     salesCount: {
-      type: number,
+      type: Number,
       default: 0,
     },
 
