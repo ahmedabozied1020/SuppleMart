@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createProduct,
   getProducts,
+  getCategories,
 } = require("../controllers/products.controllers");
 const upload = require("../utils/multerConfig");
 
@@ -16,6 +17,8 @@ router.post(
   createProduct
 ); // auth and restrectedTo middlwares are required
 
-router.get("/", getProducts); //auth middlware is required
+router.get("/products", getProducts); //auth middlware is required
+
+router.get("/categories", getCategories);
 
 module.exports = router;

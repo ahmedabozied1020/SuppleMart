@@ -87,4 +87,20 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct, getProducts };
+const getCategories = async (req, res, next) => {
+  const categories = Product.schema.path("categories").options.enum;
+  const productsCountInEachCategory = await Promise.all(
+    categories.map((category) =>
+      Product.find({ categories: { $all: [category] } })
+    )
+  );
+
+  const CategoryAndProducts = categories.reduce((obj, category, index) => {
+    obj[category] = productsCountInEachCategory[index];
+    return obj;
+  }, {});
+
+  res.status(200).send(CategoryAndProducts);
+};
+
+module.exports = { createProduct, getProducts, getCategories };

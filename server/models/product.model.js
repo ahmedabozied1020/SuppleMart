@@ -31,20 +31,18 @@ const productSchema = new Schema(
       max: 5,
     },
 
-    categories: [
-      {
-        type: String,
-        enum: [
-          "all",
-          "whey protein",
-          "sports nutrition",
-          "weight loss",
-          "well-being",
-          "vitamins",
-          "food & drink",
-        ],
-      },
-    ],
+    categories: {
+      type: [String],
+      enum: [
+        "all",
+        "whey protein",
+        "sports nutrition",
+        "weight loss",
+        "well-being",
+        "vitamins",
+        "food & drink",
+      ],
+    },
 
     thumbnail: {
       type: String,
