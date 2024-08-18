@@ -28,7 +28,8 @@ const getProducts = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Error fetching products:", error);
+    next(error);
   }
 };
 
@@ -107,7 +108,8 @@ const getCategories = async (req, res, next) => {
 
     res.status(200).send(CategoryAndProducts);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Error fetching categories:", error);
+    next(error);
   }
 };
 
@@ -119,7 +121,23 @@ const getBestSellingProducts = async (req, res, next) => {
 
     res.status(200).send(bestSellingProducts);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Error fetching best-selling products:", error);
+    next(error);
+  }
+};
+
+const getLatestDealProduct = async (req, res, next) => {
+  try {
+    const { title } = req.params;
+    const product = await Product.find({ title });
+    res.status(200).send(product);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching latest-deal product:", error);
+    next(error);
   }
 };
 
@@ -128,4 +146,5 @@ module.exports = {
   getProducts,
   getCategories,
   getBestSellingProducts,
+  getLatestDealProduct,
 };

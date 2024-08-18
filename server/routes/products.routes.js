@@ -4,6 +4,7 @@ const {
   getProducts,
   getCategories,
   getBestSellingProducts,
+  getLatestDealProduct,
 } = require("../controllers/products.controllers");
 const upload = require("../utils/multerConfig");
 
@@ -23,5 +24,7 @@ router.get("/products", getProducts); //auth middlware is required
 router.get("/categories", getCategories);
 
 router.get("/bestSelling", getBestSellingProducts);
+
+router.get("/latestDealProduct/:title", getLatestDealProduct);
 
 module.exports = router;
