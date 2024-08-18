@@ -95,18 +95,16 @@ const createProduct = async (req, res, next) => {
 const getCategories = async (req, res, next) => {
   try {
     const categories = Product.schema.path("categories").options.enum;
-    const productsCountInEachCategory = await Promise.all(
-      categories.map((category) =>
-        Product.find({ categories: { $all: [category] } })
-      )
+    const categoryAndProductCountObjects = await Promise.all(
+      categories.map(async (category) => {
+        const count = await Product.countDocuments({
+          categories: { $all: [category] },
+        });
+        return { category, count };
+      })
     );
 
-    const CategoryAndProducts = categories.reduce((obj, category, index) => {
-      obj[category] = productsCountInEachCategory[index];
-      return obj;
-    }, {});
-
-    res.status(200).send(CategoryAndProducts);
+    res.status(200).send(categoryAndProductCountObjects);
   } catch (error) {
     console.error("Error fetching categories:", error);
     next(error);
