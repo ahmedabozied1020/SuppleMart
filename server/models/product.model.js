@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema(
@@ -23,6 +24,11 @@ const productSchema = new Schema(
       type: Number,
       required: true,
       min: 0,
+    },
+
+    salesCount: {
+      type: number,
+      default: 0,
     },
 
     rate: {

@@ -103,4 +103,8 @@ const getCategories = async (req, res, next) => {
   res.status(200).send(CategoryAndProducts);
 };
 
+// const getBestSellingProducts=async (req,res,next) => {
+//   const
+// }
+
 module.exports = { createProduct, getProducts, getCategories };
