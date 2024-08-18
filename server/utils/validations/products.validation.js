@@ -8,8 +8,6 @@ const createProductSchema = Joi.object({
   count: Joi.number().min(0).required(),
   rate: Joi.number().min(0).max(5),
   categories: Joi.array().items(Joi.string()),
-  thumbnail: Joi.string().uri().required(),
-  images: Joi.array().items(Joi.string().uri()).default([]),
 });
 
 module.exports = {
