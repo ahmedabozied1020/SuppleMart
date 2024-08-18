@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 
+
 const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
 const {
@@ -13,7 +14,6 @@ const createProduct = async (req, res, next) => {
     if (error) {
       throw new CustomError(error.details[0].message, 400);
     }
-
     const { title, description, price, count, rate, categories } = req.body;
 
     const lowerCaseCategories = categories.map((category) =>
@@ -45,6 +45,22 @@ const createProduct = async (req, res, next) => {
         imagesUrls.push(imageKitResponse.url);
       }
     }
+
+    const {
+      title,
+      description,
+      price,
+      count,
+      rate,
+      categories,
+      thumbnail,
+      images,
+    } = req.body;
+
+    const lowerCaseCategories = categories.map((category) =>
+      category.toLowerCase()
+    );
+
 
     const product = new Product({
       title,
