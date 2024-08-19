@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema(
@@ -25,26 +26,29 @@ const productSchema = new Schema(
       min: 0,
     },
 
+    salesCount: {
+      type: Number,
+      default: 0,
+    },
+
     rate: {
       type: Number,
       min: 0,
       max: 5,
     },
 
-    categories: [
-      {
-        type: String,
-        enum: [
-          "all",
-          "whey protein",
-          "sports nutrition",
-          "weight loss",
-          "well-being",
-          "vitamins",
-          "food & drink",
-        ],
-      },
-    ],
+    categories: {
+      type: [String],
+      enum: [
+        "all",
+        "whey protein",
+        "sports nutrition",
+        "weight loss",
+        "well-being",
+        "vitamins",
+        "food & drink",
+      ],
+    },
 
     thumbnail: {
       type: String,
