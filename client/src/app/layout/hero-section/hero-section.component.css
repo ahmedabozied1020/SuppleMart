@@ -1,0 +1,36 @@
+.hero {
+  position: relative;
+  background-image: linear-gradient(rgba(115, 3, 7, 0.88), rgba(0, 0, 0, 0.9)),
+    url("../../../../public/h1_bg-1.jpg");
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hero:hover::before {
+  opacity: 1;
+}
+.cyber {
+  -webkit-clip-path: polygon(
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 0
+  );
+  clip-path: polygon(
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 0
+  );
+}
