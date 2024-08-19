@@ -6,6 +6,8 @@
   --primary-color: #f2cb1f;
   --secondary-color: #1c2127;
   --secondary-text: #999999;
+  --lightwhite: #f1f5f9;
+  --red-color: rgb(239 68 68);
 }
 
 * {
@@ -19,20 +21,4 @@
 
 body {
   background-color: whitesmoke;
-}
-
-:root {
-  --primary-color: #f2cb1f;
-  --secondary-color: #1c2127;
-  --secondary-text: #999999;
-  --lightwhite: #f1f5f9;
-  --red-color: rgb(239 68 68);
-}
-
-::selection {
-  color: white;
-  background: var(--primary-color);
-}
-
-body {
 }
