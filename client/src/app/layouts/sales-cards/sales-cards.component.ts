@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SalesCardComponent } from '../../components/cards/sales-card/sales-card.component';
-import { BigCardComponent } from '../../components/cards/big-card/big-card.component';
+import { BigCardComponent } from '../../components/cards/product-cards/big-card/big-card.component';
+import { SalesCardComponent } from '../../components/cards/product-cards/sales-card/sales-card.component';
 
 @Component({
   selector: 'app-sales-cards',

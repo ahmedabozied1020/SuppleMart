@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CardsRealCustomersComponent } from '../../components/cards/cards-real-customers/cards-real-customers.component';
+import { TestimonialCardComponent } from '../../components/cards/testimonial-card/testimonial-card.component';
 
 @Component({
   selector: 'app-review-real-customers',
   standalone: true,
-  imports: [CardsRealCustomersComponent],
+  imports: [TestimonialCardComponent],
   templateUrl: './review-real-customers.component.html',
   styleUrl: './review-real-customers.component.css',
 })
