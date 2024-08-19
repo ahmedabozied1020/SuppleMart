@@ -125,6 +125,18 @@ const getBestSellingProducts = async (req, res, next) => {
   }
 };
 
+const getHomeRecommendedProducts = async (req, res, next) => {
+  try {
+    const recommendedProducts = await Product.find()
+      .limit(5)
+      .select("title thumbnail price rate");
+
+    res.status(200).send(recommendedProducts);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getLatestDealProduct = async (req, res, next) => {
   try {
     const { title } = req.params;
@@ -146,4 +158,5 @@ module.exports = {
   getCategories,
   getBestSellingProducts,
   getLatestDealProduct,
+  getHomeRecommendedProducts,
 };
