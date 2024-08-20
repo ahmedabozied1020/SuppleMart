@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { ReviewRealCustomersComponent } from './layouts/testimonials/review-real-customers.component';
-import { SalesCardsComponent } from './layouts/sales-cards/sales-cards.component';
+import { HomeComponent } from './pages/home/home.component';
+import { HeroSectionComponent } from './layouts/hero-section/hero-section.component';
+import { FooterComponent } from './layouts/footer/footer.component';
+import { SmallCardComponent } from './components/cards/product-cards/small-card/small-card.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ReviewRealCustomersComponent, SalesCardsComponent],
+  imports: [HomeComponent, HeroSectionComponent, FooterComponent, SmallCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
