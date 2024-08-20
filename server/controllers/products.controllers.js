@@ -4,31 +4,14 @@ const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
 const {
   createProductSchema,
+  paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
 
-const getProducts = async (req, res, next) => {
+const getHomeProducts = async (req, res, next) => {
   try {
-    const page = +req.query.page || 1;
-    const limit = +req.query.limit || 10;
-    const skip = (page - 1) * limit;
-
-    const productCount = await Product.countDocuments();
-    const products = await Product.find().skip(skip).limit(limit);
-
-    const pagesNumber = Math.ceil(productCount / limit);
-
-    res.send({
-      products,
-      pagination: {
-        total: productCount,
-        pages: pagesNumber,
-        page,
-        prev: page > 1,
-        next: page < pagesNumber,
-      },
-    });
+    const products = await Product.find().limit(8);
+    res.send(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
     next(error);
   }
 };
@@ -88,7 +71,6 @@ const createProduct = async (req, res, next) => {
     product.save();
     res.status(201).send(product);
   } catch (error) {
-    console.error("Error creating product:", error);
     next(error);
   }
 };
@@ -101,13 +83,21 @@ const getCategories = async (req, res, next) => {
         const count = await Product.countDocuments({
           categories: { $all: [category] },
         });
-        return { category, count };
+
+        const firstProduct = await Product.findOne({
+          categories: { $all: [category] },
+        }).select("thumbnail");
+        console.log(firstProduct);
+        return {
+          category,
+          thumbnail: firstProduct ? firstProduct.thumbnail : null,
+          count,
+        };
       })
     );
 
     res.status(200).send(categoryAndProductCountObjects);
   } catch (error) {
-    console.error("Error fetching categories:", error);
     next(error);
   }
 };
@@ -120,7 +110,6 @@ const getBestSellingProducts = async (req, res, next) => {
 
     res.status(200).send(bestSellingProducts);
   } catch (error) {
-    console.error("Error fetching best-selling products:", error);
     next(error);
   }
 };
@@ -144,19 +133,70 @@ const getLatestDealProduct = async (req, res, next) => {
     res.status(200).send(product);
 
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).send({ message: "Product not found" });
     }
   } catch (error) {
-    console.error("Error fetching latest-deal product:", error);
     next(error);
   }
 };
 
+const getPaginatedProducts = async (req, res, next) => {
+  try {
+    const category = req.params.category || "all";
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const minPrice = parseFloat(req.query.minPrice);
+    const maxPrice = parseFloat(req.query.maxPrice);
+    const minRating = parseFloat(req.query.minRating);
+
+    const { error } = paginatedProductsSchema.validate({
+      category,
+      page,
+      limit,
+    });
+
+    const skip = (page - 1) * limit;
+
+    if (error) {
+      throw new CustomError(error.details[0].message, 400);
+    }
+
+    const validCategories = Product.schema.path("categories").options.enum;
+    if (!validCategories.includes(category)) {
+      throw new CustomError("invalid category", 400);
+    }
+
+    const query = { categories: { $all: [category] } };
+    if (minPrice) query.price = { ...query.price, $gte: minPrice };
+    if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
+    if (minRating) query.rate = { ...query.rate, $gte: minRating };
+
+    const categorisedProductsCount = await Product.countDocuments(query);
+
+    const paginatedProducts = await Product.find(query).skip(skip).limit(limit);
+
+    const pagesNumber = Math.ceil(categorisedProductsCount / limit);
+
+    res.status(200).send({
+      paginatedProducts,
+      pagination: {
+        total: categorisedProductsCount,
+        pages: pagesNumber,
+        page,
+        prev: page > 1,
+        next: page < pagesNumber,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   createProduct,
-  getProducts,
+  getHomeProducts,
   getCategories,
   getBestSellingProducts,
   getLatestDealProduct,
   getHomeRecommendedProducts,
+  getPaginatedProducts,
 };

@@ -1,11 +1,12 @@
 const express = require("express");
 const {
   createProduct,
-  getProducts,
+  getHomeProducts,
   getCategories,
   getBestSellingProducts,
   getLatestDealProduct,
   getHomeRecommendedProducts,
+  getPaginatedProducts,
 } = require("../controllers/products.controllers");
 const upload = require("../utils/multerConfig");
 
@@ -20,7 +21,7 @@ router.post(
   createProduct
 ); // auth and restrectedTo middlwares are required
 
-router.get("/products", getProducts); //auth middlware is required
+router.get("/", getHomeProducts);
 
 router.get("/categories", getCategories);
 
@@ -29,5 +30,7 @@ router.get("/bestSelling", getBestSellingProducts);
 router.get("/latestDealProduct/:title", getLatestDealProduct);
 
 router.get("/homeRecommendedProducts", getHomeRecommendedProducts);
+
+router.get("/shop/:category?", getPaginatedProducts);
 
 module.exports = router;

@@ -10,6 +10,13 @@ const createProductSchema = Joi.object({
   categories: Joi.array().items(Joi.string()),
 });
 
+const paginatedProductsSchema = Joi.object({
+  category: Joi.string().default("all"),
+  page: Joi.number().integer().min(1).default(1),
+  limit: Joi.number().integer().min(1).default(12),
+});
+
 module.exports = {
   createProductSchema,
+  paginatedProductsSchema,
 };
