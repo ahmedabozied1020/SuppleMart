@@ -21,6 +21,5 @@ export class NavbarItemComponent {
 
   ngOnChanges() {
     this.safeSvgIcon = this.sanitizer.bypassSecurityTrustHtml(this.svgIcon);
-    console.log(this.label)
   }
 }

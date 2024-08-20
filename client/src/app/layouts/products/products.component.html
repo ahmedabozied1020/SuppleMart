@@ -1,0 +1,8 @@
+<section class="container m-auto flex gap-4 flex-wrap">
+    @for(product of products; track product._id){
+        <app-main-product-card [product]="product"></app-main-product-card>
+    }
+    @empty{
+        loading
+    }
+</section>

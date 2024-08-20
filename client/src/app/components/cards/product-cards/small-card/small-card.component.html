@@ -6,14 +6,10 @@
   ></div>
 
   <figure>
-    <img
-      src="smallCard.png"
-      alt="Image"
-      class="w-14 h-16"
-    />
+    <img [src]="category.imgUrl" alt="Category" class="w-14 h-16 cursor-pointer" />
   </figure>
   <div class="ml-4">
-    <h2 class="text-xl font-bold">Whey Protein</h2>
-    <p class="text-[var(--secondary-text)] font-semibold">6 products</p>
+    <h2 class="text-xl font-bold cursor-pointer">{{category.name}}</h2>
+    <p class="text-[var(--secondary-text)] font-semibold">{{category.numberOfProducts}} products</p>
   </div>
 </div>

@@ -1,0 +1,9 @@
+<section class="container m-auto my-10 flex gap-2">
+  @for(category of categories; track category.name){
+  <app-small-card [category]="category"></app-small-card>
+  }
+  @empty{
+    loading
+  }
+</section>
+
