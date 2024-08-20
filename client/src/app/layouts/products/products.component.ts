@@ -3,11 +3,12 @@ import { ProductRequestsService } from '../../services/http-requests/product-req
 import { Product } from '../../interfaces/product';
 import { Subscription } from 'rxjs';
 import { MainProductCardComponent } from '../../components/cards/product-cards/main-product-card/main-product-card.component';
+import { OutlinedButtonComponent } from '../../components/buttons/outlined-button/outlined-button.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [MainProductCardComponent],
+  imports: [MainProductCardComponent, OutlinedButtonComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })

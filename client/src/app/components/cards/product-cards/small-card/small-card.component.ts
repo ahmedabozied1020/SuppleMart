@@ -6,10 +6,9 @@ import { Category } from '../../../../interfaces/category';
   standalone: true,
   imports: [],
   templateUrl: './small-card.component.html',
-  styleUrl: './small-card.component.css'
+  styleUrl: './small-card.component.css',
 })
 export class SmallCardComponent {
   @Input() category!: Category;
-  
-
+  @Input() loading: boolean = true;
 }

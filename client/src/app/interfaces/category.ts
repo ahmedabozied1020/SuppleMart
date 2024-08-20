@@ -1,5 +1,5 @@
 export interface Category {
-    name: string,
-    imgUrl: string,
-    numberOfProducts: number
+    category: string,
+    thumbnail: string,
+    count: number
 }

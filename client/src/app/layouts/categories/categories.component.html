@@ -1,9 +1,11 @@
-<section class="container m-auto my-10 flex gap-2">
-  @for(category of categories; track category.name){
-  <app-small-card [category]="category"></app-small-card>
-  }
-  @empty{
-    loading
+<section class="container m-auto my-10 flex justify-between">
+  @for(category of categories; track category.category){
+  <app-small-card [loading]="false" [category]="category"></app-small-card>
+  } @empty{
+  <app-small-card [loading]="true"></app-small-card>
+  <app-small-card [loading]="true"></app-small-card>
+  <app-small-card [loading]="true"></app-small-card>
+  <app-small-card [loading]="true"></app-small-card>
+  <app-small-card [loading]="true"></app-small-card>
   }
 </section>
-
