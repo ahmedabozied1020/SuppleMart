@@ -6,10 +6,44 @@
   <div class="flex justify-between gap-2 flex-wrap">
     @for(product of products; track product._id){
     <app-main-product-card
+      [loading]="false"
       [product]="product"
       class="w-[20%]"
     ></app-main-product-card>
-    } @empty{ loading }
+    } @empty{
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-[20%]"
+    ></app-main-product-card>
+    }
   </div>
   <div class="flex justify-center mt-8">
     <app-outlined-button label="VIEW ALL PRODUCTS"></app-outlined-button>

@@ -10,4 +10,9 @@ import { Product } from '../../../../interfaces/product';
 })
 export class MainProductCardComponent {
   @Input() product!: Product;
+  @Input() loading: boolean = true;
+
+  ngOnInit(){
+    this.product && this.product.categories.splice(0,1);
+  }
 }
