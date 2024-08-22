@@ -1,7 +1,7 @@
 <!-- parent.component.html -->
-<div class="flex justify-between w-full">
+<section class="flex justify-between w-full">
   <div class="container m-auto flex justify-between gap-7">
-    <section class="flex flex-col gap-3 flex-1">
+    <div class="flex flex-col gap-3 flex-1">
       <p class="font-bold text-4xl mb-8">Best Selling</p>
       <app-sales-card
         [imgProduct]="'Intelligent_Wool_Bottle.png'"
@@ -27,12 +27,12 @@
         [priceProduct]="486.12"
         [ratingId]="'card4'"
       ></app-sales-card>
-    </section>
-    <section class="flex-1">
+    </div>
+    <div class="flex-1">
       <p class="font-bold text-4xl mb-8">Latest Deals</p>
       <app-big-card></app-big-card>
-    </section>
-    <section class="flex flex-col gap-3 flex-1">
+    </div>
+    <div class="flex flex-col gap-3 flex-1">
       <p class="font-bold text-4xl mb-8">Recommended</p>
       <app-sales-card
         [imgProduct]="'4-400x373.png'"
@@ -58,6 +58,6 @@
         [priceProduct]="882.76"
         [ratingId]="'card8'"
       ></app-sales-card>
-    </section>
+    </div>
   </div>
-</div>
+</section>

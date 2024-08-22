@@ -1,4 +1,3 @@
-const { number } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema(

@@ -29,16 +29,24 @@ app.use("/products", productRoutes);
 
 app.use(errorHandler);
 
-mongoose.connect(DB_URL).then(() => {
-  logger.log({
-    level: "info",
-    message: "Connected to DB",
-  });
-
-  app.listen(PORT, () =>
+mongoose
+  .connect(DB_URL)
+  .then(() => {
     logger.log({
       level: "info",
-      message: `server running on port ${PORT}`,
-    })
-  );
-});
+      message: "Connected to DB",
+    });
+
+    app.listen(PORT, () =>
+      logger.log({
+        level: "info",
+        message: `server running on port ${PORT}`,
+      })
+    );
+  })
+  .catch((err) => {
+    logger.log({
+      level: "error",
+      message: "Couldn't Connect to DB, Please Check Your Internet Connection",
+    });
+  });

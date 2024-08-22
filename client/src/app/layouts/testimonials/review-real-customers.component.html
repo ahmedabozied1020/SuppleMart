@@ -1,9 +1,7 @@
-<div class="flex items-center justify-center min-h-screen">
-  <div
-    class="bg-hero bg-center bg-no-repeat relative mt-10 container hover:bg-red-800"
-  >
+<section class="w-full bg-hero group">
+  <div class="container m-auto relative">
     <div
-      class="absolute inset-0 bg-red-700 hover:bg-red-800 opacity-85 mix-blend-multiply transition-all duration-300"
+      class="absolute inset-0 bg-red-700 group-hover:bg-red-950 opacity-85 mix-blend-multiply transition-all duration-300"
     ></div>
     <div class="relative z-10 p-4 mt-10">
       <div class="flex flex-col px-4 py-6 md:px-10 md:py-10 w-full">
@@ -17,19 +15,11 @@
           <h2>Real Customers</h2>
         </div>
       </div>
-      <div
-        class="mt-6 mb-16 md:mt-10 flex flex-col md:flex-row justify-center md:justify-evenly w-full"
-      >
-        <app-testimonial-card
-          class="mb-6 md:mb-0"
-        ></app-testimonial-card>
-        <app-testimonial-card
-          class="mb-6 md:mb-0"
-        ></app-testimonial-card>
-        <app-testimonial-card
-          class="mb-6 md:mb-0"
-        ></app-testimonial-card>
+      <div class="flex gap-4">
+        <app-testimonial-card></app-testimonial-card>
+        <app-testimonial-card></app-testimonial-card>
+        <app-testimonial-card></app-testimonial-card>
       </div>
     </div>
   </div>
-</div>
+</section>
