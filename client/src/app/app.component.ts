@@ -7,7 +7,12 @@ import { SmallCardComponent } from './components/cards/product-cards/small-card/
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HomeComponent, HeroSectionComponent, FooterComponent, SmallCardComponent],
+  imports: [
+    HomeComponent,
+    HeroSectionComponent,
+    FooterComponent,
+    SmallCardComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
