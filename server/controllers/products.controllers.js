@@ -148,6 +148,7 @@ const getPaginatedProducts = async (req, res, next) => {
     const minPrice = parseFloat(req.query.minPrice);
     const maxPrice = parseFloat(req.query.maxPrice);
     const minRating = parseFloat(req.query.minRating);
+    const searchQuery = req.query.search || "";
 
     const { error } = paginatedProductsSchema.validate({
       category,
@@ -170,6 +171,7 @@ const getPaginatedProducts = async (req, res, next) => {
     if (minPrice) query.price = { ...query.price, $gte: minPrice };
     if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
     if (minRating) query.rate = { ...query.rate, $gte: minRating };
+    if (searchQuery) query.$text = { $search: searchQuery };
 
     const categorisedProductsCount = await Product.countDocuments(query);
 
