@@ -1,20 +1,32 @@
 <div
-  class="w-64  h-20 relative card card-side shadow-xl p-4 flex items-center overflow-hidden group  border-none"
+  class="smallCard py-4 px-1 w-52 h-20 relative bg-white flex items-center group text-sm"
 >
-
   <div
     class="absolute left-0 bottom-0 h-0 w-1 bg-[var(--primary-color)] transition-all duration-300 group-hover:h-full"
   ></div>
-
+  @if(!loading){
   <figure>
     <img
-      src="smallCard.png"
-      alt="Image"
-      class="w-20 h-24 object-cover rounded-lg"
+      [src]="category.thumbnail"
+      alt="Category"
+      class="w-14 h-16 cursor-pointer"
     />
   </figure>
   <div class="ml-4">
-    <h2 class="text-xl text-black font-bold">Whey Protein</h2>
-    <p class="text-[var(--secondary-text)] font-semibold">6 products</p>
+    <h2 class="font-extrabold cursor-pointer">{{ category.category }}</h2>
+    <p class="text-[var(--secondary-text)] font-semibold">
+      {{ category.count }} products
+    </p>
   </div>
+  } @else{
+  <div class="flex w-52 flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <div class="skeleton h-12 w-12 shrink-0"></div>
+      <div class="flex flex-col gap-4">
+        <div class="skeleton h-4 w-28"></div>
+        <div class="skeleton h-4 w-20"></div>
+      </div>
+    </div>
+  </div>
+  }
 </div>
