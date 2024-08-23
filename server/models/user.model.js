@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
+const Product = require("./product.model");
 
 const userSchema = Schema(
   {
@@ -18,6 +19,15 @@ const userSchema = Schema(
       required: [true, "Password is required"],
       minlength: 8,
     },
+    cart: [
+      {
+        productId: { type: Schema.Types.ObjectId, ref: Product },
+        quantity: {
+          type: Number,
+        },
+      },
+    ],
+
     role: {
       type: String,
       enum: ["user", "admin"],
