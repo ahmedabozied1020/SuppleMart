@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const jwtSign = util.promisify(jwt.sign);
 const { createUserSchema } = require("../utils/validations/users.validation");
 const CustomError = require("../utils/errors/CustomError");
+const { Admin } = require("mongodb");
 
 exports.signup = async (req, res, next) => {
   const { error } = await createUserSchema.validateAsync(req.body);
@@ -39,3 +40,13 @@ exports.login = async (req, res) => {
     res.send("invalid email or password");
   }
 };
+
+exports.creatAdmin = async (req, res) => {
+  const { email, password, role } = req.body;
+};
+const { email, password, role } = req.body;
+const existingUser = await User.findOne({ email });
+if (existingUser) return res.status(409).send("Email is Already Used.");
+const user = new User({ email, password, role: "admin" });
+await user.save();
+res.send({ message: "Admin Created", user });
