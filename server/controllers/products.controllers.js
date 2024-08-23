@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Category = require("../models/category.model");
 
 const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
@@ -162,7 +163,7 @@ const getPaginatedProducts = async (req, res, next) => {
       throw new CustomError(error.details[0].message, 400);
     }
 
-    const validCategories = Product.schema.path("categories").options.enum;
+    const validCategories = Category.find({ id: -1 }, { title: 1 });
     if (!validCategories.includes(category)) {
       throw new CustomError("invalid category", 400);
     }
