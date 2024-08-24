@@ -1,62 +1,75 @@
 <!-- parent.component.html -->
-<section class="flex justify-between w-full">
-  <div class="container m-auto flex justify-between gap-7">
-    <div class="flex flex-col gap-3 flex-1">
+<section class="w-full flex flex-col md:flex-row">
+  <div class="container m-auto flex flex-col md:flex-row gap-7">
+    <!-- Best Selling Section -->
+    <div class="flex flex-col gap-3 flex-1 order-1 md:order-1">
       <p class="font-bold text-4xl mb-8">Best Selling</p>
       <app-sales-card
         [imgProduct]="'Intelligent_Wool_Bottle.png'"
         [nameProduct]="'Intelligent Wool Bottle'"
         [priceProduct]="7.49"
         [ratingId]="'card1'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'2-800x747.png'"
         [nameProduct]="'Enormous Wooden Pants'"
         [priceProduct]="767.13"
         [ratingId]="'card2'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'3.png'"
         [nameProduct]="'Sleek Wool Bench'"
         [priceProduct]="269.37"
         [ratingId]="'card3'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'4-400x373.png'"
         [nameProduct]="'Aerodynamic silk Shirt'"
         [priceProduct]="486.12"
         [ratingId]="'card4'"
+        class="w-full"
       ></app-sales-card>
     </div>
-    <div class="flex-1">
+
+    <!-- Latest Deals Section -->
+    <div class="flex-1 order-2 md:order-2">
       <p class="font-bold text-4xl mb-8">Latest Deals</p>
-      <app-big-card></app-big-card>
+      <app-big-card class="w-full"></app-big-card>
     </div>
-    <div class="flex flex-col gap-3 flex-1">
+
+    <!-- Recommended Section -->
+    <div class="flex flex-col gap-3 flex-1 order-3 md:order-3">
       <p class="font-bold text-4xl mb-8">Recommended</p>
       <app-sales-card
         [imgProduct]="'4-400x373.png'"
         [nameProduct]="'Aerodynamic silk Shirt'"
         [priceProduct]="486.12"
         [ratingId]="'card5'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'38-400x373.png'"
         [nameProduct]="'Awesome Marble Plate'"
         [priceProduct]="259.95"
         [ratingId]="'card6'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'5-400x373.png'"
         [nameProduct]="'Small Silk Bottle'"
         [priceProduct]="249.78"
         [ratingId]="'card7'"
+        class="w-full"
       ></app-sales-card>
       <app-sales-card
         [imgProduct]="'15-800x747.png'"
         [nameProduct]="'Intelligent Rubber Computer '"
         [priceProduct]="882.76"
         [ratingId]="'card8'"
+        class="w-full"
       ></app-sales-card>
     </div>
   </div>

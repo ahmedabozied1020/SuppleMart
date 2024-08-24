@@ -1,38 +1,46 @@
 <section
   class="hero w-full bg-center bg-no-repeat bg-cover h-[500px] relative transition-all duration-300"
 >
-  <div class="container m-auto">
-    <div class="flex py-70">
-      <div class="left flex-row mt-5">
+  <div class="container m-auto h-full">
+    <div class="flex flex-col md:flex-row h-full">
+      <!-- Left Section: Text and Button -->
+      <div
+        class="left flex flex-col justify-center md:w-1/2 px-4 py-16 md:py-0 md:pl-16 relative z-10"
+      >
+        <!-- CYBER MONDAY SALE -->
         <a>
           <p
-            class="cyber text-xs w-36 font-medium leading-5 text-white bg-[var(--red-color)]"
+            class="cyber text-xs w-full md:w-36 font-medium leading-5 text-white bg-[var(--red-color)] text-center md:text-left mb-4 md:mb-5"
           >
             CYBER MONDAY SALE
           </p>
         </a>
-        <div class="mt-2.5 mx-0 mb-10">
-          <h1 class="text-white text-6xl w-[500px] font-bold">
-            Boost your immune system today
-          </h1>
-        </div>
-        <p class="text-xl text-white">
+        <!-- Main Headline -->
+        <h1
+          class="text-white text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-center md:text-left"
+        >
+          Boost your immune system today
+        </h1>
+        <!-- Description -->
+        <p class="text-lg md:text-xl text-white mb-4 text-center md:text-left">
           24g of pure protein for enhanced lean muscle.
         </p>
-        <app-filled-button class="relative"></app-filled-button>
+        <!-- Button -->
+        <app-filled-button class="relative mx-auto md:mx-0"></app-filled-button>
       </div>
-      <div class="right relative">
+      <!-- Right Section: Image and Discount -->
+      <div
+        class="right flex items-center justify-center md:justify-end md:w-1/2 relative"
+      >
+        <!-- Discount Badge -->
         <div
-          class="absolute top-14 w-24 h-24 border-4 border-[var(--red-color)] bg-[var(--red-color)] text-white font-bold rounded-full"
+          class="absolute bottom-24 left-96 md:top-14 w-24 h-24 border-4 border-[var(--red-color)] bg-[var(--red-color)] text-white font-bold rounded-full flex items-center justify-center"
         >
-          <span
-            class="absolute inset-0 flex items-center justify-center text-center text-2xl"
-          >
-            30% OFF
-          </span>
+          <span class="text-2xl">30% OFF</span>
         </div>
-        <div class="w-full md:w-[100vw] lg:max-w-[534px] mx-auto">
-          <img src="h1_img-1.png" alt="" />
+        <!-- Image -->
+        <div class="w-full max-w-lg ms:max-w-[534px] mx-auto">
+          <img src="h1_img-1.png" alt="Product Image" class="w-full h-auto" />
         </div>
       </div>
     </div>
