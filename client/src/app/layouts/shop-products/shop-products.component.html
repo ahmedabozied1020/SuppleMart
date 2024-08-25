@@ -1,1 +1,47 @@
-<p>shop-products works!</p>
+<section class="container m-auto my-16">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-11">
+    @for(product of products; track product._id){
+    <app-main-product-card
+      [loading]="false"
+      [product]="product"
+      class="w-full"
+    ></app-main-product-card>
+    } @empty{
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    }
+  </div>
+  <div class="flex justify-center mt-8">
+    <app-outlined-button label="VIEW ALL PRODUCTS"></app-outlined-button>
+  </div>
+</section>
