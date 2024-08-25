@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Category } from '../../../interfaces/category';
 import { CategoryRequestsService } from '../../../services/http-requests/category-requests/category-requests.service';
 import { Subscription } from 'rxjs';
