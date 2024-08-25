@@ -10,4 +10,4 @@ async function addSalesCountField() {
   }
 }
 
-// addSalesCountField();
+module.exports = addSalesCountField;
