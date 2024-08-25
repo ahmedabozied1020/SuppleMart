@@ -1,3 +1,5 @@
+const Product = require("../../models/product.model");
+
 async function addSalesCountField() {
   try {
     const result = await Product.updateMany(
