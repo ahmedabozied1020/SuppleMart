@@ -1,5 +1,4 @@
 const Product = require("../models/product.model");
-const Category = require("../models/category.model");
 
 const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
