@@ -54,8 +54,9 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.index({ title: 1 });
-productSchema.index({ categories: 1 });
+productSchema.index({ categories: 1, price: 1, rate: 1 });
+
+productSchema.index({ title: "text", description: "text" });
 
 productSchema.pre("save", function () {
   if (!this.categories.includes("all")) {
