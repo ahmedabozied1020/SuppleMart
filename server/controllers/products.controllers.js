@@ -185,8 +185,11 @@ const getPaginatedProducts = async (req, res, next) => {
       throw new CustomError(error.details[0].message, 400);
     }
 
-    const validCategories = Category.find({ id: -1 }, { title: 1 });
-    if (!validCategories.includes(category)) {
+    const validCategories = await Category.find({});
+    console.log(validCategories);
+    const categoriesTitles = validCategories.map((cat) => cat.title);
+    console.log(categoriesTitles);
+    if (!categoriesTitles.includes(category)) {
       throw new CustomError("invalid category", 400);
     }
 
