@@ -6,6 +6,7 @@ const {
   createProductSchema,
   paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
+const Category = require("../models/category.model");
 
 const getHomeProducts = async (req, res, next) => {
   try {
@@ -70,6 +71,23 @@ const createProduct = async (req, res, next) => {
     // Pre-save script will run to add "All" category if not present
     product.save();
     res.status(201).send(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addCategory = async (req, res, next) => {
+  try {
+    const { title } = req.body;
+
+    const existingCategory = await Category.findOne({ title });
+    if (existingCategory) {
+      return res.status(409).send({ message: "Category already exists" });
+    }
+
+    const newCategory = new Category({ title });
+    await newCategory.save();
+    res.status(201).send({ message: "Category created successfully" });
   } catch (error) {
     next(error);
   }
@@ -197,6 +215,7 @@ module.exports = {
   createProduct,
   getHomeProducts,
   getCategories,
+  addCategory,
   getBestSellingProducts,
   getLatestDealProduct,
   getHomeRecommendedProducts,
