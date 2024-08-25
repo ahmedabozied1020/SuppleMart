@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-
+import { FiltersComponent } from '../../layouts/filters/filters.component';
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [],
+  imports: [FiltersComponent],
   templateUrl: './shop.component.html',
-  styleUrl: './shop.component.css'
+  styleUrl: './shop.component.css',
 })
-export class ShopComponent {
-
-}
+export class ShopComponent {}
