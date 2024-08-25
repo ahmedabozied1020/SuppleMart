@@ -95,19 +95,19 @@ const addCategory = async (req, res, next) => {
 
 const getCategories = async (req, res, next) => {
   try {
-    const categories = Product.schema.path("categories").options.enum;
+    const categories = await Category.find({});
     const categoryAndProductCountObjects = await Promise.all(
       categories.map(async (category) => {
         const count = await Product.countDocuments({
-          categories: { $all: [category] },
+          categories: { $in: [category.title] },
         });
 
         const firstProduct = await Product.findOne({
-          categories: { $all: [category] },
+          categories: { $in: [category.title] },
         }).select("thumbnail");
-        console.log(firstProduct);
+
         return {
-          category,
+          category: category.title,
           thumbnail: firstProduct ? firstProduct.thumbnail : null,
           count,
         };
