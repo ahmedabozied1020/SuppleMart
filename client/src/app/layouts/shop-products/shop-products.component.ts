@@ -1,31 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../../interfaces/product';
-import { ProductRequestsService } from '../../services/http-requests/product-requests/product-requests.service';
 import { MainProductCardComponent } from '../../components/cards/product-cards/main-product-card/main-product-card.component';
 import { OutlinedButtonComponent } from '../../components/buttons/outlined-button/outlined-button.component';
+import { PaginatedProductsService } from '../../services/http-requests/paginated-products/paginated-products.service';
+import { PaginatedProductsResponse } from '../../interfaces/PaginatedProductsResponse';
 
 @Component({
   selector: 'app-shop-products',
   standalone: true,
   imports: [MainProductCardComponent, OutlinedButtonComponent],
   templateUrl: './shop-products.component.html',
-  styleUrl: './shop-products.component.css',
+  styleUrls: ['./shop-products.component.css'],
 })
-export class ShopProductsComponent {
-  products!: Product[];
+export class ShopProductsComponent implements OnInit, OnDestroy {
+  paginatedData: PaginatedProductsResponse | undefined;
   private subscription!: Subscription;
 
-  constructor(private productRequestsService: ProductRequestsService) {}
+  constructor(private productRequestsService: PaginatedProductsService) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.subscription = this.productRequestsService
-        .getProducts()
-        .subscribe((prods) => {
-          this.products = prods;
-        });
-    }, 1000);
+    const category = 'all';
+    const page = 1;
+    const limit = 12;
+    const minPrice = 10;
+    const maxPrice = 100;
+    const minRating = 2;
+    const searchQuery = '';
+
+    this.subscription = this.productRequestsService
+      .getProducts(
+        category,
+        page,
+        limit,
+        minPrice,
+        maxPrice,
+        minRating,
+        searchQuery
+      )
+      .subscribe((paginatedData) => {
+        this.paginatedData = paginatedData;
+      });
   }
 
   ngOnDestroy() {
