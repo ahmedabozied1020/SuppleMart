@@ -185,24 +185,21 @@ const getPaginatedProducts = async (req, res, next) => {
       throw new CustomError(error.details[0].message, 400);
     }
 
-    const validCategories = await Category.find({});
-    console.log(validCategories);
-    const categoriesTitles = validCategories.map((cat) => cat.title);
-    console.log(categoriesTitles);
-    if (!categoriesTitles.includes(category)) {
-      throw new CustomError("invalid category", 400);
+    if (category !== "all") {
+      const categoryExists = await Category.exists({ title: category });
+      if (!categoryExists) {
+        throw new CustomError("Invalid category", 400);
+      }
     }
 
-    const query = { categories: { $all: [category] } };
+    const query = category === "all" ? {} : { categories: { $in: [category] } };
     if (minPrice) query.price = { ...query.price, $gte: minPrice };
     if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
     if (minRating) query.rate = { ...query.rate, $gte: minRating };
     if (searchQuery) query.$text = { $search: searchQuery };
 
     const categorisedProductsCount = await Product.countDocuments(query);
-
     const paginatedProducts = await Product.find(query).skip(skip).limit(limit);
-
     const pagesNumber = Math.ceil(categorisedProductsCount / limit);
 
     res.status(200).send({
