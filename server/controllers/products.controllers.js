@@ -27,6 +27,11 @@ const createProduct = async (req, res, next) => {
 
     const { title, description, price, count, rate, categories } = req.body;
 
+    const validCategories = await Category.find({ title: { $in: categories } });
+    if (validCategories.length !== categories.length) {
+      throw new CustomError("One or more categories are invalid", 400);
+    }
+
     const lowerCaseCategories = categories.map((category) =>
       category.toLowerCase().trim()
     );
