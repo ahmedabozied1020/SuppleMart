@@ -1,7 +1,7 @@
-<div class="group bg-white w-72 h-[435px]">
+<div class="group bg-white w-full max-w-sm h-[435px] mx-auto">
   @if(!loading){
   <div class="relative h-[66%]">
-    <img [src]="product.thumbnail" alt="product" />
+    <img [src]="product.thumbnail" alt="product" class="w-full h-full object-cover" />
     <div
       class="absolute bottom-0 left-0 right-0 h-0 mix-blend-multiply bg-[var(--primary-color)] group-hover:h-full transition-all duration-300"
     ></div>
@@ -9,9 +9,9 @@
   <div class="p-3 h-[20%]">
     <div class="text-[#999999] text-xs">
       @for(category of product.categories; track category){
-      <span class="cursor-pointer hover:text-[var(--primary-color)] me-1"
-        ><a href="#">{{ category }}</a></span
-      >
+      <span class="cursor-pointer hover:text-[var(--primary-color)] me-1">
+        <a href="#">{{ category }}</a>
+      </span>
       }
     </div>
     <h3 class="font-bold">
@@ -65,9 +65,9 @@
     </div>
   </div>
   } @else{
-  <div class="flex w-52 flex-col gap-4">
+  <div class="flex w-full flex-col gap-4">
     <div class="flex items-center justify-center gap-4">
-      <div class="skeleton h-48 w-48 shrink-0"></div>
+      <div class="skeleton h-48 w-full max-w-xs shrink-0"></div>
     </div>
   </div>
   }
