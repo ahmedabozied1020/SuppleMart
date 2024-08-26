@@ -206,6 +206,7 @@ const getPaginatedProducts = async (req, res, next) => {
       paginatedProducts,
       pagination: {
         total: categorisedProductsCount,
+        limit,
         pages: pagesNumber,
         page,
         prev: page > 1,
