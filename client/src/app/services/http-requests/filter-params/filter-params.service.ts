@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -12,13 +13,24 @@ export class FilterParamsService {
     minPrice: 0,
     maxPrice: 1000,
     minRating: 0,
-    serchQuery: '',
+    searchQuery: '',
   });
 
   filters$ = this.filtersSubject.asObservable();
 
-  seFilters(filters: any) {
-    this.filtersSubject.next(filters);
+  setFilters(newFilters: any) {
+    const currentFilters = this.filtersSubject.value;
+    const updatedFilters = { ...currentFilters, ...newFilters };
+    this.filtersSubject.next(updatedFilters);
+  }
+
+  getHttpParams() {
+    const filters = this.filtersSubject.value;
+    let params = new HttpParams();
+    for (const key in filters) {
+      params = params.set(key, filters[key]);
+    }
+    return params;
   }
 
   constructor() {}
