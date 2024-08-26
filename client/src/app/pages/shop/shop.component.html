@@ -2,7 +2,9 @@
   <app-filters></app-filters>
   <div class="flex-col">
     <div class="border-b-2 pb-3">
-      <app-pagination-bar></app-pagination-bar>
+      <app-pagination-bar
+        [paginationData]="paginationData"
+      ></app-pagination-bar>
     </div>
     <app-shop-products
       [paginatedProducts]="paginatedProducts"
