@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Category } from '../../../interfaces/category';
 import { CategoryRequestsService } from '../../../services/http-requests/category-requests/category-requests.service';
 import { Subscription } from 'rxjs';
+import { FilterParamsService } from '../../../services/http-requests/filter-params/filter-params.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,11 +14,11 @@ import { Router } from '@angular/router';
 })
 export class CategoryFilterComponent {
   categories!: Category[];
-
   private subscription!: Subscription;
 
   constructor(
     private categoryRequestsService: CategoryRequestsService,
+    private filtersParams: FilterParamsService,
     private router: Router
   ) {}
 
@@ -32,10 +33,11 @@ export class CategoryFilterComponent {
     }, 1000);
   }
 
-  //not working yet,until using routerLink in the app
-  navigateToCategory(category: string) {
-    this.router.navigate(['products/shop/'], {
+  handleCategorySelect(category: string) {
+    this.filtersParams.setFilters({ category });
+    this.router.navigate([], {
       queryParams: { category },
+      queryParamsHandling: 'merge',
     });
   }
 

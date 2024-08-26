@@ -7,7 +7,7 @@
     @for(category of categories; track category.category){
     <li class="flex justify-between">
       <a
-        (click)="navigateToCategory(category.category)"
+        (click)="handleCategorySelect(category.category)"
         class="flex items-center cursor-pointer hover:underline"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
