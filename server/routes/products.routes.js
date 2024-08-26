@@ -34,6 +34,6 @@ router.get("/latestDealProduct/:title", getLatestDealProduct);
 
 router.get("/homeRecommendedProducts", getHomeRecommendedProducts);
 
-router.get("/shop/:category?", getPaginatedProducts);
+router.get("/shop", getPaginatedProducts);
 
 module.exports = router;

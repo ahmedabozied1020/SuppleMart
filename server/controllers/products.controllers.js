@@ -165,7 +165,7 @@ const getLatestDealProduct = async (req, res, next) => {
 
 const getPaginatedProducts = async (req, res, next) => {
   try {
-    const category = req.params.category || "all";
+    const category = req.query.category || "all";
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 12;
     const minPrice = parseFloat(req.query.minPrice);
