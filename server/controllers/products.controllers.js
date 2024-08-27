@@ -1,5 +1,4 @@
 const Product = require("../models/product.model");
-
 const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
 const {
@@ -165,7 +164,7 @@ const getLatestDealProduct = async (req, res, next) => {
 
 const getPaginatedProducts = async (req, res, next) => {
   try {
-    const category = req.params.category || "all";
+    const category = req.query.category || "all";
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 12;
     const minPrice = parseFloat(req.query.minPrice);
@@ -185,27 +184,28 @@ const getPaginatedProducts = async (req, res, next) => {
       throw new CustomError(error.details[0].message, 400);
     }
 
-    const validCategories = Category.find({ id: -1 }, { title: 1 });
-    if (!validCategories.includes(category)) {
-      throw new CustomError("invalid category", 400);
+    if (category !== "all") {
+      const categoryExists = await Category.exists({ title: category });
+      if (!categoryExists) {
+        throw new CustomError("Invalid category", 400);
+      }
     }
 
-    const query = { categories: { $all: [category] } };
+    const query = category === "all" ? {} : { categories: { $in: [category] } };
     if (minPrice) query.price = { ...query.price, $gte: minPrice };
     if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
     if (minRating) query.rate = { ...query.rate, $gte: minRating };
     if (searchQuery) query.$text = { $search: searchQuery };
 
     const categorisedProductsCount = await Product.countDocuments(query);
-
     const paginatedProducts = await Product.find(query).skip(skip).limit(limit);
-
     const pagesNumber = Math.ceil(categorisedProductsCount / limit);
 
     res.status(200).send({
       paginatedProducts,
       pagination: {
         total: categorisedProductsCount,
+        limit,
         pages: pagesNumber,
         page,
         prev: page > 1,
