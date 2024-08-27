@@ -1,119 +1,162 @@
-<form
-  class="container w-50"
-  [formGroup]="registerForm"
-  (ngSubmit)="handleSubmit()"
->
-  <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="name"
-      name="name"
-      formControlName="name"
-      placeholder="Enter your name"
+<div class="flex h-screen">
+  <div class="w-1/2">
+    <img
+      src="img register.jpg"
+      alt="register image"
+      class="w-full h-full object-cover opacity-85"
     />
-    <div
-      *ngIf="(name?.touched && name?.invalid) || (submitted && name?.invalid)"
-      class="alert alert-danger"
-    >
-      <div *ngIf="name?.errors?.['required']">name is required!</div>
-    </div>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input
-      type="email"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-      name="email"
-      formControlName="email"
-      placeholder="Enter your email address"
-    />
-    <div
-      *ngIf="(email?.touched && email?.invalid) || (submitted && email?.invalid)"
-      class="alert alert-danger"
-    >
-      <div *ngIf="email?.errors?.['required']">Email is required!</div>
-      <div *ngIf="email?.errors?.['pattern']">Invalid email format!</div>
+  <div
+    class="w-1/2 bg-[var(--secondary-color)] flex flex-col items-center justify-center"
+  >
+    <div class="flex flex-col items-center">
+      <img class="w-52 mb-3" src="logo light.svg" alt=" logo App" />
+      <p
+        class="text-white font-bold text-2xl w-full capitalize text-center leading-7 mb-2"
+      >
+        Become the best version of yourself.
+        <br />
+        Push your limits.
+      </p>
     </div>
-  </div>
-  <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input
-      type="text"
-      class="form-control"
-      id="username"
-      name="username"
-      formControlName="username"
-      placeholder="Enter your username"
-    />
-    <div
-      *ngIf="
-        (username?.touched && username?.invalid) ||
-        (submitted && username?.invalid)
-      "
-      class="alert alert-danger"
-    >
-      <div *ngIf="username?.errors?.['required']">username is required!</div>
-      <div *ngIf="username?.errors?.['pattern']">
-        username can't contain spaces
+    <div class="w-3/4">
+      <form
+        class="container mx-auto max-w-md"
+        [formGroup]="registerForm"
+        (ngSubmit)="handleSubmit()"
+      >
+        <div class="mb-4">
+          <label
+            for="name"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Name</label
+          >
+          <input
+            type="text"
+            class="p-2 text-white mt-1 w-full h-10 block rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="name"
+            name="name"
+            formControlName="name"
+            placeholder="Enter your name"
+          />
+          <div
+            *ngIf="
+              (name?.touched && name?.invalid) || (submitted && name?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="name?.errors?.['required']">Name is required!</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="exampleInputEmail1"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            name="email"
+            formControlName="email"
+            placeholder="Enter your email address"
+          />
+          <div
+            *ngIf="
+              (email?.touched && email?.invalid) ||
+              (submitted && email?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="email?.errors?.['required']">Email is required!</div>
+            <div *ngIf="email?.errors?.['pattern']">Invalid email format!</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="exampleInputPassword1"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Password</label
+          >
+          <input
+            type="password"
+            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="exampleInputPassword1"
+            name="password"
+            formControlName="password"
+            placeholder="Enter your password"
+          />
+          <div
+            *ngIf="
+              (password?.touched && password?.invalid) ||
+              (submitted && password?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="password?.errors?.['required']">
+              Password is required!
+            </div>
+            <div *ngIf="password?.errors?.['minlength']">
+              Min length is 8 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="re_password"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="re_password"
+            name="re_password"
+            formControlName="re_password"
+            placeholder="Re-enter your password"
+            (input)="handleChange()"
+          />
+          <div
+            *ngIf="
+              (re_password?.touched && re_password?.invalid) ||
+              (submitted && (re_password?.invalid || noMatch))
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="re_password?.errors?.['required']">
+              Re-enter your password!
+            </div>
+            <div *ngIf="re_password?.errors?.['minlength']">
+              Min length is 8 characters
+            </div>
+            <div *ngIf="noMatch">Passwords don't match</div>
+          </div>
+        </div>
+        <div><app-filled-button></app-filled-button></div>
+        <!-- <button
+          type="submit"
+          class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Register
+        </button> -->
+      </form>
+
+      <div class="text-center mt-6">
+        <p class="text-sm text-gray-600">
+          Already have an account?
+          <a
+            routerLink="#"
+            class="font-medium text-[--primary-color] hover:text-yellow-600"
+          >
+            Log in now
+          </a>
+        </p>
       </div>
     </div>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="exampleInputPassword1"
-      name="password"
-      formControlName="password"
-      placeholder="Enter your password"
-    />
-    <div
-      *ngIf="
-        (password?.touched && password?.invalid) ||
-        (submitted && password?.invalid)
-      "
-      class="alert alert-danger"
-    >
-      <div *ngIf="password?.errors?.['required']">password is required!</div>
-      <div *ngIf="password?.errors?.['minlength']">
-        min length is 8 characters
-      </div>
-    </div>
-  </div>
-  <div class="mb-3">
-    <label for="re_password" class="form-label">Confirm Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="re_password"
-      name="re_password"
-      formControlName="re_password"
-      placeholder="Re-enter your password"
-      (input)="handleChange()"
-    />
-    <div
-      *ngIf="
-        (re_password?.touched && re_password?.invalid) ||
-        (submitted && (re_password?.invalid || noMatch))
-      "
-      class="alert alert-danger"
-    >
-      <div *ngIf="re_password?.errors?.['required']">
-        Re-enter your password!
-      </div>
-      <div *ngIf="re_password?.errors?.['minlength']">
-        min length is 8 characters
-      </div>
-      <div *ngIf="noMatch">passwords don't match</div>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Register</button>
-</form>
-<div class="text-center mt-3">
-  <p>Already have an account? <a routerLink="/login">Log in now</a></p>
 </div>
