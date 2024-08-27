@@ -33,7 +33,7 @@
           >
           <input
             type="text"
-            class="p-2 text-white mt-1 w-full h-10 block rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="p-2 text-white mt-1 w-full h-10 block bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             id="name"
             name="name"
             formControlName="name"
@@ -57,7 +57,7 @@
           >
           <input
             type="email"
-            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             name="email"
@@ -84,7 +84,7 @@
           >
           <input
             type="password"
-            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             id="exampleInputPassword1"
             name="password"
             formControlName="password"
@@ -114,7 +114,7 @@
           >
           <input
             type="password"
-            class="text-white p-2 mt-1 h-10 block w-full rounded-md bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             id="re_password"
             name="re_password"
             formControlName="re_password"
@@ -137,7 +137,7 @@
             <div *ngIf="noMatch">Passwords don't match</div>
           </div>
         </div>
-        <div>
+        <div class="w-full flex justify-center">
           <app-register-button [label]="'register'"></app-register-button>
         </div>
         <!-- <button
