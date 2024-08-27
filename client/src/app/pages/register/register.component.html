@@ -1,0 +1,119 @@
+<form
+  class="container w-50"
+  [formGroup]="registerForm"
+  (ngSubmit)="handleSubmit()"
+>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      formControlName="name"
+      placeholder="Enter your name"
+    />
+    <div
+      *ngIf="(name?.touched && name?.invalid) || (submitted && name?.invalid)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="name?.errors?.['required']">name is required!</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      name="email"
+      formControlName="email"
+      placeholder="Enter your email address"
+    />
+    <div
+      *ngIf="(email?.touched && email?.invalid) || (submitted && email?.invalid)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="email?.errors?.['required']">Email is required!</div>
+      <div *ngIf="email?.errors?.['pattern']">Invalid email format!</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      name="username"
+      formControlName="username"
+      placeholder="Enter your username"
+    />
+    <div
+      *ngIf="
+        (username?.touched && username?.invalid) ||
+        (submitted && username?.invalid)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="username?.errors?.['required']">username is required!</div>
+      <div *ngIf="username?.errors?.['pattern']">
+        username can't contain spaces
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="exampleInputPassword1"
+      name="password"
+      formControlName="password"
+      placeholder="Enter your password"
+    />
+    <div
+      *ngIf="
+        (password?.touched && password?.invalid) ||
+        (submitted && password?.invalid)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="password?.errors?.['required']">password is required!</div>
+      <div *ngIf="password?.errors?.['minlength']">
+        min length is 8 characters
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="re_password" class="form-label">Confirm Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="re_password"
+      name="re_password"
+      formControlName="re_password"
+      placeholder="Re-enter your password"
+      (input)="handleChange()"
+    />
+    <div
+      *ngIf="
+        (re_password?.touched && re_password?.invalid) ||
+        (submitted && (re_password?.invalid || noMatch))
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="re_password?.errors?.['required']">
+        Re-enter your password!
+      </div>
+      <div *ngIf="re_password?.errors?.['minlength']">
+        min length is 8 characters
+      </div>
+      <div *ngIf="noMatch">passwords don't match</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+<div class="text-center mt-3">
+  <p>Already have an account? <a routerLink="/login">Log in now</a></p>
+</div>

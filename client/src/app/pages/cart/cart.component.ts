@@ -1,7 +1,7 @@
-import { CartProductComponent } from './../../../components/cart-product/cart-product/cart-product.component';
-import { FooterComponent } from './../../../layouts/footer/footer.component';
+import { FooterComponent } from './../../layouts/footer/footer.component';
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../../../layouts/navbar/navbar.component';
+import { NavbarComponent } from '../../layouts/navbar/navbar.component';
+import { CartProductComponent } from '../../components/cards/cart-product/cart-product/cart-product.component';
 
 @Component({
   selector: 'app-cart',
