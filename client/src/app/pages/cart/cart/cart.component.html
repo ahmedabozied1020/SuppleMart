@@ -1,0 +1,111 @@
+<!-- parent component -->
+<app-navbar></app-navbar>
+<div class="h-1 font-bold my-10 text-4xl w-5/6 container mx-auto">cart</div>
+<div class="container mx-auto w-full md:w-5/6">
+  <div
+    class="flex flex-wrap 2xl:flex-nowrap xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-wrap justify-center gap-6"
+  >
+    <div class="w-full me-16 overflow-x-auto md:w-2/3">
+      <div
+        class="uppercase flex w-full justify-between font-extrabold text-xs mt-5 border-b pb-5"
+      >
+        <p class="w-[2%] p-5"></p>
+        <p class="w-3/12 md:w-2/12"></p>
+        <p class="w-3/12">product</p>
+        <p class="w-2/12">price</p>
+        <p class="w-2/12">quantity</p>
+        <p class="w-2/12">subtotal</p>
+      </div>
+      <app-cart-product
+        [imgProductCart]="'15-800x747.png'"
+        [nameProductCart]="'incredible rubber coat'"
+        [available]="'Available on backorder'"
+        [priceProductCart]="174.66"
+        class="flex items-center justify-between font-bold py-5 border-b"
+      >
+      </app-cart-product>
+      <app-cart-product
+        [imgProductCart]="'15-800x747.png'"
+        [nameProductCart]="'incredible rubber coat'"
+        [available]="'Available on backorder'"
+        [priceProductCart]="174.66"
+        class="flex items-center justify-between font-bold py-5 border-b"
+      >
+      </app-cart-product>
+      <app-cart-product
+        [imgProductCart]="'15-800x747.png'"
+        [nameProductCart]="'incredible rubber coat'"
+        [available]="'Available on backorder'"
+        [priceProductCart]="174.66"
+        class="flex items-center justify-between font-bold py-5 border-b"
+      >
+      </app-cart-product>
+    </div>
+    <div className="card bg-base-100 ">
+      <div class="border-gray border-8 px-8 py-2">
+        <table class="table w-80">
+          <thead>
+            <tr class="uppercase border-b border-gray-300">
+              <th class="font-bold text-black text-xl">cart totals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="font-bold border-b border-gray-300">
+              <th>
+                <p class="font-extrabold">Subtotal</p>
+              </th>
+              <td class="text-right text-lg font-extrabold">£174.66</td>
+            </tr>
+            <tr class="font-bold border-none">
+              <th>
+                <p class="pt-4 font-extrabold">Total</p>
+              </th>
+              <td
+                class="text-2xl text-right font-extrabold pt-7"
+                style="color: #f2cb1f"
+              >
+                £174.66
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="#">
+          <button
+            class="font-extrabold my-8 text-sm w-full h-14 rounded-none bg-[#f2cb1f] hover:bg-[#C7A21E] hover:text-white hover:underline"
+          >
+            Proceed to checkout
+          </button></a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-center mb-10">
+    <a href="#" class="w-full md:w-auto">
+      <button
+        class="text-black uppercase font-extrabold text-xs h-14 rounded-none bg-[#f2cb1f] py-5 px-8 mt-5 hover:bg-[#C7A21E] hover:text-white w-full"
+      >
+        update cart
+      </button>
+    </a>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- <table class="table">
+    <thead>
+      <tr class="uppercase border-b border-gray-300">
+        <th></th>
+        <th></th>
+        <th>product</th>
+        <th>price</th>
+        <th>quantity</th>
+        <th>subtotal</th>sds
+      </tr>
+    </thead>
+    <app-cart-product
+      [imgProductCart]="'15-800x747.png'"
+      [nameProductCart]="'incredible rubber coat'"
+      [available]="'Available on backorder'"
+      [priceProductCart]="174.66"
+    ></app-cart-product>
+  </table> -->
