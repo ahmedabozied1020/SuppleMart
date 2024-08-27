@@ -25,12 +25,12 @@
 <section class="bg-[var(--primary-color)] h-16">
   <div class="container m-auto flex h-full">
     <div class="flex-1 flex items-center">
-      <app-navbar-item label="LOGO" url="/"></app-navbar-item>
-      <app-navbar-item first="true" label="HOME" url="#"></app-navbar-item>
-      <app-navbar-item label="SHOP" url="#"></app-navbar-item>
-      <app-navbar-item label="PAGE" url="#"></app-navbar-item>
-      <app-navbar-item label="BLOG" url="#"></app-navbar-item>
-      <app-navbar-item label="CONTACT" url="#"></app-navbar-item>
+      <app-navbar-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/" label="LOGO"></app-navbar-item>
+      <app-navbar-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/" first="true" label="HOME"></app-navbar-item>
+      <app-navbar-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/shop" label="SHOP"></app-navbar-item>
+      <app-navbar-item label="PAGE"></app-navbar-item>
+      <app-navbar-item label="BLOG"></app-navbar-item>
+      <app-navbar-item label="CONTACT"></app-navbar-item>
     </div>
     <div class="flex items-center relative">
       <app-navbar-item
@@ -43,7 +43,7 @@
         [svgIcon]="heartIcon"
         title="wish list"
       ></app-navbar-item>
-      <app-navbar-item [svgIcon]="cartIcon" title="cart"></app-navbar-item>
+      <app-navbar-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/cart" [svgIcon]="cartIcon" title="cart"></app-navbar-item>
       <span
         class="badge badge-sm indicator-item bg-[#da5454] border-[#da5454] absolute rounded-full text-white right-2 top-2"
         >8</span
