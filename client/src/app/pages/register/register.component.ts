@@ -1,7 +1,14 @@
+import { RegisterButtonComponent } from './../../components/buttons/register-button/register-button.component';
 import { FilledButtonComponent } from './../../components/buttons/filled-button/filled-button.component';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,7 +19,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FilledButtonComponent,
+    RegisterButtonComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
