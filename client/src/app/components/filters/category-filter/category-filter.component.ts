@@ -22,6 +22,7 @@ export class CategoryFilterComponent {
     private router: Router
   ) {}
 
+
   ngOnInit() {
     setTimeout(() => {
       this.subscription = this.categoryRequestsService
