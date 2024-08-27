@@ -3,45 +3,25 @@
     class="font-bold text-lg border-l-[3px] border-b-[1px] border-x-[--primary-color] py-4 px-7 block"
     >Filter by price</span
   >
-  <div class="container w-75 mt-5">
+  <div class="container w-75 p-6 pt-0">
     <div class="d-flex justify-content-between">
-      <div class="w-50">
-        <h1 class="mb-5">Filter by Price</h1>
-        <form
-          #priceFilterForm="ngForm"
-          (ngSubmit)="handleFilterSubmit(priceFilterForm)"
-          class="w-100"
+      <div class="custom-slider">
+        <ngx-slider
+          [(value)]="minPrice"
+          [(highValue)]="maxPrice"
+          [options]="options"
+        ></ngx-slider>
+      </div>
+      <div class="flex justify-between">
+        <p>
+          Price: $<span>{{ minPrice }}</span> — $<span>{{ maxPrice }}</span>
+        </p>
+        <button
+          (click)="handleFilterSubmit()"
+          class="underline hover:text-[--primary-color]"
         >
-          <div class="mt-5">
-            <input
-              type="range"
-              id="min_price"
-              name="min_price"
-              [(ngModel)]="minPrice"
-              min="0"
-              max="1000"
-              step="10"
-              class="form-range"
-            />
-            <input
-              type="range"
-              id="max_price"
-              name="max_price"
-              [(ngModel)]="maxPrice"
-              min="0"
-              max="1000"
-              step="10"
-              class="form-range"
-            />
-            <button type="submit" class="btn btn-primary">Filter</button>
-            <div class="mt-2">
-              Price: <span class="from">£{{ minPrice }}</span> —
-              <span class="to">£{{ maxPrice }}</span>
-            </div>
-            <input type="hidden" name="layout" value="grid" />
-            <div class="clear-both"></div>
-          </div>
-        </form>
+          Filter
+        </button>
       </div>
     </div>
   </div>

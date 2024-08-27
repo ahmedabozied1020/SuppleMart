@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Category } from '../../../interfaces/category';
 import { CategoryRequestsService } from '../../../services/http-requests/category-requests/category-requests.service';
 import { Subscription } from 'rxjs';
+import { FilterParamsService } from '../../../services/http-requests/filter-params/filter-params.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-filter',
@@ -14,7 +16,12 @@ export class CategoryFilterComponent {
   categories!: Category[];
   private subscription!: Subscription;
 
-  constructor(private categoryRequestsService: CategoryRequestsService) {}
+  constructor(
+    private categoryRequestsService: CategoryRequestsService,
+    private filtersParams: FilterParamsService,
+    private router: Router
+  ) {}
+
 
   ngOnInit() {
     setTimeout(() => {
@@ -24,7 +31,15 @@ export class CategoryFilterComponent {
           this.categories = cats;
           this.categories.splice(0, 1);
         });
-    }, 5000);
+    }, 1000);
+  }
+
+  handleCategorySelect(category: string) {
+    this.filtersParams.setFilters({ category });
+    this.router.navigate([], {
+      queryParams: { category },
+      queryParamsHandling: 'merge',
+    });
   }
 
   ngOnDestroy() {
