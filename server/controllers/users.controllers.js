@@ -11,17 +11,17 @@ exports.signup = async (req, res, next) => {
   const { error } = await createUserSchema.validateAsync(req.body);
 
   if (error) {
-    throw new CustomError(error.details[0].message, 400);
+    return res.status(409).send({"error": "invalid data sent"});
   }
 
   const { name, email, password } = req.body;
 
   const existingUser = await User.findOne({ email });
-  if (existingUser) return res.status(409).send("Email is already used.");
+  if (existingUser) return res.status(409).send({"error": "this email is already in use"});
 
   const user = new User({ name, email, password });
   await user.save();
-  res.send({ message: "User created", user });
+  res.status(201).send({"success": "Successfully registered"});
 };
 
 exports.login = async (req, res) => {
