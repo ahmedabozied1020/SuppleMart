@@ -8,6 +8,7 @@ import { FooterComponent } from '../../layouts/footer/footer.component';
 import { ProductsComponent } from '../../layouts/products/products.component';
 import { MainProductCardComponent } from "../../components/cards/product-cards/main-product-card/main-product-card.component";
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,7 +20,8 @@ import { MainProductCardComponent } from "../../components/cards/product-cards/m
     SalesCardsComponent,
     ReviewRealCustomersComponent,
     FooterComponent,
-    MainProductCardComponent
+    MainProductCardComponent,
+  
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
