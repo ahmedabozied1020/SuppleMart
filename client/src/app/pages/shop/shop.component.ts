@@ -48,7 +48,6 @@ export class ShopComponent {
   ngOnInit() {
     this.route.queryParams.subscribe((p) => {
       const params = { ...p, page: Number(p['page']) || 1 };
-      console.log(params);
       this.filtersParams.setFilters(params);
     });
 
