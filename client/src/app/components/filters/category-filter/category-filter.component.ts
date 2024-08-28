@@ -35,9 +35,9 @@ export class CategoryFilterComponent {
   }
 
   handleCategorySelect(category: string) {
-    this.filtersParams.setFilters({ category });
+    this.filtersParams.setFilters({ category, page: 1 });
     this.router.navigate([], {
-      queryParams: { category },
+      queryParams: { category, page: 1 },
       queryParamsHandling: 'merge',
     });
   }

@@ -1,20 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Route } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterParamsService {
-  private filtersSubject = new BehaviorSubject<any>({
-    category: 'all',
-    page: 1,
-    limit: 12,
-    minPrice: 0,
-    maxPrice: 1000,
-    minRating: 0,
-    searchQuery: '',
-  });
+  private filtersSubject = new BehaviorSubject<any>({});
 
   filters$ = this.filtersSubject.asObservable();
 
@@ -32,6 +25,4 @@ export class FilterParamsService {
     }
     return params;
   }
-
-  constructor() {}
 }

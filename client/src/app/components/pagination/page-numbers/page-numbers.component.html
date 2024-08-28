@@ -1,5 +1,8 @@
 <div class="join">
-  <button class="join-item btn btn-sm rounded-none p-2 h-10">
+  <button
+    class="join-item btn btn-sm rounded-none p-2 h-10"
+    (click)="previousPage()"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -15,12 +18,17 @@
       />
     </svg>
   </button>
-  <button class="join-item btn btn-sm">1</button>
-  <button class="join-item btn btn-sm active">2</button>
-  <button class="join-item btn btn-sm">3</button>
-  <span>...</span>
-  <button class="join-item btn btn-sm">4</button>
-  <button class="join-item btn btn-sm rounded-none p-2">
+  @for (page of pages; track $index) {
+  <button
+    class="join-item btn btn-sm"
+    [class.active]="page === currentPage"
+    (click)="selectPage(page)"
+  >
+    {{ page }}
+  </button>
+  }
+
+  <button class="join-item btn btn-sm rounded-none p-2" (click)="nextPage()">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
