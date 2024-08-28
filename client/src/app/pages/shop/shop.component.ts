@@ -8,14 +8,25 @@ import { PaginatedProductsService } from '../../services/http-requests/paginated
 import { Subscription } from 'rxjs';
 import { Product } from '../../interfaces/product';
 import { Pagination } from '../../interfaces/paginationData';
+import { NavbarComponent } from '../../layouts/navbar/navbar.component';
+import { FooterComponent } from '../../layouts/footer/footer.component';
+import { BreadCrumbsComponent } from '../../components/bread-crumbs/bread-crumbs.component';
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [FiltersComponent, ShopProductsComponent, PaginationBarComponent],
+  imports: [
+    FiltersComponent,
+    ShopProductsComponent,
+    PaginationBarComponent,
+    NavbarComponent,
+    FooterComponent,
+    BreadCrumbsComponent,
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
 export class ShopComponent {
+  title = 'Shop';
   paginatedProducts: Product[] | undefined;
   paginationData: Pagination | undefined;
   private subscription!: Subscription;
@@ -35,15 +46,15 @@ export class ShopComponent {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((p) => {
+      const params = { ...p, page: Number(p['page']) || 1 };
+      console.log(params);
       this.filtersParams.setFilters(params);
     });
 
     this.filterSubscription = this.filtersParams.filters$.subscribe(() => {
       this.fetchProducts();
     });
-
-    this.fetchProducts();
   }
 
   ngOnDestroy() {
