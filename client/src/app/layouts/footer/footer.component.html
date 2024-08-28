@@ -1,59 +1,58 @@
 <section class="m-auto">
   <!-- white Footer Section -->
-  <div
-    class="w-full flex bg-white justify-between items-center py-16 px-8 row-auto"
-  >
-    <div
-      class="brandName transition duration-200 ease-in-out transform hover:opacity-50"
-    >
+  <div class="w-full flex overflow-x-auto py-16 px-8 row-auto lg:gap-x-24  scrollbar-hidden ">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-1.png" alt="" />
+          <img src="brand_white-1.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
-    <div class="brandName transition duration-200 ease-in-out hover:opacity-50">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-2.png" alt="" />
+          <img src="brand_white-2.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
-    <div class="brandName transition duration-200 ease-in-out hover:opacity-50">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-3.png" alt="" />
+          <img src="brand_white-3.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
-    <div class="brandName transition duration-200 ease-in-out hover:opacity-50">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-4.png" alt="" />
+          <img src="brand_white-4.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
-    <div class="brandName transition duration-200 ease-in-out hover:opacity-50">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-5.png" alt="" />
+          <img src="brand_white-5.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
-    <div class="brandName transition duration-200 ease-in-out hover:opacity-50">
+    <div class="flex-none w-32 transition duration-200 ease-in-out transform hover:opacity-50">
       <div class="brandImage">
         <a href="#" title="Brand Name">
-          <img src="brand_white-6.png" alt="" />
+          <img src="brand_white-6.png" alt="" class="w-full h-auto" />
         </a>
       </div>
     </div>
   </div>
+
   <!-- Small Footer Section -->
   <footer class="bg-[var(--primary-color)] text-slate-950 py-10 px-8">
-    <div class="container mx-auto px-4 flex items-center justify-between">
+    <div
+      class="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-center"
+    >
       <!-- Left Section -->
       <div
-        class="flex-1 text-center sm:text-left border-r border-[var(--secondary-text)] pr-4 flex items-center"
+        class="flex-1 text-center sm:text-left border-b sm:border-r border-[var(--secondary-text)] sm:border-b-0 sm:pr-4 flex items-center mb-4 sm:mb-0"
       >
         <!-- Location Icon -->
         <svg
@@ -75,19 +74,21 @@
             d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
           />
         </svg>
-
         <p class="mx-1">9066 Green Lake Drive Chevy, MD 20815</p>
       </div>
+
       <!-- Middle Section -->
       <div
-        class="flex-1 text-center border-r border-[var(--secondary-text)] px-4 font-bold text-3xl"
+        class="flex-1 text-center border-b sm:border-r border-[var(--secondary-text)] sm:border-b-0 px-4 font-bold text-3xl mb-4 sm:mb-0"
       >
         <p class="mb-2">(+84)-1800-33358</p>
       </div>
 
       <!-- Right Section -->
-      <div class="flex-1 text-center pl-4">
-        <div class="flex justify-center space-x-3 mt-2 items-center">
+      <div class="flex-1 text-center sm:text-right">
+        <div
+          class="flex justify-center sm:justify-end space-x-3 mt-2 items-center"
+        >
           <div class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +179,7 @@
     <div class="container mx-auto px-4">
       <!-- Grid layout for sections -->
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
+        class="grid grid-cols-1 gap-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
       >
         <!-- Customer Service Section -->
         <div class="flex flex-col items-center sm:items-start">
@@ -293,36 +294,49 @@
           </ul>
         </div>
         <!-- Subscribe Section -->
-
-        <div class="flex-col items-center justify-between sm:items-start">
+        <div class="flex flex-col items-start pr-10">
           <h2 class="text-lg font-bold mb-4">Subscribe Us</h2>
-          <p class="mb-3">Sign up for offers and exclusive discounts.</p>
-          <form
-            class="flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0"
-          >
-            <input
-              type="email"
-              placeholder="Email address..."
-              class="px-4 py-2 mb-3 border border-gray-600 rounded-md w-full sm:w-64"
-            />
-            <button
-              type="submit"
-              class="px-4 py-2 bg-[var(--primary-color)] text-black rounded-none hover:bg-[var(--primary-color)] transition-colors duration-200"
+          <div class="flex flex-col items-center sm:items-start sm:text-left">
+            <p class="mb-3 text-[var(--secondary-text)]">
+              Sign up for offers and exclusive discounts.
+            </p>
+            <form
+              class="sm:flex-row items-center sm:items-end space-y-4 sm:space-y-0 w-full sm:w-auto"
             >
-              Subscribe
-            </button>
-          </form>
+              <input
+                type="email"
+                placeholder="Email address..."
+                class="px-2 py-2 border border-gray-600 mb-2"
+              />
+              <button
+                type="submit"
+                class="px-4 py-2 bg-[var(--primary-color)] text-black r hover:bg-[var(--primary-color)] transition-colors duration-200 w-full sm:w-auto"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
       <!-- Footer Bottom -->
       <div
-        class="mt-8 border-t border-gray-600 pt-4 text-center flex justify-evenly"
+        class="mt-8 border-t border-gray-600 pt-4 text-[var(--secondary-text)] text-center flex flex-col sm:flex-row sm:justify-evenly"
       >
         <p class="mb-2">
-          &copy; Copyright © 2020 <span class="text-[var(--primary-color)] cursor-pointer">SuppleMart.</span> All Rights Reserved.
+          &copy; Copyright © 2020 Supplero. All Rights Reserved.
+        </p>
+        <p>
+          We accept:
+          <img
+            src="path/to/payment-icons.png"
+            alt="Payment Icons"
+            class="inline-block"
+          />
         </p>
       </div>
+
+      \
     </div>
   </footer>
 </section>
