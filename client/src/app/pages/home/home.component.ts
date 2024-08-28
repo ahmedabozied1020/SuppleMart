@@ -21,7 +21,6 @@ import { MainProductCardComponent } from "../../components/cards/product-cards/m
     ReviewRealCustomersComponent,
     FooterComponent,
     MainProductCardComponent,
-  
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
