@@ -1,0 +1,136 @@
+<div
+  class="flex flex-col md:flex-row w-full md:w-4/5 mx-auto bg-white min-h-[80vh] my-10"
+>
+  <div
+    class="relative overflow-hidden group w-full md:w-1/2 flex justify-center items-center mb-5 md:mb-0"
+  >
+    <img
+      class="h-4/5 max-w-full transition-transform duration-300 ease-in-out transform group-hover:scale-110"
+      src="4-400x373.png"
+      alt="product image"
+    />
+  </div>
+  <div
+    class="w-full mb-5 md:w-1/2 flex flex-col mt-5 md:mt-10 px-4 md:px-0 mx-auto md:mx-0 max-w-md md:max-w-none"
+  >
+    <!-- first section -->
+    <div class="uppercase text-[--secondary-text] text-xs mb-2">
+      <a class="hover:underline" href="#">endurance & energy, </a>
+      <a class="hover:underline" href="#">uncategorized</a>
+    </div>
+    <div>
+      <!-- second section (product name) -->
+      <p class="font-extrabold text-2xl md:text-3xl mb-4 md:mb-8">
+        Sleek Wool Bench
+      </p>
+
+      <!-- third section (product price) -->
+      <p class="text-[--primary-color] font-extrabold text-xl mb-2">£269.37</p>
+      <!-- fourth section (product availability) -->
+      <div class="flex capitalize">
+        <p class="mb-2 me-1">availability:</p>
+        <p class="mb-2 text-[#0f834d]">in stock</p>
+      </div>
+      <!-- Fifth section (product description) -->
+      <p class="text-[--secondary-text] font-base w-full md:w-4/5 mb-2">
+        Incidunt amet quia saepe. Qui qui molestiae harum. Aut maxime sint
+        laudantium ut rerum aut.
+      </p>
+
+      <!-- Sixth section (product in stock or not) -->
+      <div class="mb-6 w-20 flex justify-between text-[#0f834d]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="{1.5}"
+          stroke="currentColor"
+          class="w-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z"
+          />
+        </svg>
+        <p>in stock</p>
+      </div>
+
+      <div
+        class="flex flex-col sm:flex-row h-auto sm:h-11 space-y-4 sm:space-y-0 sm:space-x-4"
+      >
+        <div
+          class="border border-gray-300 flex w-full sm:w-1/5 justify-around items-center font-bold"
+        >
+          <button
+            (click)="decrease()"
+            class="hover:text-[--primary-color] px-3 py-2"
+          >
+            -
+          </button>
+          <p class="text-lg">{{ count }}</p>
+          <button
+            (click)="increase()"
+            class="hover:text-[--primary-color] px-3 py-2"
+          >
+            +
+          </button>
+        </div>
+
+        <button
+          class="border border-black flex flex-row w-full sm:w-48 bg-[#181818] hover:bg-black text-white items-center justify-center font-bold py-2"
+        >
+          <div class="font-bold flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="{2.5}"
+              stroke="currentColor"
+              class="w-6 me-2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+              />
+            </svg>
+            Add to cart
+          </div>
+        </button>
+
+        <div
+          class="border border-gray-300 w-full sm:w-12 flex justify-center items-center py-2 sm:py-0"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="size-5"
+            style="color: red"
+          >
+            <path
+              d="m9.653 16.915-.005-.003-.019-.01a20.759 20.759 0 0 1-1.162-.682 22.045 22.045 0 0 1-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 0 1 8-2.828A4.5 4.5 0 0 1 18 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 0 1-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 0 1-.69.001l-.002-.001Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <hr class="w-full md:w-[90%] mt-5 md:mt-10" />
+      <div class="mt-5 flex mb-3">
+        <p class="me-1 text-black text-sm">SKU:</p>
+        <p class="text-[--secondary-text] text-sm hover:text-[--primary-color]">
+          sleek-wool-bench-67190973
+        </p>
+      </div>
+      <div class="flex items-center flex-wrap">
+        <p class="me-1 text-black text-sm">Categories:</p>
+        <p class="text-[--secondary-text] text-sm hover:text-[--primary-color]">
+          Endurance & Energy,
+        </p>
+        <p class="text-[--secondary-text] text-sm hover:text-[--primary-color]">
+          Uncategorized
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
