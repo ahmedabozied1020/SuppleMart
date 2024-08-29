@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div class="flex-col container mx-auto max-w-7xl">
+  <app-bread-crumbs [currentPageTitle]="title"></app-bread-crumbs>
+  <div class="flex gap-10">
+    <app-filters></app-filters>
+    <div class="flex-col">
+      <div class="border-b-2 pb-3">
+        <app-pagination-bar
+          [paginationData]="paginationData"
+        ></app-pagination-bar>
+      </div>
+      <app-shop-products
+        [paginatedProducts]="paginatedProducts"
+      ></app-shop-products>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

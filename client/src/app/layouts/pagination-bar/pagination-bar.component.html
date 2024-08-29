@@ -1,0 +1,9 @@
+<div class="flex justify-between items-center">
+  <div class="flex items-center">
+    <app-sorts-filter></app-sorts-filter>
+    <app-results-summary
+      [paginationData]="paginationData"
+    ></app-results-summary>
+  </div>
+  <app-page-numbers [paginationData]="paginationData"></app-page-numbers>
+</div>
