@@ -54,21 +54,85 @@
         [svgIcon]="searchIcon"
         title="search"
       ></app-navbar-item>
-      <app-navbar-item
-        [svgIcon]="accountIcon"
-        title="login"
-        class="dropdown dropdown-end"
-        tabindex="0"
-        role="button"
-      >
-        <ul
+      <div class="dropdown dropdown-end">
+        <app-navbar-item
+          [svgIcon]="accountIcon"
+          title="login"
           tabindex="0"
-          class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          role="button"
+        ></app-navbar-item>
+        <form
+          tabindex="0"
+          class="dropdown-content bg-base-100 rounded-box z-[1] w-64 p-4 shadow-lg"
+          [formGroup]="loginForm"
+          (ngSubmit)="handleLogin()"
         >
-          <li><a>Item 1</a></li>
-          <li><a>Item 2</a></li>
-        </ul>
-      </app-navbar-item>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Username or Email</span>
+            </label>
+            <input
+              type="text"
+              formControlName="email"
+              placeholder="Username or Email"
+              class="input input-bordered w-full"
+              required
+            />
+            <div
+              *ngIf="
+                (email?.touched && email?.invalid) ||
+                (submitted && email?.invalid)
+              "
+              class="mt-2 text-sm text-red-600"
+            >
+              <div *ngIf="email?.errors?.['required']">Email is required!</div>
+              <div *ngIf="email?.errors?.['pattern']">
+                Invalid email format!
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control mt-2">
+            <label class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+              class="input input-bordered w-full"
+              required
+            />
+            <div
+              *ngIf="
+                (password?.touched && password?.invalid) ||
+                (submitted && password?.invalid)
+              "
+              class="mt-2 text-sm text-red-600"
+            >
+              <div *ngIf="password?.errors?.['required']">
+                Password is required!
+              </div>
+              <div *ngIf="password?.errors?.['minlength']">
+                Min length is 8 characters
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary w-full">Login</button>
+          </div>
+          <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
+            {{ errorMessage }}
+          </div>
+          <div class="text-center mt-2">
+            <a href="#" class="link link-primary">Lost your password?</a>
+          </div>
+          <div class="text-center mt-1">
+            <a href="#" class="link link-secondary">Create an Account</a>
+          </div>
+        </form>
+      </div>
       <app-navbar-item
         [svgIcon]="heartIcon"
         title="wish list"
