@@ -60,13 +60,15 @@
       ></app-navbar-item>
       <app-navbar-item
         routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
         routerLink="/shop"
         label="SHOP"
       ></app-navbar-item>
-      <app-navbar-item label="PAGE"></app-navbar-item>
-      <app-navbar-item label="BLOG"></app-navbar-item>
-      <app-navbar-item label="CONTACT"></app-navbar-item>
+      <app-navbar-item
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/contact-us"
+        label="CONTACT"
+      ></app-navbar-item>
     </div>
     <div></div>
     <div class="flex items-center relative">
