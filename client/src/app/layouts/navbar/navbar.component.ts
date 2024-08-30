@@ -1,11 +1,28 @@
 import { Component } from '@angular/core';
 import { NavbarItemComponent } from './navbar-item/navbar-item.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { catchError, of, tap } from 'rxjs';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthenticationRequestsService } from '../../services/http-requests/authentication-requests/authentication-requests.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NavbarItemComponent, RouterLink, RouterLinkActive],
+  imports: [
+    NavbarItemComponent,
+    RouterLink,
+    RouterLinkActive,
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -30,4 +47,57 @@ export class NavbarComponent {
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 </svg>
 `;
+
+  loginForm!: FormGroup;
+  submitted: boolean = false;
+  errorMessage!: string;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationRequestsService: AuthenticationRequestsService,
+    private router: Router
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$'),
+        ],
+      ],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  handleLogin() {
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      const credentials = this.loginForm.value;
+      console.log(credentials);
+      this.authenticationRequestsService
+        .login(credentials)
+        .pipe(
+          tap((msg) => {
+            if (msg?.success) {
+              this.router.navigate(['/cart']);
+            }
+          }),
+          catchError((error) => {
+            this.errorMessage =
+              error?.error?.error ||
+              'An error occurred while logging in, please try again';
+            return of(null);
+          })
+        )
+        .subscribe();
+    }
+  }
 }
