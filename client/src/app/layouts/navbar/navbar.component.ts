@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarItemComponent } from './navbar-item/navbar-item.component';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, of, Subscription, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +11,8 @@ import {
 } from '@angular/forms';
 import { AuthenticationRequestsService } from '../../services/http-requests/authentication-requests/authentication-requests.service';
 import { CommonModule } from '@angular/common';
+import { LoggedInUserService } from '../../services/observables/logged-in-user.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +23,7 @@ import { CommonModule } from '@angular/common';
     RouterLinkActive,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -51,11 +53,16 @@ export class NavbarComponent {
   loginForm!: FormGroup;
   submitted: boolean = false;
   errorMessage!: string;
+  loggedInUser: User | null = null;
+  loggedInUserSubscription!: Subscription;
+  isSuccessfullyLoggedIn: boolean = false;
+  isSuccessfullyLoggedOut: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private authenticationRequestsService: AuthenticationRequestsService,
-    private router: Router
+    private router: Router,
+    private loggedInUserService: LoggedInUserService
   ) {
     this.loginForm = this.formBuilder.group({
       email: [
@@ -77,6 +84,18 @@ export class NavbarComponent {
     return this.loginForm.get('password');
   }
 
+  ngOnInit() {
+    this.loggedInUserSubscription = this.loggedInUserService
+      .getLoggedInUser()
+      .subscribe((user) => (this.loggedInUser = user));
+  }
+
+  ngOnDestroy() {
+    if (this.loggedInUserSubscription) {
+      this.loggedInUserSubscription.unsubscribe();
+    }
+  }
+
   handleLogin() {
     this.submitted = true;
     if (this.loginForm.valid) {
@@ -85,9 +104,11 @@ export class NavbarComponent {
       this.authenticationRequestsService
         .login(credentials)
         .pipe(
-          tap((msg) => {
-            if (msg?.success) {
-              this.router.navigate(['/cart']);
+          tap((res) => {
+            if (res?.success) {
+              this.loggedInUserService.setLoggedInUser(res.user);
+              this.isSuccessfullyLoggedIn = true;
+              setTimeout(() => (this.isSuccessfullyLoggedIn = false), 3000);
             }
           }),
           catchError((error) => {
@@ -99,5 +120,11 @@ export class NavbarComponent {
         )
         .subscribe();
     }
+  }
+
+  handleLogout() {
+    this.loggedInUserService.deleteLoggedInUser();
+    this.isSuccessfullyLoggedOut = true;
+    setTimeout(() => (this.isSuccessfullyLoggedOut = false), 3000);
   }
 }

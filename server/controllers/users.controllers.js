@@ -27,7 +27,7 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) return res.send({"error": "invalid email or password"});
+  if (!user) return res.status(400).send({"error": "invalid email or password"});
   // valid email
   const isMatched = await bcrypt.compare(password, user.password);
   if (isMatched) {
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
     const {password, createdAt, updatedAt, __v, ..._user} = user._doc;
     res.send({ success: "successfully logged in", user: {..._user, token} });
   } else {
-    res.send({"error": "invalid email or password"});
+    res.status(400).send({"error": "invalid email or password"});
   }
 };
 
