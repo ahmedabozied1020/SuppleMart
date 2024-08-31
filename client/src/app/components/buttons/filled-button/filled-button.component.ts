@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-filled-button',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './filled-button.component.css'
 })
 export class FilledButtonComponent {
-
+  @Input() label!: string;
 }

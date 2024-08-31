@@ -1,11 +1,11 @@
 const Product = require("../models/product.model");
-
 const uploadToImageKit = require("../utils/imageKitConfig");
 const CustomError = require("../utils/errors/CustomError");
 const {
   createProductSchema,
   paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
+const Category = require("../models/category.model");
 
 const getHomeProducts = async (req, res, next) => {
   try {
@@ -25,6 +25,11 @@ const createProduct = async (req, res, next) => {
     }
 
     const { title, description, price, count, rate, categories } = req.body;
+
+    const validCategories = await Category.find({ title: { $in: categories } });
+    if (validCategories.length !== categories.length) {
+      throw new CustomError("One or more categories are invalid", 400);
+    }
 
     const lowerCaseCategories = categories.map((category) =>
       category.toLowerCase().trim()
@@ -75,21 +80,38 @@ const createProduct = async (req, res, next) => {
   }
 };
 
+const addCategory = async (req, res, next) => {
+  try {
+    const { title } = req.body;
+
+    const existingCategory = await Category.findOne({ title });
+    if (existingCategory) {
+      return res.status(409).send({ message: "Category already exists" });
+    }
+
+    const newCategory = new Category({ title });
+    await newCategory.save();
+    res.status(201).send({ message: "Category created successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getCategories = async (req, res, next) => {
   try {
-    const categories = Product.schema.path("categories").options.enum;
+    const categories = await Category.find({});
     const categoryAndProductCountObjects = await Promise.all(
       categories.map(async (category) => {
         const count = await Product.countDocuments({
-          categories: { $all: [category] },
+          categories: { $in: [category.title] },
         });
 
         const firstProduct = await Product.findOne({
-          categories: { $all: [category] },
+          categories: { $in: [category.title] },
         }).select("thumbnail");
-        console.log(firstProduct);
+
         return {
-          category,
+          category: category.title,
           thumbnail: firstProduct ? firstProduct.thumbnail : null,
           count,
         };
@@ -142,12 +164,13 @@ const getLatestDealProduct = async (req, res, next) => {
 
 const getPaginatedProducts = async (req, res, next) => {
   try {
-    const category = req.params.category || "all";
+    const category = req.query.category || "all";
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 12;
     const minPrice = parseFloat(req.query.minPrice);
     const maxPrice = parseFloat(req.query.maxPrice);
     const minRating = parseFloat(req.query.minRating);
+    const searchQuery = req.query.search || "";
 
     const { error } = paginatedProductsSchema.validate({
       category,
@@ -161,26 +184,28 @@ const getPaginatedProducts = async (req, res, next) => {
       throw new CustomError(error.details[0].message, 400);
     }
 
-    const validCategories = Product.schema.path("categories").options.enum;
-    if (!validCategories.includes(category)) {
-      throw new CustomError("invalid category", 400);
+    if (category !== "all") {
+      const categoryExists = await Category.exists({ title: category });
+      if (!categoryExists) {
+        throw new CustomError("Invalid category", 400);
+      }
     }
 
-    const query = { categories: { $all: [category] } };
+    const query = category === "all" ? {} : { categories: { $in: [category] } };
     if (minPrice) query.price = { ...query.price, $gte: minPrice };
     if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
     if (minRating) query.rate = { ...query.rate, $gte: minRating };
+    if (searchQuery) query.$text = { $search: searchQuery };
 
     const categorisedProductsCount = await Product.countDocuments(query);
-
     const paginatedProducts = await Product.find(query).skip(skip).limit(limit);
-
     const pagesNumber = Math.ceil(categorisedProductsCount / limit);
 
     res.status(200).send({
       paginatedProducts,
       pagination: {
         total: categorisedProductsCount,
+        limit,
         pages: pagesNumber,
         page,
         prev: page > 1,
@@ -215,6 +240,7 @@ module.exports = {
   createProduct,
   getHomeProducts,
   getCategories,
+  addCategory,
   getBestSellingProducts,
   getLatestDealProduct,
   getHomeRecommendedProducts,

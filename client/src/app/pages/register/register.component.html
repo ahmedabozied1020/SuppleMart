@@ -1,0 +1,168 @@
+<div class="flex min-h-screen">
+  <div class="w-1/2 hidden md:block">
+    <img
+      src="img register.jpg"
+      alt="register image"
+      class="w-full h-full object-cover opacity-85"
+    />
+  </div>
+  <div
+    class="w-full md:w-1/2 bg-[var(--secondary-color)] flex flex-col items-center justify-center"
+  >
+    <div class="flex flex-col items-center">
+      <img class="w-52 mb-3" src="logo light.svg" alt=" logo App" />
+      <p
+        class="text-white font-bold text-2xl w-full capitalize text-center leading-7 mb-2"
+      >
+        Become the best version of yourself.
+        <br />
+        Push your limits.
+      </p>
+    </div>
+    <div class="w-3/4">
+      <form
+        class="container mx-auto max-w-md"
+        [formGroup]="registerForm"
+        (ngSubmit)="handleSubmit()"
+      >
+        <div class="mb-4">
+          <label
+            for="name"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Name</label
+          >
+          <input
+            type="text"
+            class="p-2 text-white mt-1 w-full h-10 block bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="name"
+            name="name"
+            formControlName="name"
+            placeholder="Enter your name"
+          />
+          <div
+            *ngIf="
+              (name?.touched && name?.invalid) || (submitted && name?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <!-- password?.errors?.['minlength'] -->
+            <div *ngIf="name?.errors?.['required']">Name is required!</div>
+            <div *ngIf="name?.errors?.['minlength']">
+              Min Length is 3 chars!
+            </div>
+            <div *ngIf="name?.errors?.['maxlength']">
+              Max Length is 30 chars!
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="exampleInputEmail1"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            name="email"
+            formControlName="email"
+            placeholder="Enter your email address"
+          />
+          <div
+            *ngIf="
+              (email?.touched && email?.invalid) ||
+              (submitted && email?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="email?.errors?.['required']">Email is required!</div>
+            <div *ngIf="email?.errors?.['pattern']">Invalid email format!</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="exampleInputPassword1"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Password</label
+          >
+          <input
+            type="password"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="exampleInputPassword1"
+            name="password"
+            formControlName="password"
+            placeholder="Enter your password"
+          />
+          <div
+            *ngIf="
+              (password?.touched && password?.invalid) ||
+              (submitted && password?.invalid)
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="password?.errors?.['required']">
+              Password is required!
+            </div>
+            <div *ngIf="password?.errors?.['minlength']">
+              Min length is 8 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="re_password"
+            class="block text-sm font-bold text-[--primary-color]"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            id="re_password"
+            name="re_password"
+            formControlName="re_password"
+            placeholder="Re-enter your password"
+            (input)="handleChange()"
+          />
+          <div
+            *ngIf="
+              (re_password?.touched && re_password?.invalid) ||
+              (submitted && (re_password?.invalid || noMatch))
+            "
+            class="mt-2 text-sm text-red-600"
+          >
+            <div *ngIf="re_password?.errors?.['required']">
+              Re-enter your password!
+            </div>
+            <div *ngIf="re_password?.errors?.['minlength']">
+              Min length is 8 characters
+            </div>
+            <div *ngIf="noMatch">Passwords don't match</div>
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
+          {{errorMessage}}
+        </div>
+        <div class="w-full flex justify-center">
+          <app-register-button [label]="'register'"></app-register-button>
+        </div>
+      </form>
+
+      <div class="text-center mt-2">
+        <p class="text-sm text-white">
+          Already have an account?
+          <a
+            routerLink="#"
+            class="font-medium text-[--primary-color] hover:text-yellow-600"
+          >
+            Log in now
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
