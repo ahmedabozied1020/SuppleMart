@@ -216,6 +216,26 @@ const getPaginatedProducts = async (req, res, next) => {
     next(error);
   }
 };
+const deleteProduct = async (req, res) => {
+  try {
+    const productName = req.params.name;
+    await Product.deleteOne({ name: productName, userId: req.user._id });
+    res.send("Product deleted");
+    res.status(200).send({ message: "Product deleted successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting product", error });
+  }
+};
+const updateProduct = async (req, res) => {
+  try {
+    const oldProductName = req.params.name;
+    const productName = req.body.name;
+    await Product.updateOne({ name: oldProductName }, { name: productName });
+    res.status(200).send({ message: "Product Updated successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Error Updating product", error });
+  }
+};
 module.exports = {
   createProduct,
   getHomeProducts,
@@ -225,4 +245,6 @@ module.exports = {
   getLatestDealProduct,
   getHomeRecommendedProducts,
   getPaginatedProducts,
+  deleteProduct,
+  updateProduct,
 };

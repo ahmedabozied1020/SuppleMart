@@ -10,6 +10,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("./utils/logging/logger");
 const errorHandler = require("./middlewares/errorHandler");
 
+const User = require("./models/user.model");
+
 const userRoutes = require("./routes/users.routes");
 const productRoutes = require("./routes/products.routes");
 const cartRoutes = require("./routes/cart.routes");
@@ -34,12 +36,24 @@ app.use("/cart", cartRoutes);
 app.use(errorHandler);
 
 mongoose
-  .connect(DB_URL)
-  .then(() => {
+  .connect(process.env.DB_URL)
+  .then(async () => {
     logger.log({
       level: "info",
       message: "Connected to DB",
     });
+
+    const { ADMIN, ADMIN_PASS } = process.env;
+    const existingAdmin = await User.findOne({ email: ADMIN });
+    if (!existingAdmin) {
+      const admin = new User({
+        name: "hamada",
+        email: ADMIN,
+        password: ADMIN_PASS,
+        role: "admin",
+      });
+      await admin.save();
+    }
 
     app.listen(PORT, () =>
       logger.log({
@@ -51,6 +65,6 @@ mongoose
   .catch((err) => {
     logger.log({
       level: "error",
-      message: "Couldn't Connect to DB, Please Check Your Internet Connection",
+      message: err.message,
     });
   });
