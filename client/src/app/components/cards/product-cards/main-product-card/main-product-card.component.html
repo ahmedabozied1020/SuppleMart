@@ -1,7 +1,13 @@
-<div class="group bg-white w-full max-w-sm h-[435px] mx-auto">
+<!-- Child Component -->
+
+<div class="group bg-white w-full max-w-sm h-[500px] mx-auto">
   @if(!loading){
   <div class="relative h-[66%]">
-    <img [src]="product.thumbnail" alt="product" class="w-full h-full object-cover" />
+    <img
+      [src]="product.thumbnail"
+      alt="product"
+      class="w-full h-full object-cover"
+    />
     <div
       class="absolute bottom-0 left-0 right-0 h-0 mix-blend-multiply bg-[var(--primary-color)] group-hover:h-full transition-all duration-300"
     ></div>
@@ -14,7 +20,7 @@
       </span>
       }
     </div>
-    <h3 class="font-bold">
+    <h3 class="font-bold text-sm mt-3">
       <a href="#">{{ product.title }}</a>
     </h3>
     <div>{{ product.rating }}</div>

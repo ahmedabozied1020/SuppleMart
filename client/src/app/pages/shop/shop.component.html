@@ -1,18 +1,49 @@
-<app-navbar></app-navbar>
-<div class="flex-col container mx-auto max-w-7xl">
-  <app-bread-crumbs [currentPageTitle]="title"></app-bread-crumbs>
-  <div class="flex gap-10">
-    <app-filters></app-filters>
-    <div class="flex-col">
-      <div class="border-b-2 pb-3">
-        <app-pagination-bar
-          [paginationData]="paginationData"
-        ></app-pagination-bar>
+<div class="flex flex-col min-h-screen">
+  <app-navbar></app-navbar>
+
+  <div class="drawer lg:drawer-none">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content flex flex-col">
+      <div class="flex-grow container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div class="flex items-center mb-4">
+          <app-bread-crumbs
+            [currentPageTitle]="title"
+            class="flex-grow"
+          ></app-bread-crumbs>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-10">
+          <aside class="hidden lg:block w-80">
+            <div class="p-4">
+              <app-filters></app-filters>
+            </div>
+          </aside>
+
+          <main class="flex-1">
+            <div class="border-b-2 pb-3 mb-4 ms-5">
+              <app-pagination-bar
+                [paginationData]="paginationData"
+              ></app-pagination-bar>
+            </div>
+            <app-shop-products
+              [paginatedProducts]="paginatedProducts"
+            ></app-shop-products>
+          </main>
+        </div>
       </div>
-      <app-shop-products
-        [paginatedProducts]="paginatedProducts"
-      ></app-shop-products>
+    </div>
+
+    <div class="drawer-side lg:hidden">
+      <label
+        for="my-drawer"
+        aria-label="close sidebar"
+        class="drawer-overlay"
+      ></label>
+      <aside class="w-80 min-h-full bg-base-200 p-4">
+        <app-filters></app-filters>
+      </aside>
     </div>
   </div>
+
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
