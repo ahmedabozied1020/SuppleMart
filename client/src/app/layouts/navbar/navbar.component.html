@@ -1,3 +1,23 @@
+@if(isSuccessfullyLoggedIn){
+<div
+  class="z-50 toast toast-top toast-center transition-transform transform -translate-y-full opacity-0 duration-500"
+  [ngClass]="{ 'translate-y-0 opacity-100': isSuccessfullyLoggedIn }"
+>
+  <div class="alert alert-success">
+    <span>You are logged in, Welcome ^_^</span>
+  </div>
+</div>
+} @if(isSuccessfullyLoggedOut){
+<div
+  class="z-50 toast toast-top toast-center transition-transform transform -translate-y-full opacity-0 duration-500"
+  [ngClass]="{ 'translate-y-0 opacity-100': isSuccessfullyLoggedOut }"
+>
+  <div class="alert alert-error">
+    <span>You are now logged out</span>
+  </div>
+</div>
+}
+
 <section
   class="bg-[var(--secondary-color)] py-3 hidden md:flex text-[var(--secondary-text)] font-semibold"
 >
@@ -40,35 +60,138 @@
       ></app-navbar-item>
       <app-navbar-item
         routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
         routerLink="/shop"
         label="SHOP"
       ></app-navbar-item>
-      <app-navbar-item label="PAGE"></app-navbar-item>
-      <app-navbar-item label="BLOG"></app-navbar-item>
-      <app-navbar-item label="CONTACT"></app-navbar-item>
+      <app-navbar-item
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/contact-us"
+        label="CONTACT"
+      ></app-navbar-item>
     </div>
+    <div></div>
     <div class="flex items-center relative">
       <app-navbar-item
         first="true"
         [svgIcon]="searchIcon"
         title="search"
       ></app-navbar-item>
-      <app-navbar-item
-        [svgIcon]="accountIcon"
-        title="login"
-        class="dropdown dropdown-end"
-        tabindex="0"
-        role="button"
-      >
-        <ul
+      <div class="dropdown dropdown-end">
+        <app-navbar-item
+          [svgIcon]="accountIcon"
+          title="login"
           tabindex="0"
-          class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          role="button"
+        ></app-navbar-item>
+        @if(loggedInUser){
+        <div
+          class="dropdown-content bg-base-100 rounded-none z-[1] w-64 p-4 shadow-lg"
         >
-          <li><a>Item 1</a></li>
-          <li><a>Item 2</a></li>
-        </ul>
-      </app-navbar-item>
+          <div class="text-center">
+            <h2 class="text-lg font-bold">Welcome, {{ loggedInUser.name }}!</h2>
+          </div>
+
+          <ul class="mt-4">
+            <li
+              class="p-2 cursor-pointer hover:bg-slate-300 hover:text-white rounded text-center"
+            >
+              Settings
+            </li>
+            <li
+              class="p-2 mt-2 cursor-pointer hover:bg-slate-300 hover:text-white rounded text-center"
+            >
+              Profile
+            </li>
+          </ul>
+          <div class="mt-4">
+            <button
+              (click)="handleLogout()"
+              class="btn text-white bg-[var(--secondary-color)] hover:bg-red-700 rounded-none w-full"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+        } @else{
+        <form
+          tabindex="0"
+          class="dropdown-content bg-base-100 rounded-none z-[1] w-64 p-4 shadow-lg"
+          [formGroup]="loginForm"
+          (ngSubmit)="handleLogin()"
+        >
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input
+              type="text"
+              formControlName="email"
+              placeholder="Enter your email"
+              class="input input-bordered w-full rounded-none"
+              required
+            />
+            <div
+              *ngIf="
+                (email?.touched && email?.invalid) ||
+                (submitted && email?.invalid)
+              "
+              class="mt-2 text-sm text-red-600"
+            >
+              <div *ngIf="email?.errors?.['required']">Email is required!</div>
+              <div *ngIf="email?.errors?.['pattern']">
+                Invalid email format!
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control mt-2">
+            <label class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+              class="input input-bordered w-full rounded-none"
+              required
+            />
+            <div
+              *ngIf="
+                (password?.touched && password?.invalid) ||
+                (submitted && password?.invalid)
+              "
+              class="mt-2 text-sm text-red-600"
+            >
+              <div *ngIf="password?.errors?.['required']">
+                Password is required!
+              </div>
+              <div *ngIf="password?.errors?.['minlength']">
+                Min length is 8 characters
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button
+              type="submit"
+              class="btn bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:text-white rounded-none w-full"
+            >
+              Login
+            </button>
+          </div>
+          <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
+            {{ errorMessage }}
+          </div>
+          <div class="text-center mt-1">
+            <a routerLink="/register" class="link text-[var(--secondary-color)]"
+              >Create an Account</a
+            >
+          </div>
+        </form>
+        }
+      </div>
       <app-navbar-item
         [svgIcon]="heartIcon"
         title="wish list"
@@ -82,7 +205,7 @@
       ></app-navbar-item>
       <span
         class="badge badge-sm indicator-item bg-[#da5454] border-[#da5454] absolute rounded-full text-white right-2 top-2"
-        >8</span
+        >{{ loggedInUser?.cart?.length || "0" }}</span
       >
     </div>
   </div>

@@ -8,26 +8,33 @@ const CustomError = require("../utils/errors/CustomError");
 const { Admin } = require("mongodb");
 
 exports.signup = async (req, res, next) => {
-  const { error } = await createUserSchema.validateAsync(req.body);
+  try {
+    const { error } = createUserSchema.validate(req.body);
 
-  if (error) {
-    return res.status(409).send({"error": "invalid data sent"});
+    if(error) {
+      throw new CustomError(error.details[0].message, 400);
+    }
+
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser){
+      throw new CustomError("this email is already in use", 409);
+    }
+
+    const user = new User({ name, email, password });
+    await user.save();
+    res.status(201).send({ success: "Successfully registered" });
+  } catch (error) {
+    next(error);
   }
-
-  const { name, email, password } = req.body;
-
-  const existingUser = await User.findOne({ email });
-  if (existingUser) return res.status(409).send({"error": "this email is already in use"});
-
-  const user = new User({ name, email, password });
-  await user.save();
-  res.status(201).send({"success": "Successfully registered"});
 };
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) return res.send("invalid email or password");
+  if (!user)
+    return res.status(400).send({ error: "invalid email or password" });
   // valid email
   const isMatched = await bcrypt.compare(password, user.password);
   if (isMatched) {
@@ -35,9 +42,10 @@ exports.login = async (req, res) => {
     const token = await jwtSign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "2d",
     });
-    res.send({ message: "user logged in", token });
+    const { password, createdAt, updatedAt, __v, ..._user } = user._doc;
+    res.send({ success: "successfully logged in", user: { ..._user, token } });
   } else {
-    res.send("invalid email or password");
+    res.status(400).send({ error: "invalid email or password" });
   }
 };
 
