@@ -1,14 +1,11 @@
-.more:hover + .shopping-content {
-  width: 100%;
-  visibility: visible;
-}
-
-.shopping-content:hover.shopping-content {
-  width: 100%;
+.more:hover + .shopping-content,
+.shopping-content:hover {
+  transform: translateX(0%);
   visibility: visible;
 }
 
 .shopping-content {
-  width: 0px;
-  visibility: invisible;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }

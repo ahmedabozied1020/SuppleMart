@@ -25,7 +25,7 @@ export class SalesCardsComponent {
         .subscribe((products) => {
           this.products = products;
         });
-    }, 1000);
+    }, 500);
   }
 
   ngOnDestroy() {

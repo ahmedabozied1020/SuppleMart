@@ -31,7 +31,7 @@ export class CategoryFilterComponent {
           this.categories = cats;
           this.categories.splice(0, 1);
         });
-    }, 1000);
+    }, 500);
   }
 
   handleCategorySelect(category: string) {
