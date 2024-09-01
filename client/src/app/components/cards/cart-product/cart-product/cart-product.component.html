@@ -15,15 +15,15 @@
   </svg>
 </div>
 <div class="w-3/12 md:w-2/12">
-  <img [src]="imgProductCart" class="w-24 h-auto object-cover mx-auto" />
+  <img [src]="cartProduct.thumbnail" class="w-24 h-auto object-cover mx-auto" />
 </div>
 <div class="w-3/12">
   <a href="#" class="capitalize text-base hover:text-[var(--primary-color)]">
-    {{ nameProductCart }}
+    {{ cartProduct.title }}
   </a>
-  <p class="text-gray-400 text-sm">{{ available }}</p>
+  <p class="text-gray-400 text-sm">{{ "available" }}</p>
 </div>
-<div class="w-2/12">£{{ priceProductCart }}</div>
+<div class="w-2/12">£{{ cartProduct.price }}</div>
 <div class="w-2/12">
   <label>
     <input
