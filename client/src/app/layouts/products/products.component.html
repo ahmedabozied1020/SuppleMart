@@ -3,45 +3,45 @@
     <p class="text-[var(--secondary-text)]">SHOP OUR NEW RELEASES</p>
     <h2 class="font-extrabold text-4xl">Our Products</h2>
   </div>
-  <div class="flex justify-between gap-2 flex-wrap">
+  <div class="flex justify-between gap-10 flex-wrap">
     @for(product of products; track product._id){
     <app-main-product-card
       [loading]="false"
       [product]="product"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[46%] md:w-[40%] lg:w-[22.5%]"
     ></app-main-product-card>
     } @empty{
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     <app-main-product-card
       [loading]="true"
-      class="w-full sm:w-[45%] md:w-[30%] lg:w-[20%]"
+      class="w-full sm:w-[45%] md:w-[30%] lg:w-[22.5%]"
     ></app-main-product-card>
     }
   </div>
