@@ -5,6 +5,7 @@ const {
   updateCartItem,
   removeCartItem,
 } = require("../controllers/cart.controllers");
+
 const router = express.Router();
 
 router.get("/", getCartItems);

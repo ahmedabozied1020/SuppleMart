@@ -1,3 +1,23 @@
+@if(isSuccessfullyLoggedIn){
+<div
+  class="z-50 toast toast-top toast-center transition-transform transform -translate-y-full opacity-0 duration-500"
+  [ngClass]="{ 'translate-y-0 opacity-100': isSuccessfullyLoggedIn }"
+>
+  <div class="alert alert-success">
+    <span>You are logged in, Welcome ^_^</span>
+  </div>
+</div>
+} @if(isSuccessfullyLoggedOut){
+<div
+  class="z-50 toast toast-top toast-center transition-transform transform -translate-y-full opacity-0 duration-500"
+  [ngClass]="{ 'translate-y-0 opacity-100': isSuccessfullyLoggedOut }"
+>
+  <div class="alert alert-error">
+    <span>You are now logged out</span>
+  </div>
+</div>
+}
+
 <section
   class="bg-[var(--secondary-color)] py-3 hidden md:flex text-[var(--secondary-text)] font-semibold"
 >
@@ -22,33 +42,66 @@
   </div>
 </section>
 
-<section class="bg-[var(--primary-color)] h-16">
-  <div class="container m-auto flex h-full">
-    <div class="flex-1 flex items-center">
-      <app-navbar-item
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLink="/"
-        label="LOGO"
-      ></app-navbar-item>
-      <app-navbar-item
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLink="/"
-        first="true"
-        label="HOME"
-      ></app-navbar-item>
-      <app-navbar-item
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLink="/shop"
-        label="SHOP"
-      ></app-navbar-item>
-      <app-navbar-item label="PAGE"></app-navbar-item>
-      <app-navbar-item label="BLOG"></app-navbar-item>
-      <app-navbar-item label="CONTACT"></app-navbar-item>
+<nav class="bg-[var(--primary-color)] h-16">
+  <div class="container m-auto flex h-full items-center justify-around">
+    <button
+      data-collapse-toggle="navbar-menu"
+      type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600"
+      aria-controls="navbar-menu"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg
+        class="w-5 h-5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 17 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15"
+        />
+      </svg>
+    </button>
+    <app-navbar-item
+      class="pl-2"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLink="/"
+      label="LOGO"
+    ></app-navbar-item>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-menu">
+      <ul
+        class="md:flex-row rtl:space-x-reverse font-medium mt-4 rounded-lg bg-[var(--primary-color)] md:space-y-0 md:mt-0 md:bg-transparent"
+      >
+        <app-navbar-item
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/"
+          first="true"
+          label="HOME"
+        ></app-navbar-item>
+        <app-navbar-item
+          routerLinkActive="active-link"
+          routerLink="/shop"
+          label="SHOP"
+        ></app-navbar-item>
+        <app-navbar-item
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/contact-us"
+          label="CONTACT"
+        ></app-navbar-item>
+      </ul>
     </div>
-    <div class="flex items-center relative">
+
+    <div></div>
+    <ul class="flex items-center relative space-x-4 rtl:space-x-reverse">
       <app-navbar-item
         first="true"
         [svgIcon]="searchIcon"
@@ -61,21 +114,52 @@
           tabindex="0"
           role="button"
         ></app-navbar-item>
+        @if(loggedInUser){
+        <div
+          class="dropdown-content bg-base-100 rounded-none z-[1] w-64 p-4 shadow-lg"
+        >
+          <div class="text-center">
+            <h2 class="text-lg font-bold">Welcome, {{ loggedInUser.name }}!</h2>
+          </div>
+
+          <ul class="mt-4">
+            <li
+              class="p-2 cursor-pointer hover:bg-slate-300 hover:text-white rounded text-center"
+            >
+              Settings
+            </li>
+            <li
+              class="p-2 mt-2 cursor-pointer hover:bg-slate-300 hover:text-white rounded text-center"
+            >
+              Profile
+            </li>
+          </ul>
+          <div class="mt-4">
+            <button
+              (click)="handleLogout()"
+              class="btn text-white bg-[var(--secondary-color)] hover:bg-red-700 rounded-none w-full"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+        } @else{
         <form
           tabindex="0"
-          class="dropdown-content bg-base-100 rounded-box z-[1] w-64 p-4 shadow-lg"
+          class="dropdown-content bg-base-100 rounded-none z-[1] w-64 p-4 shadow-lg"
           [formGroup]="loginForm"
           (ngSubmit)="handleLogin()"
         >
           <div class="form-control">
             <label class="label">
-              <span class="label-text">Username or Email</span>
+              <span class="label-text">Email</span>
             </label>
             <input
               type="text"
               formControlName="email"
-              placeholder="Username or Email"
-              class="input input-bordered w-full"
+              placeholder="Enter your email"
+              class="input input-bordered w-full rounded-none"
               required
             />
             <div
@@ -100,7 +184,7 @@
               type="password"
               formControlName="password"
               placeholder="Password"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full rounded-none"
               required
             />
             <div
@@ -120,18 +204,23 @@
           </div>
 
           <div class="mt-4">
-            <button type="submit" class="btn btn-primary w-full">Login</button>
+            <button
+              type="submit"
+              class="btn bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:text-white rounded-none w-full"
+            >
+              Login
+            </button>
           </div>
           <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
             {{ errorMessage }}
           </div>
-          <div class="text-center mt-2">
-            <a href="#" class="link link-primary">Lost your password?</a>
-          </div>
           <div class="text-center mt-1">
-            <a href="#" class="link link-secondary">Create an Account</a>
+            <a routerLink="/register" class="link text-[var(--secondary-color)]"
+              >Create an Account</a
+            >
           </div>
         </form>
+        }
       </div>
       <app-navbar-item
         [svgIcon]="heartIcon"
@@ -146,11 +235,11 @@
       ></app-navbar-item>
       <span
         class="badge badge-sm indicator-item bg-[#da5454] border-[#da5454] absolute rounded-full text-white right-2 top-2"
-        >8</span
+        >{{ loggedInUser?.cart?.length || "0" }}</span
       >
-    </div>
+    </ul>
   </div>
-</section>
+</nav>
 
 <section class="bg-[#f7f7f7] h-[4.3rem] hidden md:flex items-center">
   <div
