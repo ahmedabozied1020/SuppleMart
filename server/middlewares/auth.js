@@ -11,5 +11,5 @@ module.exports = async (req, res, next) => {
   const user = await User.findById(payload.userId);
   if (!user) return res.status(401).send("unAuthenticated");
   req.user = user;
-  next();
+  next();
 };

@@ -1,0 +1,234 @@
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box w-11/12 max-w-5xl">
+    <div class="flex justify-between">
+      <div>
+        <h3 class="text-lg font-bold">Add Product Data!</h3>
+        <p class="py-4">Press ESC key or click the close button to close</p>
+      </div>
+    </div>
+    <div class="modal-action">
+      <div
+        class="w-full md: bg-[var(--secondary-color)] flex flex-col items-center justify-center"
+      >
+        <div class="flex flex-col items-center">
+          <p
+            class="text-white font-bold text-2xl w-full capitalize text-center leading-7 mb-2"
+          >
+            Add Proudcts Data
+          </p>
+        </div>
+        <div class="w-3/4">
+          <form
+            class="container mx-auto max-w-md"
+            [formGroup]="addProductForm"
+            (ngSubmit)="handleSubmit()"
+            method="dialog"
+          >
+            <div class="mb-4">
+              <label
+                for="title"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Product title</label
+              >
+              <input
+                type="text"
+                class="p-2 text-white mt-1 w-full h-10 block bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                id="title"
+                name="title"
+                formControlName="title"
+                placeholder="Enter product title"
+              />
+              <div
+                *ngIf="
+                  (title?.touched && title?.invalid) ||
+                  (submitted && title?.invalid)
+                "
+                class="mt-2 text-sm text-red-600"
+              >
+                <div *ngIf="title?.errors?.['required']">
+                  Title is required!
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="exampleInputTitle1"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Product Description</label
+              >
+              <textarea
+                type="text"
+                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                id="exampleInputTitle1"
+                aria-describedby="descriptionHelp"
+                name="description"
+                formControlName="description"
+                placeholder="Enter product description"
+              >
+              </textarea>
+              <div
+                *ngIf="
+                  (description?.touched && description?.invalid) ||
+                  (submitted && description?.invalid)
+                "
+                class="mt-2 text-sm text-red-600"
+              >
+                <div *ngIf="description?.errors?.['required']">
+                  Description is required!
+                </div>
+                <div *ngIf="description?.errors?.['maxlength']">
+                  Too long! Max 500 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="exampleInputPrice1"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Price</label
+              >
+              <input
+                type="number"
+                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                id="exampleInputPrice1"
+                name="price"
+                formControlName="price"
+                placeholder="Enter product price"
+              />
+              <div
+                *ngIf="
+                  (price?.touched && price?.invalid) ||
+                  (submitted && price?.invalid)
+                "
+                class="mt-2 text-sm text-red-600"
+              >
+                <div *ngIf="price?.errors?.['required']">
+                  Price is required!
+                </div>
+                <div *ngIf="price?.errors?.['min']">
+                  Price could not be negative value!
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="exampleInputCount1"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Count</label
+              >
+              <input
+                type="number"
+                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                id="exampleInputCount1"
+                name="count"
+                formControlName="count"
+                placeholder="Enter product count"
+              />
+              <div
+                *ngIf="
+                  (count?.touched && count?.invalid) ||
+                  (submitted && count?.invalid)
+                "
+                class="mt-2 text-sm text-red-600"
+              >
+                <div *ngIf="count?.errors?.['required']">
+                  Count is required!
+                </div>
+                <div *ngIf="count?.errors?.['min']">
+                  Count could not be negative value!
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="exampleInputThumbnail1"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Thumbnail</label
+              >
+              <!-- (change)="onThumbnailChange($event)" -->
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                (change)="onSingleFileSelected($event)"
+                class="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                id="exampleInputThumbnail1"
+                name="thumbnail"
+                formControlName="thumbnail"
+                placeholder="Enter product thumbnail"
+              />
+              <!-- <div
+                *ngIf="
+                  (thumbnail?.touched && thumbnail?.invalid) ||
+                  (submitted && thumbnail?.invalid)
+                "
+                class="mt-2 text-sm text-red-600"
+              >
+                <div *ngIf="thumbnail?.errors?.['required']">
+                  Thumbnail is required!
+                </div>
+              </div> -->
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="exampleInputImages1"
+                class="block text-sm font-bold text-[--primary-color]"
+                >Images</label
+              >
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                multiple
+                (change)="onMultipleFilesSelected($event)"
+                class="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                id="exampleInputImages1"
+                name="images"
+                formControlName="images"
+                placeholder="Enter product images"
+              />
+            </div>
+
+            <div class="mb-4">
+              <h3 class="mb-2 text-sm font-bold text-[--primary-color]">
+                Select Categories:
+              </h3>
+              <div class="flex flex-wrap" formArrayName="categories">
+                <div *ngFor="let category of categories; let i = index">
+                  <label
+                    class="cursor-pointer flex items-center mr-4 mb-2"
+                    for="{{ category }}"
+                  >
+                    <input
+                      type="checkbox"
+                      class="checkbox checkbox-warning mr-2"
+                      [formControlName]="i"
+                      (change)="onCheckboxChange($event)"
+                      [value]="category"
+                    />
+                    <span class="label-text text-white">{{ category }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
+              {{ errorMessage }}
+            </div>
+            <div class="w-full flex justify-center">
+              <app-register-button
+                [label]="'Add Product'"
+              ></app-register-button>
+              <div>
+                <button class="btn">Close</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>

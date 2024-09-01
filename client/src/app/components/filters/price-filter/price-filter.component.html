@@ -1,0 +1,28 @@
+<div class="polygon bg-white w-72 mb-8">
+  <span
+    class="font-bold text-lg border-l-[3px] border-b-[1px] border-x-[--primary-color] py-4 px-7 block"
+    >Filter by price</span
+  >
+  <div class="container w-75 p-6 pt-0">
+    <div class="d-flex justify-content-between">
+      <div class="custom-slider">
+        <ngx-slider
+          [(value)]="minPrice"
+          [(highValue)]="maxPrice"
+          [options]="options"
+        ></ngx-slider>
+      </div>
+      <div class="flex justify-between">
+        <p>
+          Price: $<span>{{ minPrice }}</span> — $<span>{{ maxPrice }}</span>
+        </p>
+        <button
+          (click)="handleFilterSubmit()"
+          class="underline hover:text-[--primary-color]"
+        >
+          Filter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

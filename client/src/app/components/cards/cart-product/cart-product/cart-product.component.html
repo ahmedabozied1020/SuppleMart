@@ -1,0 +1,38 @@
+<div class="w-[2%] p-5">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="size-4 text-gray-400 hover:text-[var(--primary-color)] cursor-pointer"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+    />
+  </svg>
+</div>
+<div class="w-3/12 md:w-2/12">
+  <img [src]="imgProductCart" class="w-24 h-auto object-cover mx-auto" />
+</div>
+<div class="w-3/12">
+  <a href="#" class="capitalize text-base hover:text-[var(--primary-color)]">
+    {{ nameProductCart }}
+  </a>
+  <p class="text-gray-400 text-sm">{{ available }}</p>
+</div>
+<div class="w-2/12">£{{ priceProductCart }}</div>
+<div class="w-2/12">
+  <label>
+    <input
+      type="number"
+      min="0"
+      max="10"
+      value="1"
+      class="w-12 h-10 text-center p-2 text-md focus:border-[var(--primary-color)] focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] transition duration-500"
+    />
+  </label>
+</div>
+<div class="w-2/12">£174.66</div>

@@ -7,7 +7,9 @@ const createProductSchema = Joi.object({
   price: Joi.number().min(0).required(),
   count: Joi.number().min(0).required(),
   rate: Joi.number().min(0).max(5),
-  categories: Joi.array().items(Joi.string()),
+  categories: Joi.array().items(Joi.string()).optional(),
+  thumbnail: Joi.optional(),
+  images: Joi.optional(),
 });
 
 const paginatedProductsSchema = Joi.object({

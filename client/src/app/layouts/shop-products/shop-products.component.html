@@ -1,0 +1,44 @@
+<section class="container m-auto my-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-11">
+    @for(product of paginatedProducts; track product._id){
+    <app-main-product-card
+      [loading]="false"
+      [product]="product"
+      class="w-full"
+    ></app-main-product-card>
+    } @empty{
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    <app-main-product-card
+      [loading]="true"
+      class="w-full"
+    ></app-main-product-card>
+    }
+  </div>
+</section>

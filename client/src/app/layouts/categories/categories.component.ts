@@ -26,7 +26,7 @@ export class CategoriesComponent {
           this.categories.splice(5, 1);
           this.categories.splice(0, 1);
         });
-    }, 5000);
+    }, 500);
   }
 
   ngOnDestroy() {

@@ -12,7 +12,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class NavbarItemComponent {
   @Input() first!: string;
   @Input() label!: string;
-  @Input() url!: string;
   @Input() svgIcon!: string;
 
   safeSvgIcon!: SafeHtml;

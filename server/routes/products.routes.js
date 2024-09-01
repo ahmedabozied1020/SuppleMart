@@ -9,6 +9,7 @@ const {
   getPaginatedProducts,
   deleteProduct,
   updateProduct,
+  addCategory,
 } = require("../controllers/products.controllers");
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
@@ -31,13 +32,15 @@ router.get("/", getHomeProducts);
 
 router.get("/categories", getCategories);
 
+router.post("/category", addCategory);
+
 router.get("/bestSelling", getBestSellingProducts);
 
 router.get("/latestDealProduct/:title", getLatestDealProduct);
 
 router.get("/homeRecommendedProducts", getHomeRecommendedProducts);
 
-router.get("/shop/:category?", getPaginatedProducts);
+router.get("/shop", getPaginatedProducts);
 
 router.patch("/:name", auth, checkRole("admin"), updateProduct);
 

@@ -5,8 +5,7 @@ const {
   updateCartItem,
   removeCartItem,
 } = require("../controllers/cart.controllers");
-const { addToCartWithoutLogin } = require("../controllers/users.controllers");
-const auth = require("../middlewares/auth");
+
 const router = express.Router();
 
 router.get("/", auth, getCartItems);

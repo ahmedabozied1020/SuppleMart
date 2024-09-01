@@ -25,7 +25,7 @@ export class ProductsComponent {
         .subscribe((prods) => {
           this.products = prods;
         });
-    }, 5000);
+    }, 500);
   }
 
   ngOnDestroy() {
