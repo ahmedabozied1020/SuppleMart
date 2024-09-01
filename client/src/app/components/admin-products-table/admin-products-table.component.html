@@ -56,7 +56,9 @@
         <td>
           <div class="flex gap-2">
             <app-edit-button></app-edit-button>
-            <app-delete-button [product]="product"></app-delete-button>
+            <app-delete-button
+              (click)="handleDelete(product._id)"
+            ></app-delete-button>
           </div>
         </td>
       </tr>
@@ -75,3 +77,25 @@
     </tfoot>
   </table>
 </div>
+
+<dialog id="za3bola" class="modal">
+  <div class="modal-box">
+    <p class="pb-4">Press ESC key or click the button below to close</p>
+    <h3 class="text-lg font-bold">
+      This Product Will Be Deleted, Are You Sure?
+    </h3>
+    <div class="modal-action">
+      <form method="dialog">
+        <div class="flex gap-5">
+          <button class="btn">Close</button>
+          <button
+            class="btn bg-red-600 text-white hover:bg-red-800"
+            (click)="onSubmit()"
+          >
+            Confirm
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</dialog>

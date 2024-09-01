@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { AddProductFormModalComponent } from '../../forms/add-product-form-modal/add-product-form-modal.component';
 
 @Component({

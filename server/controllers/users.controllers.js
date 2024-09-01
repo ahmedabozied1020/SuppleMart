@@ -133,6 +133,6 @@ exports.createAdmin = async (req, res, next) => {
     await user.save();
     res.status(201).send({ message: "Admin Created", user });
   } catch (error) {
-    throw new CustomError(error.details[0].message, 500);
+    next(error);
   }
 };
