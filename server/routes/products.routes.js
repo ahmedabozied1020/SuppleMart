@@ -47,6 +47,6 @@ router.post("/getByIds", getProductsByIds);
 
 router.patch("/:id", auth, checkRole("admin"), updateProduct);
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", auth, checkRole("admin"), deleteProduct);
 
 module.exports = router;
