@@ -45,7 +45,10 @@
 <nav class="bg-[var(--primary-color)] h-16">
   <div class="container m-auto flex h-full items-center px-4">
     <!-- Hamburger menu for mobile -->
-    <label for="my-drawer" class="btn btn-ghost drawer-button lg:hidden">
+    <label
+      for="my-drawer"
+      class="me-3 hover:text-white hover:cursor-pointer drawer-button lg:hidden"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -234,32 +237,36 @@
 
 <div class="drawer">
   <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content">
-    <!-- Page content here -->
-  </div>
   <div class="drawer-side">
     <label
       for="my-drawer"
       aria-label="close sidebar"
       class="drawer-overlay"
     ></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+    <ul class="menu min-h-full w-2/5 p-4 bg-black">
       <li>
         <a
           routerLink="/"
-          routerLinkActive="active"
+          routerLinkActive="text-yellow-400"
           [routerLinkActiveOptions]="{ exact: true }"
+          class="text-white font-bold hover:underline"
           >HOME</a
         >
       </li>
       <li>
-        <a routerLink="/shop" routerLinkActive="active">SHOP</a>
+        <a
+          routerLink="/shop"
+          routerLinkActive="text-yellow-400"
+          class="text-white font-bold hover:underline"
+          >SHOP</a
+        >
       </li>
       <li>
         <a
           routerLink="/contact-us"
-          routerLinkActive="active"
+          routerLinkActive="text-yellow-400"
           [routerLinkActiveOptions]="{ exact: true }"
+          class="text-white font-bold hover:underline"
           >CONTACT</a
         >
       </li>
