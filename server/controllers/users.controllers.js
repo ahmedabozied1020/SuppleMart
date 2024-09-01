@@ -29,8 +29,9 @@ exports.signup = async (req, res, next) => {
 };
 
 const mergeNonLoggedInUserCart = async (userId, cartItems) => {
-  // console.log(userId);
-  // console.log(cartItems);
+  if (!Array.isArray(cartItems)) {
+    throw new CustomError("Invalid cart data", 400);
+  }
 
   for (let item of cartItems) {
     if (
@@ -42,20 +43,22 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
     }
   }
 
-  const user = await User.findById(userId).populate("cart.productId");
-  // console.log(user);
+  const user = await User.findById(userId);
+  console.log(user);
+
   const incomingProductIds = new Set(
     cartItems.map((item) => item.productId.toString())
   );
-  // console.log(incomingProductIds);
+
   user.cart = user.cart.filter((cartItem) => {
-    const productId = cartItem._id.toString();
-    if (!incomingProductIds.has(productId)) {
-      return false;
+    if (cartItem.product) {
+      const productId = cartItem.id.toString();
+      if (!incomingProductIds.has(productId)) {
+        return false;
+      }
     }
     return true;
   });
-  // console.log(user.cart);
 
   for (let item of cartItems) {
     const product = await Product.findById(item.productId);
@@ -63,12 +66,9 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
       throw new CustomError(`Product with id ${item.productId} not found`, 404);
     }
 
-    const existingCartItem = user.cart.find((cartItem) => {
-      console.log(cartItem);
-      cartItem._id.toString() === item.productId;
-    });
-
-    console.log(existingCartItem);
+    const existingCartItem = user.cart.find(
+      (cartItem) => cartItem.id.toString() === item.productId
+    );
 
     if (existingCartItem) {
       existingCartItem.quantity = item.quantity;
@@ -77,21 +77,21 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
         user.cart.push({ product, quantity: item.quantity });
       } else {
         throw new CustomError(
-          "Cannot add product with negative or zero quantity",
+          "Cannot add product with negative or zero quantity.",
           400
         );
       }
     }
   }
 
-  await user.save();
+  return await user.save();
 };
 
 exports.login = async (req, res) => {
   try {
     const { email, password, cart } = req.body;
 
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) return res.send("invalid email or password");
     // valid email
     const isMatched = await bcrypt.compare(password, user.password);
@@ -106,7 +106,7 @@ exports.login = async (req, res) => {
       );
 
       if (cart) {
-        await mergeNonLoggedInUserCart(user._id, req.body.cart);
+        user = await mergeNonLoggedInUserCart(user._id, req.body.cart);
       }
 
       res.send({ message: "user logged in", token, user });

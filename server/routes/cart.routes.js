@@ -9,9 +9,8 @@ const { addToCartWithoutLogin } = require("../controllers/users.controllers");
 const auth = require("../middlewares/auth");
 const router = express.Router();
 
-router.get("/", getCartItems);
-router.post("/", addToCart);
-router.put("/", updateCartItem);
-router.delete("/", removeCartItem);
-
+router.get("/", auth, getCartItems);
+router.post("/add", auth, addToCart);
+router.put("/update", auth, updateCartItem);
+router.delete("/delete", auth, removeCartItem);
 module.exports = router;

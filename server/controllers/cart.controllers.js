@@ -1,31 +1,47 @@
+const User = require("../models/user.model");
 const Product = require("../models/product.model");
+const CustomError = require("../utils/errors/CustomError");
+const mongoose = require("mongoose");
 
 const addToCart = async (req, res, next) => {
   try {
     const { productId, quantity } = req.body;
 
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+    if (quantity < 1) {
+      throw new CustomError("quantity must be positve number", 400);
     }
 
-    let cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
+    const userId = req.user.id;
+
+    const product = await Product.findById(productId);
+    if (!product) {
+      throw new CustomError("Product not found", 404);
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new CustomError("User not found", 404);
+    }
+
+    let cart = user.cart || [];
 
     const cartItemIndex = cart.findIndex(
-      (item) => item.productId === productId
+      (item) => item.productId && item.productId.toString() === productId
     );
 
     if (cartItemIndex !== -1) {
       cart[cartItemIndex].quantity =
         Number(cart[cartItemIndex].quantity) + Number(quantity);
     } else {
-      cart.push({ productId: productId, quantity });
+      cart.push({ productId, quantity });
     }
 
-    res.cookie("cart", JSON.stringify(cart), { httpOnly: true, path: "/" });
+    user.cart = cart;
+    await user.save();
+
     res
       .status(201)
-      .send({ message: "Product added to cart successfully", cart });
+      .send({ success: "Product added to cart successfully", user });
   } catch (error) {
     next(error);
   }
@@ -33,46 +49,86 @@ const addToCart = async (req, res, next) => {
 
 const updateCartItem = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { productId, quantity } = req.body;
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      throw new CustomError("Invalid product ID", 400);
     }
 
-    let cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
-    const cartItem = cart.find((item) => item.productId === productId);
-
-    if (cartItem) {
-      cartItem.quantity = quantity;
-      res.cookie("cart", JSON.stringify(cart), { httpOnly: true });
-      res.status(200).send({ message: "Cart item updated successfully", cart });
-    } else {
-      res.status(404).send({ message: "Item not found in cart" });
+    if (quantity <= 0) {
+      throw new CustomError("Quantity must be greater than zero", 400);
     }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new CustomError("User not found", 404);
+    }
+
+    const cartItem = user.cart.find(
+      (item) => item.productId && item.productId.toString() === productId
+    );
+
+    if (!cartItem) {
+      throw new CustomError("Product not found in cart", 404);
+    }
+
+    cartItem.quantity = quantity;
+    await user.save();
+
+    res.status(200).send({ success: "Cart item updated successfully", user });
   } catch (error) {
     next(error);
   }
 };
 
-const getCartItems = (req, res, next) => {
+const getCartItems = async (req, res, next) => {
   try {
-    const cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
-    res.status(200).send(cart);
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new CustomError("Invalid user ID", 400);
+    }
+
+    const user = await User.findById(userId).populate({
+      path: "cart.product", // Path to the product field inside the cart array
+      select: "title price", // Model to use for populating
+    });
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    res.status(200).send({ success: "Cart item retrived successfully", user });
   } catch (error) {
     next(error);
   }
 };
 
-const removeCartItem = (req, res, next) => {
+const removeCartItem = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { productId } = req.body;
-    let cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
 
-    cart = cart.filter((item) => item.productId !== productId);
-    res.cookie("cart", JSON.stringify(cart), { httpOnly: true });
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      throw new CustomError("Invalid product ID", 400);
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new CustomError("User not found", 404);
+    }
+
+    user.cart = user.cart.filter(
+      (item) => item.productId && item.productId.toString() !== productId
+    );
+
+    await user.save();
+
     res
       .status(200)
-      .send({ message: "Item removed from cart successfully", cart });
+      .send({ success: "Cart item removed successfully", cart: user.cart });
   } catch (error) {
     next(error);
   }
