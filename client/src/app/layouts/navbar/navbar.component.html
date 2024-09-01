@@ -18,6 +18,7 @@
 </div>
 }
 
+<!-- first navbar -->
 <section
   class="bg-[var(--secondary-color)] py-3 hidden md:flex text-[var(--secondary-text)] font-semibold"
 >
@@ -42,9 +43,9 @@
   </div>
 </section>
 
+<!-- second navbar (logo - sign in user - etc) -->
 <nav class="bg-[var(--primary-color)] h-16">
   <div class="container m-auto flex h-full items-center px-4">
-    <!-- Hamburger menu for mobile -->
     <label
       for="my-drawer"
       class="me-3 hover:text-white hover:cursor-pointer drawer-button lg:hidden"
@@ -234,7 +235,7 @@
     </ul>
   </div>
 </nav>
-
+<!-- drawer for responsive in mobile and tablet -->
 <div class="drawer">
   <input id="my-drawer" type="checkbox" class="drawer-toggle" />
   <div class="drawer-side">
@@ -274,6 +275,7 @@
   </div>
 </div>
 
+<!-- third navbar about contact us -->
 <section class="bg-[#f7f7f7] h-[4.3rem] hidden md:flex items-center">
   <div
     class="container m-auto flex items-center justify-between h-full font-bold"
@@ -349,62 +351,3 @@
     </span>
   </div>
 </section>
-
-<!-- <nav class="bg-[var(--primary-color)] h-16">
-          <div class="container m-auto flex h-full items-center justify-around">
-            <app-navbar-item
-            class="pl-2"
-            routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLink="/"
-            label="LOGO"
-            ></app-navbar-item>
-
-            <div class="hidden w-full md:block md:w-auto" id="navbar-menu">
-              <ul
-              class="md:flex-row rtl:space-x-reverse font-medium mt-4 rounded-lg bg-[var(--primary-color)] md:space-y-0 md:mt-0 md:bg-transparent"
-              >
-              <app-navbar-item
-              routerLinkActive="active-link"
-              [routerLinkActiveOptions]="{ exact: true }"
-              routerLink="/"
-                  first="true"
-                  label="HOME"
-                  ></app-navbar-item>
-                  <app-navbar-item
-                  routerLinkActive="active-link"
-                  routerLink="/shop"
-                  label="SHOP"
-                  ></app-navbar-item>
-                  <app-navbar-item
-                  routerLinkActive="active-link"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  routerLink="/contact-us"
-                  label="CONTACT"
-                ></app-navbar-item>
-              </ul>
-            </div>
-
-            <div></div>
-            <ul class="flex items-center relative">
-              <app-navbar-item
-                first="true"
-                [svgIcon]="searchIcon"
-                title="search"
-              <!-- ></app-navbar-item> -->
-
-<!-- <app-navbar-item
-                [svgIcon]="heartIcon"
-                title="wish list"
-                ></app-navbar-item>
-                <app-navbar-item
-                routerLinkActive="active-link"
-                [routerLinkActiveOptions]="{ exact: true }"
-                routerLink="/cart"
-                [svgIcon]="cartIcon"
-                title="cart"
-              ></app-navbar-item>
-              <span
-                class="badge badge-sm indicator-item bg-[#da5454] border-[#da5454] absolute rounded-full text-white right-2 top-2"
-                >{{ loggedInUser?.cart?.length || "0" }}</span
-                > -->
