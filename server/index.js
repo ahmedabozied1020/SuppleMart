@@ -36,7 +36,7 @@ app.use("/cart", cartRoutes);
 app.use(errorHandler);
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(DB_URL)
   .then(async () => {
     logger.log({
       level: "info",
