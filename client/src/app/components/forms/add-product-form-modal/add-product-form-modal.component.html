@@ -1,18 +1,20 @@
 <dialog id="my_modal_1" class="modal">
-  <div class="modal-box w-11/12 max-w-5xl">
+  <div class="modal-box w-11/12 max-w-5xl bg-[var(--secondary-color)]">
     <div class="flex justify-between">
       <div>
-        <h3 class="text-lg font-bold">Add Product Data!</h3>
-        <p class="py-4">Press ESC key or click the close button to close</p>
+        <h3 class="text-xl font-bold text-white pt-2 text-wh">
+          Add Product Data!
+        </h3>
+        <p class="py-4 text-lg text-red-700 font-semibold">
+          Press ESC key or click the close button to close
+        </p>
       </div>
     </div>
     <div class="modal-action">
-      <div
-        class="w-full md: bg-[var(--secondary-color)] flex flex-col items-center justify-center"
-      >
+      <div class="w-full md: flex flex-col items-center justify-center">
         <div class="flex flex-col items-center">
           <p
-            class="text-white font-bold text-2xl w-full capitalize text-center leading-7 mb-2"
+            class="text-white font-bold text-3xl w-full capitalize text-center leading-7 mb-2 p-1"
           >
             Add Proudcts Data
           </p>
@@ -32,7 +34,7 @@
               >
               <input
                 type="text"
-                class="p-2 text-white mt-1 w-full h-10 block bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="p-2 text-white mt-1 w-full h-10 rounded block bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 id="title"
                 name="title"
                 formControlName="title"
@@ -59,7 +61,7 @@
               >
               <textarea
                 type="text"
-                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="text-white p-2 mt-1 h-10 block rounded w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 id="exampleInputTitle1"
                 aria-describedby="descriptionHelp"
                 name="description"
@@ -91,7 +93,7 @@
               >
               <input
                 type="number"
-                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="text-white p-2 mt-1 h-10 block w-full rounded bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 id="exampleInputPrice1"
                 name="price"
                 formControlName="price"
@@ -121,7 +123,7 @@
               >
               <input
                 type="number"
-                class="text-white p-2 mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                class="text-white p-2 rounded mt-1 h-10 block w-full bg-[#33383d] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 id="exampleInputCount1"
                 name="count"
                 formControlName="count"
@@ -154,7 +156,7 @@
                 type="file"
                 accept=".jpg,.jpeg,.png"
                 (change)="onSingleFileSelected($event)"
-                class="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                class="file-input file-input-bordered rounded file-input-sm w-full max-w-xs"
                 id="exampleInputThumbnail1"
                 name="thumbnail"
                 formControlName="thumbnail"
@@ -218,13 +220,17 @@
             <div *ngIf="errorMessage" class="text-center mt-2 text-red-600">
               {{ errorMessage }}
             </div>
-            <div class="w-full flex justify-center">
+            <div class="w-full flex flex-col sm:flex-row justify-between">
+              <button
+                class="flex font-bold text-lg px-14 h-10 items-center justify-center mt-2 border-1 border-[--secondary-color] text-black uppercase transition-all duration-300 ease-in-outtext-xs leading-5 rounded py-4 bg-red-700 hover:bg-black hover:text-white"
+              >
+                Close
+              </button>
+
               <app-register-button
+                class=""
                 [label]="'Add Product'"
               ></app-register-button>
-              <div>
-                <button class="btn">Close</button>
-              </div>
             </div>
           </form>
         </div>
