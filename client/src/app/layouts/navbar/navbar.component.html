@@ -44,30 +44,6 @@
 
 <nav class="bg-[var(--primary-color)] h-16">
   <div class="container m-auto flex h-full items-center justify-around">
-    <button
-      data-collapse-toggle="navbar-menu"
-      type="button"
-      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:focus:ring-gray-600"
-      aria-controls="navbar-menu"
-      aria-expanded="false"
-    >
-      <span class="sr-only">Open main menu</span>
-      <svg
-        class="w-5 h-5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 17 14"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M1 1h15M1 7h15M1 13h15"
-        />
-      </svg>
-    </button>
     <app-navbar-item
       class="pl-2"
       routerLinkActive="active-link"
@@ -75,6 +51,7 @@
       routerLink="/"
       label="LOGO"
     ></app-navbar-item>
+
     <div class="hidden w-full md:block md:w-auto" id="navbar-menu">
       <ul
         class="md:flex-row rtl:space-x-reverse font-medium mt-4 rounded-lg bg-[var(--primary-color)] md:space-y-0 md:mt-0 md:bg-transparent"
@@ -101,7 +78,7 @@
     </div>
 
     <div></div>
-    <ul class="flex items-center relative space-x-4 rtl:space-x-reverse">
+    <ul class="flex items-center relative">
       <app-navbar-item
         first="true"
         [svgIcon]="searchIcon"
