@@ -6,6 +6,7 @@ const {
   paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
 const Category = require("../models/category.model");
+const { error } = require("winston");
 
 const getHomeProducts = async (req, res, next) => {
   try {
@@ -216,26 +217,67 @@ const getPaginatedProducts = async (req, res, next) => {
     next(error);
   }
 };
-const deleteProduct = async (req, res) => {
+
+const deleteProduct = async (req, res, next) => {
   try {
-    const productName = req.params.name;
-    await Product.deleteOne({ name: productName, userId: req.user._id });
-    res.send("Product deleted");
-    res.status(200).send({ message: "Product deleted successfully" });
+    const productId = req.params.id;
+
+    const deletedProduct = await Product.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+      throw new CustomError("Invalid product id", 404);
+    }
+
+    res.status(200).send({ success: "Product deleted successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Error deleting product", error });
+    next(error);
+  }
+};
+
+const getProductsByIds = async (req, res, next) => {
+  try {
+    const productsIds = req.body.productsIds;
+
+    const products = await Promise.all(
+      productsIds.map(async (id) => await Product.findById(id))
+    );
+
+    for (let i = 0; i < products.length; i++) {
+      if (!products[i]) {
+        throw new CustomError("One or more id is invalid", 400);
+      }
+    }
+
+    res.status(200).send({ success: "Product Updated successfully", products });
+  } catch (error) {
+    next(error);
   }
 };
 const updateProduct = async (req, res) => {
   try {
-    const oldProductName = req.params.name;
-    const productName = req.body.name;
-    await Product.updateOne({ name: oldProductName }, { name: productName });
-    res.status(200).send({ message: "Product Updated successfully" });
+    const { error } = createProductSchema.validate(req.body);
+
+    if (error) {
+      throw new CustomError(error.details[0].message, 400);
+    }
+
+    const oldProductId = req.params.id;
+    const newData = req.body;
+
+    const updateProduct = await Product.findByIdAndUpdate(
+      { _id: oldProductId },
+      { $set: newData },
+      { new: true, runValidators: true }
+    );
+    console.log(updateProduct);
+
+    res.status(200).send({ success: "Product Updated successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Error Updating product", error });
+    error.message = "Error Updating product";
+    next(error);
   }
 };
+
 module.exports = {
   createProduct,
   getHomeProducts,
@@ -247,4 +289,5 @@ module.exports = {
   getPaginatedProducts,
   deleteProduct,
   updateProduct,
+  getProductsByIds,
 };
