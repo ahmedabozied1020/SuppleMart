@@ -1,6 +1,6 @@
 <!-- Child Component -->
 
-<div class="group bg-white w-full max-w-sm h-[500px] mx-auto">
+<div class="group bg-white w-full max-w-sm h-[500px] mx-auto overflow-hidden">
   @if(!loading){
   <div class="relative h-[66%]">
     <img
@@ -29,7 +29,7 @@
     <div class="flex-1 p-5 font-extrabold">${{ product.price }}</div>
     <div class="more text-2xl bg-[#efefef] p-5 w-16 text-center">+</div>
     <div
-      class="text-slate-400 px-5 flex items-center content-center shopping-content absolute right-0 bottom-0 h-full w-0 invisible bg-[var(--secondary-color)] transition-all duration-300"
+      class="text-slate-400 px-5 flex items-center content-center shopping-content absolute right-0 bottom-0 h-full w-[100%] invisible bg-[var(--secondary-color)] transition-all duration-300"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

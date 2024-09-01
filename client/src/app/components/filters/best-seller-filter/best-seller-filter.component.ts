@@ -25,7 +25,7 @@ export class BestSellerFilterComponent {
           this.products = products;
           this.products = products.slice(0, 3);
         });
-    }, 2000);
+    }, 500);
   }
 
   ngOnDestroy() {

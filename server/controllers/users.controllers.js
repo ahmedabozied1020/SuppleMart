@@ -92,7 +92,7 @@ exports.login = async (req, res) => {
     const { email, password, cart } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.send("invalid email or password");
+    if (!user) return res.send({ error: "invalid email or password"});
     // valid email
     const isMatched = await bcrypt.compare(password, user.password);
     if (isMatched) {
@@ -109,9 +109,9 @@ exports.login = async (req, res) => {
         await mergeNonLoggedInUserCart(user._id, req.body.cart);
       }
 
-      res.send({ message: "user logged in", token, user });
+      res.send({ success: "user logged in", token, user });
     } else {
-      res.send("invalid email or password");
+      res.send({ error: "invalid email or password"});
     }
   } catch (error) {
     throw new CustomError(error.message, 500);
