@@ -10,6 +10,7 @@ const {
   deleteProduct,
   updateProduct,
   addCategory,
+  getProductsByIds,
 } = require("../controllers/products.controllers");
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
@@ -32,8 +33,6 @@ router.get("/", getHomeProducts);
 
 router.get("/categories", getCategories);
 
-router.post("/category", addCategory);
-
 router.get("/bestSelling", getBestSellingProducts);
 
 router.get("/latestDealProduct/:title", getLatestDealProduct);
@@ -42,8 +41,12 @@ router.get("/homeRecommendedProducts", getHomeRecommendedProducts);
 
 router.get("/shop", getPaginatedProducts);
 
-router.patch("/:name", auth, checkRole("admin"), updateProduct);
+router.post("/category", addCategory);
 
-router.delete("/:name", auth, checkRole("admin"), deleteProduct);
+router.post("/getByIds", getProductsByIds);
+
+router.patch("/:id", auth, checkRole("admin"), updateProduct);
+
+router.delete("/:id", deleteProduct);
 
 module.exports = router;
