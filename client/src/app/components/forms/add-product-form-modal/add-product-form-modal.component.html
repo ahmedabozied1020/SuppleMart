@@ -1,8 +1,10 @@
-<dialog id="my_modal_1" class="modal">
+<dialog id="my_modal_1" class="modal" (close)="resetForm()">
   <div class="modal-box w-11/12 max-w-5xl">
     <div class="flex justify-between">
       <div>
-        <h3 class="text-lg font-bold">Add Product Data!</h3>
+        <h3 class="text-lg font-bold">
+          {{ productToEdit ? "Edit" : "Add" }}Product Data!
+        </h3>
         <p class="py-4">Press ESC key or click the close button to close</p>
       </div>
     </div>
@@ -14,7 +16,7 @@
           <p
             class="text-white font-bold text-2xl w-full capitalize text-center leading-7 mb-2"
           >
-            Add Proudcts Data
+            {{ productToEdit ? "Edit" : "Add" }} Proudcts Data
           </p>
         </div>
         <div class="w-3/4">
@@ -220,10 +222,10 @@
             </div>
             <div class="w-full flex justify-center">
               <app-register-button
-                [label]="'Add Product'"
+                [label]="productToEdit ? 'Edit Product' : 'Add Product'"
               ></app-register-button>
               <div>
-                <button class="btn">Close</button>
+                <button class="btn" (click)="resetForm()">Close</button>
               </div>
             </div>
           </form>
