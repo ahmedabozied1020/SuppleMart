@@ -22,7 +22,7 @@ exports.signup = async (req, res, next) => {
 
     const user = new User({ name, email, password });
     await user.save();
-    res.send({ message: "User created", user });
+    res.send({ success: "User created", user });
   } catch (error) {
     throw new CustomError(error.details[0].message, 500);
   }
@@ -131,7 +131,7 @@ exports.createAdmin = async (req, res, next) => {
     if (existingUser) return res.status(409).send("Email is Already Used.");
     const user = new User({ name, email, password, role: "admin" });
     await user.save();
-    res.status(201).send({ message: "Admin Created", user });
+    res.status(201).send({ success: "Admin Created", user });
   } catch (error) {
     next(error);
   }

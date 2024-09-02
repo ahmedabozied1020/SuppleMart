@@ -11,10 +11,12 @@ const {
   updateProduct,
   addCategory,
   getProductsByIds,
+  getProducById,
 } = require("../controllers/products.controllers");
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
 const upload = require("../utils/multerConfig");
+const { route } = require("./users.routes");
 
 const router = express.Router();
 
@@ -28,6 +30,8 @@ router.post(
   ]),
   createProduct
 );
+
+router.get("/:id", getProducById);
 
 router.get("/", getHomeProducts);
 
@@ -45,8 +49,17 @@ router.post("/category", addCategory);
 
 router.post("/getByIds", getProductsByIds);
 
-router.patch("/:id", auth, checkRole("admin"), updateProduct);
+router.patch(
+  "/:id",
+  auth,
+  checkRole("admin"),
+  upload.fields([
+    { name: "thumbnail", maxCount: 1 },
+    { name: "images", maxCount: 5 },
+  ]),
+  updateProduct
+);
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", auth, checkRole("admin"), deleteProduct);
 
 module.exports = router;

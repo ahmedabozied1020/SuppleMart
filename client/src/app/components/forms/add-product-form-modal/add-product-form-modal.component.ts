@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { RegisterButtonComponent } from '../../buttons/register-button/register-button.component';
 import {
   FormArray,
@@ -14,6 +14,7 @@ import { tap, catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AddProductButtonComponent } from '../../buttons/add-product-button/add-product-button.component';
 import { AdminProductRequestsService } from '../../../services/http-requests/admin-product-requests/admin-product-requests.service';
+import { Product } from '../../../interfaces/product';
 
 @Component({
   selector: 'app-add-product-form-modal',
@@ -31,6 +32,7 @@ import { AdminProductRequestsService } from '../../../services/http-requests/adm
   styleUrl: './add-product-form-modal.component.css',
 })
 export class AddProductFormModalComponent {
+  @Input() productToEdit!: Product | null;
   addProductForm!: FormGroup;
   submitted: boolean = false;
   noMatch: boolean = false;
@@ -46,23 +48,49 @@ export class AddProductFormModalComponent {
     'vitamins',
     'vegan products',
   ];
-  // imagesFiles!: FileList;
 
   constructor(
     private formBuilder: FormBuilder,
     private addProductRequestService: AdminProductRequestsService,
     private router: Router
   ) {
+    this.initializeForm();
+  }
+
+  initializeForm(product?: Product) {
     this.addProductForm = this.formBuilder.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.maxLength(500)]],
-      price: ['', [Validators.required, Validators.min(0)]],
-      count: ['', [Validators.required, Validators.min(0)]],
-      categories: this.formBuilder.array([]),
-      thumbnail: [null, [Validators.required]],
-      images: [[], [Validators.required]],
+      title: [product?.title || '', [Validators.required]],
+      description: [
+        product?.description || '',
+        [Validators.required, Validators.maxLength(500)],
+      ],
+      price: [product?.price || '', [Validators.required, Validators.min(0)]],
+      count: [product?.count || '', [Validators.required, Validators.min(0)]],
+      categories: this.formBuilder.array(
+        this.categories.map((category) =>
+          product?.categories.includes(category) ? category : false
+        )
+      ),
+      thumbnail: [null, product ? [] : [Validators.required]],
+      images: [[], product ? [] : [Validators.required]],
     });
-    this.addCategoryControls();
+  }
+
+  // Function to handle changes to the productToEdit input and initialize the form
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['productToEdit'] && this.productToEdit) {
+      this.initializeForm(this.productToEdit);
+    }
+  }
+
+  // Function to reset the form and clear productToEdit
+  resetForm() {
+    this.addProductForm.reset();
+    this.categoriesArray.clear();
+    this.categories.forEach(() =>
+      this.categoriesArray.push(new FormControl(false))
+    );
+    this.productToEdit = null;
   }
 
   get title() {
@@ -87,12 +115,7 @@ export class AddProductFormModalComponent {
     return this.addProductForm.get('images') as FormArray;
   }
 
-  private addCategoryControls() {
-    this.categories.forEach(() =>
-      this.categoriesArray.push(new FormControl(false))
-    );
-  }
-
+  // Function to handle checkbox changes for categories
   onCheckboxChange(event: any) {
     const categoriesArray: FormArray = this.categoriesArray;
     const index = this.categories.indexOf(event.target.value);
@@ -103,10 +126,12 @@ export class AddProductFormModalComponent {
     }
   }
 
+  // Function to get selected categories as an array of strings
   getSelectedCategories(): string[] {
     return this.categoriesArray.value.filter((value: any) => value);
   }
 
+  // Function to handle single file selection for thumbnail
   onSingleFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -114,50 +139,52 @@ export class AddProductFormModalComponent {
     }
   }
 
+  // Function to handle multiple file selection for images
   onMultipleFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.selectedFiles = Array.from(input.files);
-      // this.addProductForm.patchValue({ images: this.selectedFiles });
     }
   }
 
-  handleSubmit = () => {
-    this.submitted = true;
-    console.log(this.title?.value);
-    console.log(this.description?.value);
-    console.log(this.description?.value);
-    if (
-      !this.title?.errors &&
-      !this.description?.errors &&
-      !this.price?.errors &&
-      !this.count?.errors &&
-      !this.thumbnailControl?.errors
-    ) {
-      const title = this.title?.value;
-      console.log(title);
-      console.log(this.selectedFile);
+  addProduct() {
+    const formData = this.createFormData();
+    this.addProductRequestService
+      .addProduct(formData)
+      .pipe(
+        tap((msg) => {
+          // if (msg?.success) {
+          //   this.router.navigate(['/']);
+          // }
+        }),
+        catchError((error) => {
+          this.errorMessage =
+            error?.error?.error ||
+            'An error occurred while adding product, please try again';
+          return of(null);
+        })
+      )
+      .subscribe();
+  }
 
-      const description = this.description?.value;
-      const price = this.price?.value;
-      const count = this.count?.value;
-      // const thumbnail = this.thumbnailControl?.value;
-      // const images = this.images?.value;
-      const categories = this.getSelectedCategories();
+  // Function to create FormData from form values
+  createFormData(): FormData {
+    const formData = new FormData();
+    formData.append('title', this.title?.value);
+    formData.append('description', this.description?.value);
+    formData.append('price', this.price?.value);
+    formData.append('count', this.count?.value);
 
-      const formData = new FormData();
-      formData.set('title', title);
-      formData.append('description', description);
-      formData.append('price', price);
-      formData.append('count', count);
+    const categories = this.getSelectedCategories();
+    for (let i = 0; i < categories.length; i++) {
+      formData.append('categories[]', categories[i]);
+    }
+
+    if (this.selectedFile) {
       formData.append('thumbnail', this.selectedFile, this.selectedFile?.name);
-      // formData.append('categories', JSON.stringify(categories));
+    }
 
-      for (let i = 0; i < categories.length; i++) {
-        formData.append('categories', categories[i]);
-      }
-
-      console.log(this.selectedFiles);
+    if (this.selectedFiles.length > 0) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         formData.append(
           'images',
@@ -165,27 +192,46 @@ export class AddProductFormModalComponent {
           this.selectedFiles[i].name
         );
       }
-
-      formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-      });
-
-      this.addProductRequestService
-        .addProduct(formData)
-        .pipe(
-          tap((msg) => {
-            if (msg?.success) {
-              this.router.navigate(['/']);
-            }
-          }),
-          catchError((error) => {
-            this.errorMessage =
-              error?.error?.error ||
-              'An error occurred while adding product, please try again';
-            return of(null);
-          })
-        )
-        .subscribe();
     }
-  };
+    return formData;
+  }
+
+  editProduct() {
+    if (!this.productToEdit) {
+      console.error('No product to edit');
+      return;
+    }
+
+    const formData = this.createFormData();
+
+    this.addProductRequestService
+      .editProduct(this.productToEdit._id, formData)
+      .pipe(
+        tap((msg) => {
+          if (msg?.success) {
+            this.router.navigate(['/products']);
+          }
+        }),
+        catchError((error) => {
+          this.errorMessage =
+            error?.error?.error ||
+            'An error occurred while editing product, please try again';
+          return of(null);
+        })
+      )
+      .subscribe();
+  }
+
+  handleSubmit() {
+    this.submitted = true;
+    if (this.addProductForm.invalid) {
+      return;
+    }
+
+    if (this.productToEdit) {
+      this.editProduct();
+    } else {
+      this.addProduct();
+    }
+  }
 }
