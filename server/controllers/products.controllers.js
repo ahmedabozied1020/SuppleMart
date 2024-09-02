@@ -253,7 +253,8 @@ const getProductsByIds = async (req, res, next) => {
     next(error);
   }
 };
-const updateProduct = async (req, res) => {
+
+const updateProduct = async (req, res, next) => {
   try {
     const { error } = createProductSchema.validate(req.body);
 
@@ -264,16 +265,44 @@ const updateProduct = async (req, res) => {
     const oldProductId = req.params.id;
     const newData = req.body;
 
+    let thumbnailUrl = null;
+    let imagesUrls = [];
+
+    // Handle thumbnail upload if provided
+    if (req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
+      const thumbnailFile = req.files.thumbnail[0];
+      const imageKitResponse = await uploadToImageKit(
+        thumbnailFile,
+        thumbnailFile.originalname,
+        "product_thumbnails"
+      );
+      thumbnailUrl = imageKitResponse.url;
+      newData.thumbnail = thumbnailUrl;
+    }
+
+    // Handle multiple images upload if provided
+    if (req.files && req.files.images && req.files.images.length > 0) {
+      for (const file of req.files.images) {
+        const imageKitResponse = await uploadToImageKit(
+          file,
+          file.originalname,
+          "product_images"
+        );
+        imagesUrls.push(imageKitResponse.url);
+      }
+      newData.images = imagesUrls;
+    }
+
     const updateProduct = await Product.findByIdAndUpdate(
       { _id: oldProductId },
       { $set: newData },
       { new: true, runValidators: true }
     );
-    console.log(updateProduct);
 
-    res.status(200).send({ success: "Product Updated successfully" });
+    res
+      .status(200)
+      .send({ success: "Product Updated successfully", updateProduct });
   } catch (error) {
-    error.message = "Error Updating product";
     next(error);
   }
 };

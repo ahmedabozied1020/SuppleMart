@@ -16,4 +16,14 @@ export class AdminProductRequestsService {
       product
     );
   }
+
+  editProduct(
+    id: string,
+    product: FormData
+  ): Observable<{ success: string; error: string }> {
+    return this.httpClient.patch<{ success: string; error: string }>(
+      `http://localhost:5000/products/${id}`,
+      product
+    );
+  }
 }

@@ -5,16 +5,22 @@ import { DeleteButtonComponent } from '../buttons/delete-button/delete-button.co
 import { Router } from '@angular/router';
 import { tap, catchError, of } from 'rxjs';
 import { AdminDeleteProductService } from '../../services/http-requests/admin-delete-product/admin-delete-product.service';
+import { AddProductFormModalComponent } from '../forms/add-product-form-modal/add-product-form-modal.component';
 
 @Component({
   selector: 'app-admin-products-table',
   standalone: true,
-  imports: [EditButtonComponent, DeleteButtonComponent],
+  imports: [
+    EditButtonComponent,
+    DeleteButtonComponent,
+    AddProductFormModalComponent,
+  ],
   templateUrl: './admin-products-table.component.html',
   styleUrl: './admin-products-table.component.css',
 })
 export class AdminProductsTableComponent {
   @Input() paginatedProducts: Product[] | undefined;
+  productToEdit!: Product;
   deletedProductId!: string;
 
   errorMessage: any;
@@ -25,6 +31,9 @@ export class AdminProductsTableComponent {
     private router: Router
   ) {}
 
+  handleEdit(product: Product) {
+    this.productToEdit = product;
+  }
   handleDelete(id: string) {
     this.deletedProductId = id;
   }
