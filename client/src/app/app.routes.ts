@@ -1,3 +1,4 @@
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
@@ -31,6 +32,11 @@ export const routes: Routes = [
     path: 'contact-us',
     component: ContactUsComponent,
     title: 'Contact Us',
+  },
+  {
+    path: 'product-details',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
   },
   {
     path: '**',

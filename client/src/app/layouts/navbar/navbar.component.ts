@@ -11,8 +11,9 @@ import {
 } from '@angular/forms';
 import { AuthenticationRequestsService } from '../../services/http-requests/authentication-requests/authentication-requests.service';
 import { CommonModule } from '@angular/common';
-import { LoggedInUserService } from '../../services/observables/logged-in-user.service';
+import { LoggedInUserService } from '../../services/observables/logged-in-user/logged-in-user.service';
 import { User } from '../../interfaces/user';
+import { CartProductsService } from '../../services/observables/cart-products/cart-products.service';
 
 @Component({
   selector: 'app-navbar',
@@ -55,14 +56,17 @@ export class NavbarComponent {
   errorMessage!: string;
   loggedInUser: User | null = null;
   loggedInUserSubscription!: Subscription;
+  cartProductsSubscription!: Subscription;
   isSuccessfullyLoggedIn: boolean = false;
   isSuccessfullyLoggedOut: boolean = false;
+  cartProductsNumber: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
     private authenticationRequestsService: AuthenticationRequestsService,
     private router: Router,
-    private loggedInUserService: LoggedInUserService
+    private loggedInUserService: LoggedInUserService,
+    private cartProductsService: CartProductsService
   ) {
     this.loginForm = this.formBuilder.group({
       email: [
@@ -88,11 +92,18 @@ export class NavbarComponent {
     this.loggedInUserSubscription = this.loggedInUserService
       .getLoggedInUser()
       .subscribe((user) => (this.loggedInUser = user));
+
+    this.cartProductsSubscription = this.cartProductsService
+      .getCartProducts()
+      .subscribe((prod) => (this.cartProductsNumber = prod.length));
   }
 
   ngOnDestroy() {
     if (this.loggedInUserSubscription) {
       this.loggedInUserSubscription.unsubscribe();
+    }
+    if (this.cartProductsSubscription) {
+      this.cartProductsSubscription.unsubscribe();
     }
   }
 

@@ -18,33 +18,15 @@
         <p class="w-2/12">quantity</p>
         <p class="w-2/12">subtotal</p>
       </div>
+      @for(cartProduct of cartProducts; track $index){
       <app-cart-product
-        [imgProductCart]="'15-800x747.png'"
-        [nameProductCart]="'incredible rubber coat'"
-        [available]="'Available on backorder'"
-        [priceProductCart]="174.66"
+        [cartProduct]="cartProduct"
         class="flex items-center justify-between font-bold py-5 border-b"
       >
       </app-cart-product>
-      <app-cart-product
-        [imgProductCart]="'15-800x747.png'"
-        [nameProductCart]="'incredible rubber coat'"
-        [available]="'Available on backorder'"
-        [priceProductCart]="174.66"
-        class="flex items-center justify-between font-bold py-5 border-b"
-      >
-      </app-cart-product>
-      <app-cart-product
-        [imgProductCart]="'15-800x747.png'"
-        [nameProductCart]="'incredible rubber coat'"
-        [available]="'Available on backorder'"
-        [priceProductCart]="174.66"
-        class="flex items-center justify-between font-bold py-5 border-b"
-      >
-      </app-cart-product>
+      }
 
       <!-- button update cart -->
-
       <div class="flex w-full justify-center mb-10">
         <a href="#" class="w-auto">
           <button
