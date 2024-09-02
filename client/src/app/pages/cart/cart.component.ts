@@ -35,9 +35,14 @@ export class CartComponent {
 
   ngOnInit() {
     this.cartProductsService.getCartProducts().subscribe((cartProds) => {
-      if (!this.cartProductsInFullStructure) {
-        this.cartProducts = cartProds;
-        const ids = this.cartProducts.map((cartProd) => cartProd.productId);
+      this.cartProducts = cartProds;
+      if (cartProds.length) {
+        console.log(cartProds)
+        console.log(this.cartProducts)
+        const ids = this.cartProducts.map((cartProd) => {
+          console.log(cartProd.productId)
+          return  cartProd.productId
+        });
         this.cartService.getProductsByIds(ids).subscribe((res) => {
           this.cartProductsInFullStructure = res.products.map(
             (prod, index) => ({
@@ -56,7 +61,7 @@ export class CartComponent {
       (prod) => prod._id !== productId
     );
 
-    deleteOneCartProductFromLocalStorage(productId)
+    deleteOneCartProductFromLocalStorage(productId);
     // if loggedin => send req to the api to delete prod from db
   }
 
@@ -71,7 +76,7 @@ export class CartComponent {
       quantity: component.cartProduct.quantity,
     }));
 
-    updatedCartProducts.forEach((prod) => {
+    updatedCartProducts.forEach((prod) => { //problem, observable is updated several times, req is sent more than once 
       this.cartProductsService.updateCartProductQuantity(
         prod.productId,
         prod.quantity
@@ -79,7 +84,9 @@ export class CartComponent {
     });
 
     localStorage.setItem('cartProducts', JSON.stringify(updatedCartProducts));
-    
+
+    this.cartService.setCart(updatedCartProducts);
+
     this.isCartProductQuantityChanged = false;
   }
 }

@@ -47,6 +47,34 @@ const addToCart = async (req, res, next) => {
   }
 };
 
+const setCart = async (req, res, next) => {
+  try {
+    const { cart } = req.body;
+
+    console.log(cart)
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    console.log(user)
+
+    if (!user) {
+      throw new CustomError("user not found", 404);
+    }
+
+    user.cart = cart.map((prod) => ({ ...prod }));
+
+    await user.save();
+    console.log(user)
+     
+
+    res
+      .status(201)
+      .send({ success: "cart has been successfully updated", cart });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateCartItem = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -133,4 +161,11 @@ const removeCartItem = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = { getCartItems, addToCart, updateCartItem, removeCartItem };
+
+module.exports = {
+  getCartItems,
+  setCart,
+  addToCart,
+  updateCartItem,
+  removeCartItem,
+};

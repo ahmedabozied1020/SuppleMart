@@ -1,10 +1,11 @@
 import { CartProduct } from '../interfaces/cart-product';
+import { User } from '../interfaces/user';
 
-export const addCartProductsToLocalStorage = (cartProducts: CartProduct[]) => {
-  // const storedCartProducts = JSON.parse(localStorage.getItem('cartProducts') || '[]');
-  //   if(storedCartProducts){
-  //     this.cartProducts = storedCartProducts;
-  //   }
+export const addLoggedInUserToLocalStorage = (user: User) => {
+  localStorage.setItem('loggedInUser', JSON.stringify(user));
+};
+export const deleteLoggedInUserFromLocalStorage = () => {
+  localStorage.removeItem('loggedInUser');
 };
 
 export const addOneCartProductToLocalStorage = (cartProduct: CartProduct) => {
@@ -61,3 +62,7 @@ export const deleteOneCartProductFromLocalStorage = (productId: string) => {
   console.log(storedCartProducts)
   localStorage.setItem('cartProducts', JSON.stringify(storedCartProducts));
 };
+
+export const emptyCartProductsFromLocalStorage = ()=> {
+  localStorage.removeItem('cartProducts');
+}

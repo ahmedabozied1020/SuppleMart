@@ -65,4 +65,8 @@ export class CartProductsService {
 
     this.cartProducts.next(currentProducts);
   }
+
+  emptyCart(): void {
+    this.cartProducts.next([]);
+  }
 }

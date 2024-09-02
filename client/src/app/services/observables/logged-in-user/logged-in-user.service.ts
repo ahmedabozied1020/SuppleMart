@@ -14,6 +14,9 @@ export class LoggedInUserService {
     return this.LoggedInUser.asObservable();
   }
 
+  initializeLoggedInUser(user: User): void{
+    this.LoggedInUser.next(user);
+  }
 
   setLoggedInUser(newUser: User){
    this.LoggedInUser.next(newUser);
