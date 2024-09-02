@@ -117,6 +117,12 @@ export class NavbarComponent {
         .pipe(
           tap((res) => {
             if (res?.success) {
+              if (res.user.role === 'admin') {
+                this.router.navigate(['/admin']);
+              } else {
+                this.router.navigate(['/']);
+              }
+
               this.loggedInUserService.setLoggedInUser(res.user);
               this.isSuccessfullyLoggedIn = true;
               setTimeout(() => (this.isSuccessfullyLoggedIn = false), 3000);

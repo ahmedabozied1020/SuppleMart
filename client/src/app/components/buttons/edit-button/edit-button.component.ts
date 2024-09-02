@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './edit-button.component.html',
-  styleUrl: './edit-button.component.css'
+  styleUrl: './edit-button.component.css',
 })
-export class EditButtonComponent {
-
-}
+export class EditButtonComponent {}
