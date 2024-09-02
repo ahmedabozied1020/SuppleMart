@@ -11,7 +11,7 @@ const {
   updateProduct,
   addCategory,
   getProductsByIds,
-  getProducById,
+  getProductById,
 } = require("../controllers/products.controllers");
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
@@ -30,8 +30,6 @@ router.post(
   ]),
   createProduct
 );
-
-router.get("/:id", getProducById);
 
 router.get("/", getHomeProducts);
 
@@ -59,6 +57,8 @@ router.patch(
   ]),
   updateProduct
 );
+
+router.get("/:id", getProductById);
 
 router.delete("/:id", auth, checkRole("admin"), deleteProduct);
 

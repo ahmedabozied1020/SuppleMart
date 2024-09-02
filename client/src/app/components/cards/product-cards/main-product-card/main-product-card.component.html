@@ -20,7 +20,9 @@
       }
     </div>
     <h3 class="font-bold text-sm h-5">
-      <a routerLink="/product-details">{{ product.title }}</a>
+      <a [routerLink]="['/product-details', product._id]">{{
+        product.title
+      }}</a>
     </h3>
     <div class="font-bold mt-6">{{ product.rate }}</div>
   </div>
@@ -64,7 +66,7 @@
         />
       </svg>
       <span
-      (click)="handleAddToCart()"
+        (click)="handleAddToCart()"
         class="absolute right-5 font-extrabold text-white hover:text-[var(--primary-color)] cursor-pointer"
         >ADD TO CART +</span
       >

@@ -1,4 +1,5 @@
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Product } from '../../../../interfaces/product';
 import { CartProductsService } from '../../../../services/observables/cart-products/cart-products.service';
@@ -6,7 +7,7 @@ import { CartProductsService } from '../../../../services/observables/cart-produ
 @Component({
   selector: 'app-main-product-card',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './main-product-card.component.html',
   styleUrl: './main-product-card.component.css',
 })
@@ -14,13 +15,13 @@ export class MainProductCardComponent {
   @Input() product!: Product;
   @Input() loading: boolean = true;
 
-  constructor(private cartProductsService: CartProductsService){}
+  constructor(private cartProductsService: CartProductsService) {}
 
   ngOnInit(){
     this.product && this.product.categories.splice(0,1); // to remove the 'ALL' category
   }
 
-  handleAddToCart(){
+  handleAddToCart() {
     this.cartProductsService.addCartProduct(this.product._id, 1);
   }
 }

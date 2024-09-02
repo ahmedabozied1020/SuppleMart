@@ -31,9 +31,7 @@ const createProduct = async (req, res, next) => {
       throw new CustomError("One or more categories are invalid", 400);
     }
 
-    const lowerCaseCategories = categories.map((category) =>
-      category.toLowerCase().trim()
-    );
+    const lowerCaseCategories = categories.map((category) => category.toLowerCase().trim());
 
     let thumbnailUrl = null;
     let imagesUrls = [];
@@ -52,11 +50,7 @@ const createProduct = async (req, res, next) => {
     // Handle multiple images upload if provided
     if (req.files && req.files.images && req.files.images.length > 0) {
       for (const file of req.files.images) {
-        const imageKitResponse = await uploadToImageKit(
-          file,
-          file.originalname,
-          "product_images"
-        );
+        const imageKitResponse = await uploadToImageKit(file, file.originalname, "product_images");
         imagesUrls.push(imageKitResponse.url);
       }
     }
@@ -80,11 +74,11 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-const getProducById = async (req, res, next) => {
+const getProductById = async (req, res, next) => {
   try {
     const productId = req.params.id;
 
-    const product = Product.findById(productId);
+    const product = await Product.findById(productId);
 
     if (!product) {
       throw new CustomError("Invalid product id", 404);
@@ -142,9 +136,7 @@ const getCategories = async (req, res, next) => {
 
 const getBestSellingProducts = async (req, res, next) => {
   try {
-    const bestSellingProducts = await Product.find()
-      .sort({ salesCount: -1 })
-      .limit(5);
+    const bestSellingProducts = await Product.find().sort({ salesCount: -1 }).limit(5);
 
     res.status(200).send(bestSellingProducts);
   } catch (error) {
@@ -154,9 +146,7 @@ const getBestSellingProducts = async (req, res, next) => {
 
 const getHomeRecommendedProducts = async (req, res, next) => {
   try {
-    const recommendedProducts = await Product.find()
-      .limit(5)
-      .select("title thumbnail price rate");
+    const recommendedProducts = await Product.find().limit(5).select("title thumbnail price rate");
 
     res.status(200).send(recommendedProducts);
   } catch (error) {
@@ -299,11 +289,7 @@ const updateProduct = async (req, res, next) => {
     // Handle multiple images upload if provided
     if (req.files && req.files.images && req.files.images.length > 0) {
       for (const file of req.files.images) {
-        const imageKitResponse = await uploadToImageKit(
-          file,
-          file.originalname,
-          "product_images"
-        );
+        const imageKitResponse = await uploadToImageKit(file, file.originalname, "product_images");
         imagesUrls.push(imageKitResponse.url);
       }
       newData.images = imagesUrls;
@@ -315,9 +301,7 @@ const updateProduct = async (req, res, next) => {
       { new: true, runValidators: true }
     );
 
-    res
-      .status(200)
-      .send({ success: "Product Updated successfully", updateProduct });
+    res.status(200).send({ success: "Product Updated successfully", updateProduct });
   } catch (error) {
     next(error);
   }
@@ -335,5 +319,5 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getProductsByIds,
-  getProducById,
+  getProductById,
 };
