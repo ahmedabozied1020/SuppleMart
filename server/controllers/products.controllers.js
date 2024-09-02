@@ -6,7 +6,6 @@ const {
   paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
 const Category = require("../models/category.model");
-const { error } = require("winston");
 
 const getHomeProducts = async (req, res, next) => {
   try {
@@ -81,18 +80,34 @@ const createProduct = async (req, res, next) => {
   }
 };
 
+const getProducById = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+
+    const product = Product.findById(productId);
+
+    if (!product) {
+      throw new CustomError("Invalid product id", 404);
+    }
+
+    res.status(200).send({ success: "Product fetched successfully", product });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addCategory = async (req, res, next) => {
   try {
     const { title } = req.body;
 
     const existingCategory = await Category.findOne({ title });
     if (existingCategory) {
-      return res.status(409).send({ message: "Category already exists" });
+      return res.status(409).send({ error: "Category already exists" });
     }
 
     const newCategory = new Category({ title });
     await newCategory.save();
-    res.status(201).send({ message: "Category created successfully" });
+    res.status(201).send({ success: "Category created successfully" });
   } catch (error) {
     next(error);
   }
@@ -156,7 +171,7 @@ const getLatestDealProduct = async (req, res, next) => {
     res.status(200).send(product);
 
     if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+      return res.status(404).send({ error: "Product not found" });
     }
   } catch (error) {
     next(error);
@@ -254,7 +269,8 @@ const getProductsByIds = async (req, res, next) => {
     next(error);
   }
 };
-const updateProduct = async (req, res) => {
+
+const updateProduct = async (req, res, next) => {
   try {
     const { error } = createProductSchema.validate(req.body);
 
@@ -265,16 +281,44 @@ const updateProduct = async (req, res) => {
     const oldProductId = req.params.id;
     const newData = req.body;
 
+    let thumbnailUrl = null;
+    let imagesUrls = [];
+
+    // Handle thumbnail upload if provided
+    if (req.files && req.files.thumbnail && req.files.thumbnail.length > 0) {
+      const thumbnailFile = req.files.thumbnail[0];
+      const imageKitResponse = await uploadToImageKit(
+        thumbnailFile,
+        thumbnailFile.originalname,
+        "product_thumbnails"
+      );
+      thumbnailUrl = imageKitResponse.url;
+      newData.thumbnail = thumbnailUrl;
+    }
+
+    // Handle multiple images upload if provided
+    if (req.files && req.files.images && req.files.images.length > 0) {
+      for (const file of req.files.images) {
+        const imageKitResponse = await uploadToImageKit(
+          file,
+          file.originalname,
+          "product_images"
+        );
+        imagesUrls.push(imageKitResponse.url);
+      }
+      newData.images = imagesUrls;
+    }
+
     const updateProduct = await Product.findByIdAndUpdate(
       { _id: oldProductId },
       { $set: newData },
       { new: true, runValidators: true }
     );
-    console.log(updateProduct);
 
-    res.status(200).send({ success: "Product Updated successfully" });
+    res
+      .status(200)
+      .send({ success: "Product Updated successfully", updateProduct });
   } catch (error) {
-    error.message = "Error Updating product";
     next(error);
   }
 };
@@ -291,4 +335,5 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getProductsByIds,
+  getProducById,
 };

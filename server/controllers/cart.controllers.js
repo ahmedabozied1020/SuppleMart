@@ -97,7 +97,7 @@ const getCartItems = async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ error: "User not found" });
     }
 
     res.status(200).send({ success: "Cart item retrived successfully", user });
