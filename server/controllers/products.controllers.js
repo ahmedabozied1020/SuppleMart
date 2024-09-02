@@ -6,7 +6,6 @@ const {
   paginatedProductsSchema,
 } = require("../utils/validations/products.validation");
 const Category = require("../models/category.model");
-const { error } = require("winston");
 
 const getHomeProducts = async (req, res, next) => {
   try {
@@ -81,18 +80,34 @@ const createProduct = async (req, res, next) => {
   }
 };
 
+const getProducById = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+
+    const product = Product.findById(productId);
+
+    if (!product) {
+      throw new CustomError("Invalid product id", 404);
+    }
+
+    res.status(200).send({ success: "Product fetched successfully", product });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addCategory = async (req, res, next) => {
   try {
     const { title } = req.body;
 
     const existingCategory = await Category.findOne({ title });
     if (existingCategory) {
-      return res.status(409).send({ message: "Category already exists" });
+      return res.status(409).send({ error: "Category already exists" });
     }
 
     const newCategory = new Category({ title });
     await newCategory.save();
-    res.status(201).send({ message: "Category created successfully" });
+    res.status(201).send({ success: "Category created successfully" });
   } catch (error) {
     next(error);
   }
@@ -156,7 +171,7 @@ const getLatestDealProduct = async (req, res, next) => {
     res.status(200).send(product);
 
     if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+      return res.status(404).send({ error: "Product not found" });
     }
   } catch (error) {
     next(error);
@@ -319,4 +334,5 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getProductsByIds,
+  getProducById,
 };

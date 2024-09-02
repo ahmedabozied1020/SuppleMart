@@ -11,23 +11,27 @@ const {
   updateProduct,
   addCategory,
   getProductsByIds,
+  getProducById,
 } = require("../controllers/products.controllers");
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
 const upload = require("../utils/multerConfig");
+const { route } = require("./users.routes");
 
 const router = express.Router();
 
 router.post(
   "/",
-  // auth,
-  // checkRole("admin"),
+  auth,
+  checkRole("admin"),
   upload.fields([
     { name: "thumbnail", maxCount: 1 },
     { name: "images", maxCount: 5 },
   ]),
   createProduct
 );
+
+router.get("/:id", getProducById);
 
 router.get("/", getHomeProducts);
 
