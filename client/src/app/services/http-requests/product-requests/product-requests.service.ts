@@ -12,4 +12,14 @@ export class ProductRequestsService {
   getProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>('http://localhost:5000/products/');
   }
+
+  getProductById(
+    id: string
+  ): Observable<{ success: string; product: Product; error: string }> {
+    return this.httpClient.get<{
+      success: string;
+      product: Product;
+      error: string;
+    }>(`http://localhost:5000/products/${id}`);
+  }
 }
