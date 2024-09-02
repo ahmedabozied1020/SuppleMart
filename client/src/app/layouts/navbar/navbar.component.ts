@@ -114,10 +114,11 @@ export class NavbarComponent {
       console.log(credentials);
       this.authenticationRequestsService
         .login(credentials)
+        // pipe is used because subscribe(success, error) is depricated
         .pipe(
           tap((res) => {
             if (res?.success) {
-              this.loggedInUserService.setLoggedInUser(res.user);
+              this.loggedInUserService.setLoggedInUser(res.user); // to show the success toast
               this.isSuccessfullyLoggedIn = true;
               setTimeout(() => (this.isSuccessfullyLoggedIn = false), 3000);
             }

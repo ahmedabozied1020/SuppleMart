@@ -18,8 +18,10 @@
         <p class="w-2/12">quantity</p>
         <p class="w-2/12">subtotal</p>
       </div>
-      @for(cartProduct of cartProducts; track $index){
+      @for(cartProduct of cartProductsInFullStructure; track $index){
       <app-cart-product
+        (deleteEvent)="handleDelete($event.productId)"
+        (QuantityChangedEvent)="cartProductQuantityChanged()"
         [cartProduct]="cartProduct"
         class="flex items-center justify-between font-bold py-5 border-b"
       >
@@ -28,9 +30,11 @@
 
       <!-- button update cart -->
       <div class="flex w-full justify-center mb-10">
-        <a href="#" class="w-auto">
+        <a routerLink="/" class="w-auto">
           <button
-            class="text-black uppercase font-extrabold text-xs h-14 rounded-none bg-[#f2cb1f] py-5 px-8 mt-5 hover:bg-[#C7A21E] hover:text-white w-full"
+            (click)="handleUpdateCart()"
+            class="disabled:cursor-not-allowed disabled:opacity-45 cursor-pointer text-black uppercase font-extrabold text-xs h-14 rounded-none bg-[#f2cb1f] py-5 px-8 mt-5 hover:bg-[#C7A21E] hover:text-white w-full"
+            [disabled]="!isCartProductQuantityChanged"
           >
             update cart
           </button>

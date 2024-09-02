@@ -238,6 +238,7 @@ const getProductsByIds = async (req, res, next) => {
   try {
     const productsIds = req.body.productsIds;
 
+    console.log(req.body)
     const products = await Promise.all(
       productsIds.map(async (id) => await Product.findById(id))
     );

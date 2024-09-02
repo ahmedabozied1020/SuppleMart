@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CartProduct } from '../../../interfaces/cart-product';
+import { addOneCartProductToLocalStorage } from '../../../utils/local-storage';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,10 @@ export class CartProductsService {
     return this.cartProducts.asObservable();
   }
 
+  initializeCartProducts(cartProducts: CartProduct[]): void{
+    this.cartProducts.next(cartProducts);
+  }
+
   addCartProduct(productId: string, quantity: number): void {
     const currentProducts = this.cartProducts.getValue();
     const productIndex = currentProducts.findIndex(
@@ -27,6 +32,8 @@ export class CartProductsService {
     } else {
       currentProducts[productIndex].quantity += quantity;
     }
+    
+    addOneCartProductToLocalStorage({productId, quantity});
 
     this.cartProducts.next(currentProducts);
   }

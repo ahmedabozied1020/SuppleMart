@@ -17,7 +17,7 @@ export class MainProductCardComponent {
   constructor(private cartProductsService: CartProductsService){}
 
   ngOnInit(){
-    this.product && this.product.categories.splice(0,1); // to remove the ALL category
+    this.product && this.product.categories.splice(0,1); // to remove the 'ALL' category
   }
 
   handleAddToCart(){
