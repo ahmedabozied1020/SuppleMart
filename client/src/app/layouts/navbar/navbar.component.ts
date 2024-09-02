@@ -111,14 +111,13 @@ export class NavbarComponent {
     this.submitted = true;
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
-      console.log(credentials);
       this.authenticationRequestsService
         .login(credentials)
         .pipe(
           tap((res) => {
             if (res?.success) {
               if (res.user.role === 'admin') {
-                this.router.navigate(['/admin']);
+                this.router.navigate(['/admin/dashboard']);
               } else {
                 this.router.navigate(['/']);
               }
