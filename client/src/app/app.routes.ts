@@ -6,6 +6,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,11 @@ export const routes: Routes = [
     path: 'product-details',
     component: ProductDetailsComponent,
     title: 'Product Details',
+  },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    title: 'Admin Dashboard',
   },
   {
     path: '**',
