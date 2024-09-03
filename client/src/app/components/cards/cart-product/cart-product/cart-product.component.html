@@ -1,5 +1,6 @@
 <div class="w-[2%] p-5">
   <svg
+    (click)="handleDelete()"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -18,21 +19,25 @@
   <img [src]="cartProduct.thumbnail" class="w-24 h-auto object-cover mx-auto" />
 </div>
 <div class="w-3/12">
-  <a href="#" class="capitalize text-base hover:text-[var(--primary-color)]">
+  <a
+    routerLink="/product-details"
+    class="capitalize text-base hover:text-[var(--primary-color)]"
+  >
     {{ cartProduct.title }}
   </a>
-  <p class="text-gray-400 text-sm">{{ "available" }}</p>
 </div>
 <div class="w-2/12">£{{ cartProduct.price }}</div>
 <div class="w-2/12">
   <label>
     <input
+      (input)="quantityChanged()"
       type="number"
       min="0"
-      max="10"
-      value="1"
+      [(ngModel)]="cartProduct.quantity"
       class="w-12 h-10 text-center p-2 text-md focus:border-[var(--primary-color)] focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] transition duration-500"
     />
   </label>
 </div>
-<div class="w-2/12">£174.66</div>
+<div class="w-2/12">
+  £{{ cartProduct.price * cartProduct.quantity | number : "1.2-2" }}
+</div>

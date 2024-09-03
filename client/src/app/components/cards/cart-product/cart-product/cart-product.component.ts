@@ -1,14 +1,38 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CartProductInFullStructure } from '../../../../interfaces/cart-product-in-full-structure';
+import { RouterLink } from '@angular/router';
+import { CartProductsService } from '../../../../services/observables/cart-products/cart-products.service';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Product } from '../../../../interfaces/product';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink, CommonModule, FormsModule ],
   templateUrl: './cart-product.component.html',
   styleUrl: './cart-product.component.css',
 })
+
 export class CartProductComponent {
-  @Input() cartProduct!: Product;
+  @Input() cartProduct!: CartProductInFullStructure;
+  @Output() deleteEvent = new EventEmitter<{ productId: string}>();
+  @Output() QuantityChangedEvent = new EventEmitter<void>();
+  @Output() updateEvent = new EventEmitter<{ productId: string, newQuantity: number }>();
+
+  changed: boolean = false;
+  
+
+  constructor(private cartProductsService: CartProductsService){}
+
+  handleDelete(){
+    this.deleteEvent.emit({productId:this.cartProduct._id});
+  }
+
+  handleUpdate(){
+    this.updateEvent.emit({productId:this.cartProduct._id, newQuantity:5});
+  }
+
+  quantityChanged(){
+    this.QuantityChangedEvent.emit();
+  }
 }

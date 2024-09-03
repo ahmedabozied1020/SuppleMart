@@ -44,46 +44,19 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
   }
 
   const user = await User.findById(userId);
-  console.log(user);
 
-  const incomingProductIds = new Set(
-    cartItems.map((item) => item.productId.toString())
-  );
-
-  user.cart = user.cart.filter((cartItem) => {
-    if (cartItem.product) {
-      const productId = cartItem.id.toString();
-      if (!incomingProductIds.has(productId)) {
-        return false;
-      }
-    }
-    return true;
-  });
+  console.log(user.cart);
+  const userCartMap = new Map(user.cart.map((item) => [item.productId, item]));
 
   for (let item of cartItems) {
-    const product = await Product.findById(item.productId);
-    if (!product) {
-      throw new CustomError(`Product with id ${item.productId} not found`, 404);
-    }
-
-    const existingCartItem = user.cart.find(
-      (cartItem) => cartItem.id.toString() === item.productId
-    );
-
-    if (existingCartItem) {
-      existingCartItem.quantity = item.quantity;
+    if (userCartMap.has(item.productId)) {
+      userCartMap.get(item.productId).quantity += item.quantity;
     } else {
-      if (item.quantity > 0) {
-        user.cart.push({ product, quantity: item.quantity });
-      } else {
-        throw new CustomError(
-          "Cannot add product with negative or zero quantity.",
-          400
-        );
-      }
+      user.cart.push({ productId: item.productId, quantity: item.quantity });
     }
   }
-
+  
+  console.log(user.cart);
   return await user.save();
 };
 
@@ -105,7 +78,7 @@ exports.login = async (req, res) => {
         }
       );
 
-      if (cart) {
+      if (cart.length) {
         user = await mergeNonLoggedInUserCart(user._id, req.body.cart);
       }
 

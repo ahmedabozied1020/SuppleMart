@@ -14,6 +14,11 @@ import { CommonModule } from '@angular/common';
 import { LoggedInUserService } from '../../services/observables/logged-in-user/logged-in-user.service';
 import { User } from '../../interfaces/user';
 import { CartProductsService } from '../../services/observables/cart-products/cart-products.service';
+import {
+  addLoggedInUserToLocalStorage,
+  deleteLoggedInUserFromLocalStorage,
+  emptyCartProductsFromLocalStorage,
+} from '../../utils/local-storage';
 
 @Component({
   selector: 'app-navbar',
@@ -98,33 +103,24 @@ export class NavbarComponent {
       .subscribe((prod) => (this.cartProductsNumber = prod.length));
   }
 
-  ngOnDestroy() {
-    if (this.loggedInUserSubscription) {
-      this.loggedInUserSubscription.unsubscribe();
-    }
-    if (this.cartProductsSubscription) {
-      this.cartProductsSubscription.unsubscribe();
-    }
-  }
-
   handleLogin() {
     this.submitted = true;
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
       this.authenticationRequestsService
         .login(credentials)
+        // pipe is used because subscribe(success, error) is depricated
         .pipe(
           tap((res) => {
             if (res?.success) {
-              if (res.user.role === 'admin') {
-                this.router.navigate(['/admin/dashboard']);
-              } else {
-                this.router.navigate(['/']);
-              }
-
               this.loggedInUserService.setLoggedInUser(res.user);
+              addLoggedInUserToLocalStorage(res.user);
+              this.cartProductsService.initializeCartProducts(res.user.cart);
               this.isSuccessfullyLoggedIn = true;
               setTimeout(() => (this.isSuccessfullyLoggedIn = false), 3000);
+              if (res.user.role === 'admin') {
+                this.router.navigate(['/admin/dashboard']);
+              }
             }
           }),
           catchError((error) => {
@@ -140,7 +136,19 @@ export class NavbarComponent {
 
   handleLogout() {
     this.loggedInUserService.deleteLoggedInUser();
+    this.cartProductsService.emptyCart();
+    deleteLoggedInUserFromLocalStorage();
+    emptyCartProductsFromLocalStorage();
     this.isSuccessfullyLoggedOut = true;
     setTimeout(() => (this.isSuccessfullyLoggedOut = false), 3000);
+  }
+
+  ngOnDestroy() {
+    if (this.loggedInUserSubscription) {
+      this.loggedInUserSubscription.unsubscribe();
+    }
+    if (this.cartProductsSubscription) {
+      this.cartProductsSubscription.unsubscribe();
+    }
   }
 }

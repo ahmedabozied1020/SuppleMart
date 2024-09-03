@@ -36,7 +36,7 @@ export const routes: Routes = [
     title: 'Contact Us',
   },
   {
-    path: 'product-details',
+    path: 'product-details/:id',
     component: ProductDetailsComponent,
     title: 'Product Details',
   },
