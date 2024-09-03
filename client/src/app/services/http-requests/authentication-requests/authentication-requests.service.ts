@@ -20,14 +20,18 @@ export class AuthenticationRequestsService {
     );
   }
 
-  login(user: {
-    email: string;
-    password: string;
-  }): Observable<{ success: string; user: User; error: string }> {
+  login(user: { email: string; password: string }): Observable<{
+    success: string;
+    user: User;
+    token: string;
+    error: string;
+  }> {
     const cart = JSON.parse(localStorage.getItem('cartProducts') || '[]');
-    return this.httpClient.post<{ success: string; user: User; error: string }>(
-      'http://localhost:5000/users/login',
-      { ...user, cart }
-    );
+    return this.httpClient.post<{
+      success: string;
+      user: User;
+      token: string;
+      error: string;
+    }>('http://localhost:5000/users/login', { ...user, cart });
   }
 }

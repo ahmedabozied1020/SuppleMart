@@ -37,6 +37,7 @@ export class AddProductFormModalComponent {
   submitted: boolean = false;
   noMatch: boolean = false;
   errorMessage!: string;
+  isSuccessfullyEdited: boolean = false;
   selectedFile!: File;
   selectedFiles: any[] = [];
   categories: string[] = [
@@ -209,7 +210,8 @@ export class AddProductFormModalComponent {
       .pipe(
         tap((msg) => {
           if (msg?.success) {
-            this.router.navigate(['/products']);
+            this.isSuccessfullyEdited = true;
+            setTimeout(() => (this.isSuccessfullyEdited = false), 3000);
           }
         }),
         catchError((error) => {

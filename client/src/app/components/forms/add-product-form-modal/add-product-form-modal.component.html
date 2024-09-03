@@ -1,3 +1,32 @@
+@if(isSuccessfullyEdited){
+<div
+  class="fixed top-0 left-1/2 -translate-x-1/2 z-50 toast toast-top toast-center transition-transform transform -translate-y-full opacity-0 duration-500"
+  [ngClass]="{ 'translate-y-0 opacity-100': isSuccessfullyEdited }"
+>
+  <div
+    class="alert bg-[var(--secondary-color)] text-[var(--primary-color)] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl w-full shadow-lg flex items-center"
+  >
+    <svg
+      class="w-6 h-6 mr-2 text-green-900"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M5 13l4 4L19 7"
+      ></path>
+    </svg>
+    <span class="block text-center font-bold"
+      >Product Successfully Edited ^_^</span
+    >
+  </div>
+</div>
+}
+
 <dialog id="my_modal_1" class="modal" (close)="resetForm()">
   <div class="modal-box w-11/12 max-w-5xl bg-[var(--secondary-color)]">
     <div class="flex justify-between">

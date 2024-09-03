@@ -1,5 +1,6 @@
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { Routes } from '@angular/router';
+import { adminGaurd } from './gaurds/admin.gaurd';
 import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CartComponent } from './pages/cart/cart.component';
@@ -39,11 +40,16 @@ export const routes: Routes = [
     component: ProductDetailsComponent,
     title: 'Product Details',
   },
+
   {
     path: 'admin',
-    component: AdminDashboardComponent,
-    title: 'Admin Dashboard',
+    canActivateChild: [adminGaurd],
+    children: [
+      { path: '', redirectTo: '/', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminDashboardComponent },
+    ],
   },
+
   {
     path: '**',
     component: NotFoundComponent,

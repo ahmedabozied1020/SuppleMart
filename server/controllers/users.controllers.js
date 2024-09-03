@@ -45,7 +45,6 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
 
   const user = await User.findById(userId);
 
-  console.log(user.cart);
   const userCartMap = new Map(user.cart.map((item) => [item.productId, item]));
 
   for (let item of cartItems) {
@@ -55,8 +54,7 @@ const mergeNonLoggedInUserCart = async (userId, cartItems) => {
       user.cart.push({ productId: item.productId, quantity: item.quantity });
     }
   }
-  
-  console.log(user.cart);
+
   return await user.save();
 };
 
@@ -65,7 +63,7 @@ exports.login = async (req, res) => {
     const { email, password, cart } = req.body;
 
     let user = await User.findOne({ email });
-    if (!user) return res.send("invalid email or password");
+    if (!user) throw new CustomError("invalid email or password", 400);
     // valid email
     const isMatched = await bcrypt.compare(password, user.password);
     if (isMatched) {
@@ -87,7 +85,7 @@ exports.login = async (req, res) => {
       res.send({ error: "invalid email or password" });
     }
   } catch (error) {
-    throw new CustomError(error.message, 500);
+    next(error);
   }
 };
 

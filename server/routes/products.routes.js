@@ -16,7 +16,6 @@ const {
 const auth = require("../middlewares/auth");
 const checkRole = require("../middlewares/checkRole");
 const upload = require("../utils/multerConfig");
-const { route } = require("./users.routes");
 
 const router = express.Router();
 

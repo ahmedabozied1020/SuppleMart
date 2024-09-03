@@ -16,6 +16,7 @@ import { User } from '../../interfaces/user';
 import { CartProductsService } from '../../services/observables/cart-products/cart-products.service';
 import {
   addLoggedInUserToLocalStorage,
+  addTokenToLocalStorage,
   deleteLoggedInUserFromLocalStorage,
   emptyCartProductsFromLocalStorage,
 } from '../../utils/local-storage';
@@ -115,11 +116,12 @@ export class NavbarComponent {
             if (res?.success) {
               this.loggedInUserService.setLoggedInUser(res.user);
               addLoggedInUserToLocalStorage(res.user);
+              addTokenToLocalStorage(res.token);
               this.cartProductsService.initializeCartProducts(res.user.cart);
               this.isSuccessfullyLoggedIn = true;
               setTimeout(() => (this.isSuccessfullyLoggedIn = false), 3000);
               if (res.user.role === 'admin') {
-                this.router.navigate(['/admin']);
+                this.router.navigate(['/admin/dashboard']);
               }
             }
           }),

@@ -4,6 +4,14 @@ import { User } from '../interfaces/user';
 export const addLoggedInUserToLocalStorage = (user: User) => {
   localStorage.setItem('loggedInUser', JSON.stringify(user));
 };
+
+export const addTokenToLocalStorage = (token: string) => {
+  localStorage.setItem('token', JSON.stringify(token));
+};
+
+export const getTokenFromLocalStorage = (): string =>
+  JSON.parse(localStorage.getItem('token') || '');
+
 export const deleteLoggedInUserFromLocalStorage = () => {
   localStorage.removeItem('loggedInUser');
 };
@@ -59,10 +67,10 @@ export const deleteOneCartProductFromLocalStorage = (productId: string) => {
   else {
     throw new Error('no cart products to be deleted from local storage!');
   }
-  console.log(storedCartProducts)
+  console.log(storedCartProducts);
   localStorage.setItem('cartProducts', JSON.stringify(storedCartProducts));
 };
 
-export const emptyCartProductsFromLocalStorage = ()=> {
+export const emptyCartProductsFromLocalStorage = () => {
   localStorage.removeItem('cartProducts');
-}
+};
