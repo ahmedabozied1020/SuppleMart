@@ -1,111 +1,112 @@
 🛒 SuppleMart
+A Full-Stack E-Commerce Platform built with Angular, Node.js, and MongoDB
+Browse, search, and purchase products with admin-powered management features.
 
-SuppleMart is a full-stack e-commerce application that allows users to browse, search, and purchase products online, while providing administrators with robust product management capabilities.
+📖 Overview
+SuppleMart is a modern full-stack e-commerce application designed for both customers and administrators.
 
-📌 Overview
-This project demonstrates a modern, scalable e-commerce platform with:
+Main Capabilities:
 
-Product Catalog Management – Browse, search, filter, and paginate products
+Product Catalog – Browse, search, filter, and paginate products
 
-User Authentication – JWT-based authentication with role-based access
+Authentication – Secure JWT-based login & registration with role-based access
 
-Shopping Cart – Persistent cart state for both guests and logged-in users
+Shopping Cart – Persistent cart state for guests & logged-in users
 
-Admin Interface – Product CRUD operations, image uploads, category management
+Admin Dashboard – Product CRUD, category management, and image uploads
 
-Multi-User Support – Separate interfaces for customers and administrators
+Multi-Role Support – Separate experiences for customers & admins
 
-🏗 System Architecture
-The application follows a client–server model with a clear separation between frontend and backend.
+🏗 Architecture
+SuppleMart follows a client–server architecture with a clear separation of concerns:
 
-Frontend: Angular + TypeScript
-Backend: Node.js + Express.js + MongoDB
+Frontend (Angular + TypeScript) ⇆ REST API (Express.js) ⇆ Database (MongoDB)
 
-scss
-نسخ
-تحرير
-Frontend (Angular)  <---->  REST API (Express.js)  <---->  Database (MongoDB)
-⚙️ Core Features
-1. Product Management System
-Operation	Endpoint	Controller Method	Features
-Create	POST /products	createProduct	Image upload, validation, category assignment
-Read	GET /products	getHomeProducts	Limited results for home page
-Read	GET /products/shop	getPaginatedProducts	Pagination, filtering, search
-Update	PATCH /products/:id	updateProduct	Full product data modification
-Delete	DELETE /products/:id	deleteProduct	Product removal
+Frontend: Angular, TailwindCSS, DaisyUI, RxJS
+Backend: Node.js, Express.js, MongoDB, JWT
+Cloud Storage: ImageKit for product images
 
-2. Authentication & User Management
-JWT-based authentication
+🚀 Features
+🔹 Product Management
+Create: Add products with image uploads and category assignment
 
-Role-based access control:
+Read: Paginated and filtered product listings, optimized for the homepage
 
-user → Customers with shopping cart access
+Update: Edit complete product details
 
-admin → Product management access
+Delete: Remove products from the store
 
-3. Shopping Cart
-Anonymous users → Cart stored in localStorage
+🔹 Authentication & User Roles
+JWT authentication
 
-Authenticated users → Cart synced with MongoDB
+Roles:
 
-Cart merge → Merges guest cart into user cart on login
+User → Shop & manage cart
 
-🛠 Technology Stack
+Admin → Full product management
+
+🔹 Shopping Cart
+Guests → Saved in browser localStorage
+
+Logged-in users → Synced with MongoDB
+
+Cart merge on login
+
+🛠 Tech Stack
+Frontend
+
+Angular + TypeScript
+
+RxJS for state management
+
+TailwindCSS + DaisyUI for styling
+
+Angular HttpClient for API calls
+
 Backend
+
 Node.js + Express.js
 
 MongoDB + Mongoose
 
 JWT Authentication
 
-Multer & ImageKit (file uploads)
+Multer + ImageKit for image management
 
-Joi (data validation)
+Joi for validation
 
-Winston (logging)
+Winston for logging
 
-Frontend
-Angular + TypeScript
+Development
 
-RxJS (state management)
+dotenv for configuration
 
-Tailwind CSS + DaisyUI
+Morgan for HTTP request logging
 
-Angular HttpClient + interceptors
+Custom error handling
 
-LocalStorage (offline persistence)
+📂 Project Structure
+server/ – Backend API (controllers, models, routes, utilities)
 
-Development Tools
-dotenv (environment configuration)
+client/ – Frontend app (components, pages, services)
 
-Morgan (HTTP request logging)
+🖥 Installation & Setup
+Clone the repository
 
-Custom error handling middleware
+Install backend dependencies (cd server && npm install)
 
-📂 Project Structure (Relevant Files)
-pgsql
-نسخ
-تحرير
-SuppleMart/
-│
-├── server/
-│   ├── index.js
-│   ├── controllers/
-│   │   ├── products.controllers.js
-│   │   ├── users.controllers.js
-│   ├── routes/
-│   │   ├── products.routes.js
-│   ├── models/
-│   │   ├── product.model.js
-│   │   ├── user.model.js
-│   ├── utils/
-│       ├── multerConfig.js
-│       ├── imageKitConfig.js
-│
-└── client/
-    ├── src/app/
-        ├── app.component.ts
-        ├── services/
-        │   ├── observables/
-        │   │   ├── cart-products.service.ts
-        │   │   ├── logged-in-user.service.ts
+Install frontend dependencies (cd client && npm install)
+
+Add environment variables in server/.env:
+
+PORT
+
+MONGO_URI
+
+JWT_SECRET
+
+IMAGEKIT keys & endpoint
+
+Start backend (npm start in server folder)
+
+Start frontend (ng serve in client folder)
