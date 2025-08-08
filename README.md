@@ -1,4 +1,4 @@
-🛒 SuppleMart
+🛒 SuppleMart : 
 A Full-Stack E-Commerce Platform built with Angular, Node.js, and MongoDB
 Browse, search, and purchase products with admin-powered management features.
 
