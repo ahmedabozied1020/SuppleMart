@@ -1,4 +1,5 @@
 🛒 SuppleMart
+
 SuppleMart is a full-stack e-commerce application that allows users to browse, search, and purchase products online, while providing administrators with robust product management capabilities.
 
 📌 Overview
